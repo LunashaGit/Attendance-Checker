@@ -67,21 +67,26 @@ class AuthenticatedSessionController extends Controller
     {
         $user = Socialite::driver('github')->user();
 
-        $found = User::where('email', $user->email)->first();
+        $found = User::where('github_id', $user->id)->first();
 
-        if ($found) {
-            Auth::login($found);
-            return redirect()->route('dashboard');
-        } else {
+        if (!$found) {
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
                 'password' => Hash::make($user->token),
+                'auth_type' => 'github',
+                'github_id' => $user->id,
+                'email_verified_at' => now(),
             ]);
 
             Auth::login($newUser);
+            
             return redirect()->route('dashboard');
+            
         }
+
+        Auth::login($found);
+        return redirect()->route('dashboard');
     }
 
 }

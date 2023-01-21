@@ -21,6 +21,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
+        'is_coach',
+        'campuse_id',
+        'job_id',
+        'section_id',
+        'github_id',
+        'email_verified_at',
+        'auth_type'
     ];
 
     /**
