@@ -22,6 +22,11 @@ Route::middleware('guest')->group(function () {
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
+    Route::get('github', [AuthenticatedSessionController::class, 'redirectToGithub'])
+                ->name('github');
+
+    Route::get('github/callback', [AuthenticatedSessionController::class, 'handleGithubCallback']);
+
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
 

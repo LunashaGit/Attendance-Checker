@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -50,4 +53,35 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    /**
+     * Github Login
+     */
+
+    public function redirectToGithub(): RedirectResponse
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function handleGithubCallback()
+    {
+        $user = Socialite::driver('github')->user();
+
+        $found = User::where('email', $user->email)->first();
+
+        if ($found) {
+            Auth::login($found);
+            return redirect()->route('dashboard');
+        } else {
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => Hash::make($user->token),
+            ]);
+
+            Auth::login($newUser);
+            return redirect()->route('dashboard');
+        }
+    }
+
 }

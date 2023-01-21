@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             User::create($user);
         }
-        
+
         $jobs = ['WEB_DEV', 'CYBER_SEC', 'DEV_OPS', 'AI', 'SAP', 'HACK_CLUB', 'DIG_SPRINT', 'CYBER_SPRINT', 'AWS_RE/START'];
         
         foreach ($jobs as $job) {
