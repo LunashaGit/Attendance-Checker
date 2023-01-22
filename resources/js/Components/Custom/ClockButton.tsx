@@ -1,27 +1,44 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-type Time = {
-    startTime: string;
-    endTime: string;
-};
+import { Time, Value } from "@/Types/ClockButton";
+import { TimeTable } from "@/Parameters/ClockButton";
 
 export default function ClockButton(props) {
     const [isDisabled, setIsDisabled] = useState(true);
-    const [hours, setHours] = useState("");
-    const [time, setTime] = useState<Time>({ startTime: "", endTime: "" });
+    const [hours, setHours] = useState(null);
+    const [time, setTime] = useState<Time>({
+        startTime: {
+            hours: "",
+            minutes: "",
+        },
+        endTime: {
+            hours: "",
+            minutes: "",
+        },
+        late: {
+            hours: "",
+            minutes: "",
+        },
+        before: {
+            hours: "",
+            minutes: "",
+        },
+        nextTimer: {
+            hours: "",
+            minutes: "",
+        },
+    });
     const [isClicked, setIsClicked] = useState(false);
+    const [valueClicked, setValueClicked] = useState<Value>({
+        hours: "",
+        minutes: "",
+    });
 
-    const timeTable = {
-        beginning: { startTime: "8:45", endTime: "9:00" },
-        lunch: { startTime: "12:20", endTime: "13:20" },
-        return: { startTime: "13:20", endTime: "13:30" },
-        end: { startTime: "17:00", endTime: "21:00" },
-    };
+    console.log(valueClicked);
 
     useEffect(() => {
-        setTime(timeTable[props.column]);
-        setHours(timeTable[props.column].startTime);
+        setTime(TimeTable[props.column]);
+        setHours(TimeTable[props.column].startTime);
     }, [props.column]);
 
     useEffect(() => {
@@ -29,21 +46,37 @@ export default function ClockButton(props) {
             let data = res.data;
             if (data[props.column] !== null) {
                 setIsClicked(true);
+                setValueClicked({
+                    hours: data[props.column].split(":")[0],
+                    minutes: data[props.column].split(":")[1],
+                });
+            } else {
+                setIsClicked(false);
             }
         });
     }, []);
 
     const checkTime = () => {
-        const currentHour = props.time.split(":")[0];
-        const currentMinute = props.time.split(":")[1];
-        const [startHour, startMinute] = time.startTime.split(":").map(Number);
-        const [endHour, endMinute] = time.endTime.split(":").map(Number);
+        const current = {
+            hours: props.time.split(":")[0],
+            minutes: props.time.split(":")[1],
+        };
+
+        const start = {
+            hours: time.startTime.hours,
+            minutes: time.startTime.minutes,
+        };
+
+        const end = {
+            hours: time.endTime.hours,
+            minutes: time.endTime.minutes,
+        };
 
         if (
-            (Number(currentHour) === startHour &&
-                Number(currentMinute) >= startMinute) ||
-            (Number(currentHour) === endHour &&
-                Number(currentMinute) <= endMinute)
+            current.hours >= start.hours &&
+            current.hours <= end.hours &&
+            current.minutes >= start.minutes &&
+            current.minutes <= end.minutes
         ) {
             setIsDisabled(false);
         } else {
@@ -58,25 +91,86 @@ export default function ClockButton(props) {
         return () => clearInterval(interval);
     }, []);
 
-    return (
-        <button
-            className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded"
-            disabled={isDisabled || isClicked}
-            onClick={() => {
+    const handleClick = () => {
+        axios
+            .put("/api/attendance/", {
+                user_id: props.auth.user.id,
+                column: props.column,
+                value:
+                    new Date().getHours() +
+                    ":" +
+                    new Date().getMinutes() +
+                    ":" +
+                    new Date().getSeconds(),
+            })
+            .then((res) => {
                 setIsClicked(true);
-                axios.put("/api/attendance", {
-                    user_id: props.auth.user.id,
-                    column: props.column,
-                    value:
-                        new Date().getHours() +
-                        ":" +
-                        new Date().getMinutes() +
-                        ":" +
-                        new Date().getSeconds(),
-                });
-            }}
-        >
-            {hours}
-        </button>
-    );
+            });
+    };
+
+    if (
+        (isClicked &&
+            isDisabled &&
+            valueClicked.hours === time.startTime.hours) ||
+        valueClicked.hours === time.endTime.hours
+    ) {
+        let x: string = "";
+        switch (time.startTime.hours) {
+            case "8":
+                x = "9:00";
+                break;
+            case "12":
+                x = "12:30";
+                break;
+            case "13":
+                x = "13:30";
+                break;
+            case "17":
+                x = "17:00";
+                break;
+            default:
+                break;
+        }
+        return (
+            <button
+                className="bg-green-500 text-white font-bold py-2 px-4 rounded opacity-50"
+                disabled
+            >
+                {x}
+            </button>
+        );
+    } else if (
+        isClicked &&
+        isDisabled &&
+        valueClicked.hours < time.late?.hours
+    ) {
+        return (
+            <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded opacity-50"
+                disabled
+            >
+                {valueClicked.hours + ":" + valueClicked.minutes}
+            </button>
+        );
+    } else if (
+        isClicked &&
+        isDisabled &&
+        valueClicked.hours < time.before?.hours
+    ) {
+        return (
+            <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded opacity-50"
+                disabled
+            >
+                {time.before.hours + ":" + time.before.minutes}
+            </button>
+        );
+    } else {
+        return (
+            <button
+                className="bg-green-500 text-white font-bold py-2 px-4 rounded"
+                onClick={handleClick}
+            ></button>
+        );
+    }
 }
