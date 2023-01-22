@@ -65,10 +65,13 @@ export default function ClockButton(props) {
         const currentMinute = currentTime.getMinutes();
 
         if (
-            (currentHour === time.firstHour &&
+            ((currentHour === time.firstHour &&
                 currentMinute >= time.firstPartOfMinutes) ||
-            (currentHour === time.secondHour &&
-                currentMinute <= time.secondPartOfMinutes)
+                (currentHour === time.secondHour &&
+                    currentMinute <= time.secondPartOfMinutes)) &&
+            axios.get("/api/attendance/" + props.auth.user.id).then((res) => {
+                res.data[props.column] === null;
+            })
         ) {
             setIsDisabled(false);
         } else {
