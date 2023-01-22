@@ -43,6 +43,10 @@ class AttendanceController extends Controller
         $attendance->update([
             $request->column => $request->value,
         ]);
+        return response()->json([
+            'message' => 'success',
+            $request->column => $request->value,
+        ]);
     }
 
     public function getByUser($id)

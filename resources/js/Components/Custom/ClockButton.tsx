@@ -103,6 +103,11 @@ export default function ClockButton(props) {
             })
             .then((res) => {
                 setIsClicked(true);
+                console.log(res);
+                setValueClicked({
+                    hours: Number(res.data[props.column].split(":")[0]),
+                    minutes: Number(res.data[props.column].split(":")[1]),
+                });
             });
     };
 
@@ -216,13 +221,30 @@ export default function ClockButton(props) {
                 {props.time.split(":")[0] + ":" + props.time.split(":")[1]}
             </button>
         );
-    } else {
+    } else if (
+        !isClicked &&
+        (props.time.split(":")[0] >= time.startTime.hours ||
+            (props.time.split(":")[0] === time.startTime.hours &&
+                props.time.split(":")[1] >= time.startTime.minutes)) &&
+        (props.time.split(":")[0] <= time.endTime.hours ||
+            (props.time.split(":")[0] === time.endTime.hours &&
+                props.time.split(":")[1] <= time.endTime.minutes))
+    ) {
         return (
             <button
                 className="bg-green-500 text-white font-bold py-2 px-4 rounded"
                 onClick={handleClick}
             >
                 {time.endTime.hours + ":" + time.endTime.minutes}
+            </button>
+        );
+    } else {
+        return (
+            <button
+                className="bg-orange-500 text-white font-bold py-2 px-4 rounded"
+                onClick={handleClick}
+            >
+                {props.time.split(":")[0] + ":" + props.time.split(":")[1]}
             </button>
         );
     }

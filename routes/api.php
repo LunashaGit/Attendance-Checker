@@ -22,7 +22,7 @@ Route::get('/attendance/{id}', [AttendanceController::class, 'getByUser']);
 Route::put('/attendance', [AttendanceController::class, 'update']);
 
 Route::get('/time', function () {
-    $time = date('H:i:s', strtotime('-8 hours', strtotime(date('H:i:s'))));
+    $time = date('H:i:s', strtotime('+5 hours', strtotime(date('H:i:s'))));
     return response()->json($time);
 });
 
