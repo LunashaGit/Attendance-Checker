@@ -26,6 +26,10 @@ export const TimeTable = {
             hours: 13,
             minutes: 20,
         },
+        nextTimer: {
+            hours: 13,
+            minutes: 20,
+        },
     },
     return: {
         startTime: {
@@ -57,6 +61,10 @@ export const TimeTable = {
         before: {
             hours: 16,
             minutes: 59,
+        },
+        nextTimer: {
+            hours: 21,
+            minutes: 0,
         },
     },
 };

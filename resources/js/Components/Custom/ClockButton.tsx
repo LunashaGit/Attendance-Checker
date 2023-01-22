@@ -106,6 +106,24 @@ export default function ClockButton(props) {
             });
     };
 
+    let x: string = "";
+    switch (time.startTime.hours) {
+        case 8:
+            x = "9:00";
+            break;
+        case 12:
+            x = "12:30";
+            break;
+        case 13:
+            x = "13:30";
+            break;
+        case 17:
+            x = "17:00";
+            break;
+        default:
+            break;
+    }
+
     if (
         isClicked &&
         isDisabled &&
@@ -116,23 +134,6 @@ export default function ClockButton(props) {
             (valueClicked.hours === time.endTime.hours &&
                 valueClicked.minutes <= time.endTime.minutes))
     ) {
-        let x: string = "";
-        switch (time.startTime.hours) {
-            case 8:
-                x = "9:00";
-                break;
-            case 12:
-                x = "12:30";
-                break;
-            case 13:
-                x = "13:30";
-                break;
-            case 17:
-                x = "17:00";
-                break;
-            default:
-                break;
-        }
         return (
             <button
                 className="bg-green-500 text-white font-bold py-2 px-4 rounded opacity-50"
@@ -184,6 +185,35 @@ export default function ClockButton(props) {
                 disabled
             >
                 {"--" + ":" + "--"}
+            </button>
+        );
+    } else if (
+        !isClicked &&
+        isDisabled &&
+        (props.time.split(":")[0] < time.startTime.hours ||
+            (props.time.split(":")[0] === time.startTime.hours &&
+                props.time.split(":")[1] <= time.startTime.minutes))
+    ) {
+        return (
+            <button
+                className="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-50"
+                disabled
+            >
+                {x}
+            </button>
+        );
+    } else if (
+        !isClicked &&
+        (props.time.split(":")[0] >= time.late?.hours ||
+            (props.time.split(":")[0] === time.late?.hours &&
+                props.time.split(":")[1] >= time.late?.minutes))
+    ) {
+        return (
+            <button
+                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
+                onClick={handleClick}
+            >
+                {props.time.split(":")[0] + ":" + props.time.split(":")[1]}
             </button>
         );
     } else {
