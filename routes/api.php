@@ -18,8 +18,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth')->group(function () {
-
-});
+Route::get('/attendance/{id}', [AttendanceController::class, 'getByUser']);
+Route::put('/attendance', [AttendanceController::class, 'update']);
 
 Route::get('/attendance', [AttendanceController::class, 'schedule']);

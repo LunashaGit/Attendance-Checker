@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\DB;
-
+use Inertia\Inertia;
 class AttendanceController extends Controller
-{
+{   
+    public function index()
+    {
+        $users = User::where('is_coach', 0)->where('is_admin', 0)->get();
+        $attendances = Attendance::where('date', now()->format('Y-m-d'))->get();
+        return Inertia::render('Attendance/Index', [
+            'users' => $users,
+            'attendances' => $attendances,
+        ]);
+    }
     
     public function schedule()
     {
@@ -26,6 +35,19 @@ class AttendanceController extends Controller
                 'updated_at' => now(),
             ]);
         }
-        
+    }
+
+    public function update(Request $request)
+    {
+        $attendance = Attendance::where('user_id', $request->user_id)->where('date', now()->format('Y-m-d'))->first();
+        $attendance->update([
+            $request->column => $request->value,
+        ]);
+    }
+
+    public function getByUser($id)
+    {
+        $attendance = Attendance::where('user_id', $id)->where('date', now()->format('Y-m-d'))->first();
+        return response()->json($attendance);
     }
 }
