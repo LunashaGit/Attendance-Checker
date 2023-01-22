@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\TestingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,9 +29,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/testing', function () {
-        return Inertia::render('Testing/Index');
-    })->name('admin');
+    Route::get('/testing', [TestingController::class, 'index'])->name('admin');
 });
 
 require __DIR__.'/auth.php';

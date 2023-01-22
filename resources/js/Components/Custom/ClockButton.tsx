@@ -2,76 +2,48 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 type Time = {
-    firstHour: Number;
-    secondHour: Number;
-    firstPartOfMinutes: Number;
-    secondPartOfMinutes: Number;
+    startTime: string;
+    endTime: string;
 };
+
 export default function ClockButton(props) {
-    const [isDisabled, setIsDisabled] = useState<boolean>(true);
-    const [isClicked, setIsClicked] = useState<boolean>(false);
-    const [hours, setHours] = useState<string>("");
-    const [time, setTime] = useState<Time>({
-        firstHour: null,
-        secondHour: null,
-        firstPartOfMinutes: null,
-        secondPartOfMinutes: null,
-    });
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [hours, setHours] = useState("");
+    const [time, setTime] = useState<Time>({ startTime: "", endTime: "" });
+    const [isClicked, setIsClicked] = useState(false);
+
+    const timeTable = {
+        beginning: { startTime: "8:45", endTime: "9:00" },
+        lunch: { startTime: "12:20", endTime: "13:20" },
+        return: { startTime: "13:20", endTime: "13:30" },
+        end: { startTime: "17:00", endTime: "21:00" },
+    };
 
     useEffect(() => {
-        switch (props.column) {
-            case "beginning":
-                setTime({
-                    firstHour: 8,
-                    secondHour: 9,
-                    firstPartOfMinutes: 45,
-                    secondPartOfMinutes: 0,
-                });
-                setHours("9:00");
-                break;
-            case "lunch":
-                setTime({
-                    firstHour: 12,
-                    secondHour: 13,
-                    firstPartOfMinutes: 30,
-                    secondPartOfMinutes: 20,
-                });
-                setHours("12:30");
-                break;
-            case "return":
-                setTime({
-                    firstHour: 13,
-                    secondHour: 13,
-                    firstPartOfMinutes: 20,
-                    secondPartOfMinutes: 30,
-                });
-                setHours("13:30");
-                break;
-            case "end":
-                setTime({
-                    firstHour: 17,
-                    secondHour: 21,
-                    firstPartOfMinutes: 0,
-                    secondPartOfMinutes: 0,
-                });
-                setHours("17:00");
-                break;
-        }
+        setTime(timeTable[props.column]);
+        setHours(timeTable[props.column].startTime);
     }, [props.column]);
 
+    useEffect(() => {
+        axios.get("/api/attendance/" + props.auth.user.id).then((res) => {
+            let data = res.data;
+            if (data[props.column] !== null) {
+                setIsClicked(true);
+            }
+        });
+    }, []);
+
     const checkTime = () => {
-        const currentTime = new Date();
-        const currentHour = currentTime.getHours();
-        const currentMinute = currentTime.getMinutes();
+        const currentHour = props.time.split(":")[0];
+        const currentMinute = props.time.split(":")[1];
+        const [startHour, startMinute] = time.startTime.split(":").map(Number);
+        const [endHour, endMinute] = time.endTime.split(":").map(Number);
 
         if (
-            ((currentHour === time.firstHour &&
-                currentMinute >= time.firstPartOfMinutes) ||
-                (currentHour === time.secondHour &&
-                    currentMinute <= time.secondPartOfMinutes)) &&
-            axios.get("/api/attendance/" + props.auth.user.id).then((res) => {
-                res.data[props.column] === null;
-            })
+            (Number(currentHour) === startHour &&
+                Number(currentMinute) >= startMinute) ||
+            (Number(currentHour) === endHour &&
+                Number(currentMinute) <= endMinute)
         ) {
             setIsDisabled(false);
         } else {
@@ -79,9 +51,12 @@ export default function ClockButton(props) {
         }
     };
 
-    if (!isClicked) {
-        setInterval(checkTime, 1000);
-    }
+    useEffect(() => {
+        const interval = setInterval(() => {
+            checkTime();
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <button
@@ -96,7 +71,8 @@ export default function ClockButton(props) {
                         new Date().getHours() +
                         ":" +
                         new Date().getMinutes() +
-                        ":00",
+                        ":" +
+                        new Date().getSeconds(),
                 });
             }}
         >
