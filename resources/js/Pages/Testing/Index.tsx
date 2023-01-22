@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ClockButton from "@/Components/Custom/ClockButton";
 import axios from "axios";
 
@@ -10,15 +10,21 @@ export default function Testing(props) {
         "return",
         "end",
     ]);
+
+    axios.get("/api/time").then((res) => {
+        setTime(res.data);
+    });
+
+    setInterval(() => {
+        axios.get("/api/time").then((res) => {
+            setTime(res.data);
+        });
+    }, 60000);
+
+    console.log(time);
     return (
         <div>
             {column.map((col, index) => {
-                setTimeout(() => {
-                    axios.get("/api/time").then((res) => {
-                        setTime(res.data);
-                    });
-                }, 120000);
-
                 return (
                     <ClockButton
                         key={index}

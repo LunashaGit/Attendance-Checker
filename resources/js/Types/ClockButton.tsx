@@ -1,27 +1,27 @@
 export type Time = {
     startTime: {
-        hours: string;
-        minutes: string;
+        hours: Number;
+        minutes: Number;
     };
     endTime: {
-        hours: string;
-        minutes: string;
+        hours: Number;
+        minutes: Number;
     };
     late?: {
-        hours: string;
-        minutes: string;
+        hours: Number;
+        minutes: Number;
     };
     before?: {
-        hours: string;
-        minutes: string;
+        hours: Number;
+        minutes: Number;
     };
     nextTimer?: {
-        hours: string;
-        minutes: string;
+        hours: Number;
+        minutes: Number;
     };
 };
 
 export type Value = {
-    hours: string;
-    minutes: string;
+    hours: Number;
+    minutes: Number;
 };

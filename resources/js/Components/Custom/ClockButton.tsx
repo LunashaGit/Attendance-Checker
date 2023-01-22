@@ -8,33 +8,31 @@ export default function ClockButton(props) {
     const [hours, setHours] = useState(null);
     const [time, setTime] = useState<Time>({
         startTime: {
-            hours: "",
-            minutes: "",
+            hours: null,
+            minutes: null,
         },
         endTime: {
-            hours: "",
-            minutes: "",
+            hours: null,
+            minutes: null,
         },
         late: {
-            hours: "",
-            minutes: "",
+            hours: null,
+            minutes: null,
         },
         before: {
-            hours: "",
-            minutes: "",
+            hours: null,
+            minutes: null,
         },
         nextTimer: {
-            hours: "",
-            minutes: "",
+            hours: null,
+            minutes: null,
         },
     });
     const [isClicked, setIsClicked] = useState(false);
     const [valueClicked, setValueClicked] = useState<Value>({
-        hours: "",
-        minutes: "",
+        hours: null,
+        minutes: null,
     });
-
-    console.log(valueClicked);
 
     useEffect(() => {
         setTime(TimeTable[props.column]);
@@ -47,8 +45,8 @@ export default function ClockButton(props) {
             if (data[props.column] !== null) {
                 setIsClicked(true);
                 setValueClicked({
-                    hours: data[props.column].split(":")[0],
-                    minutes: data[props.column].split(":")[1],
+                    hours: Number(data[props.column].split(":")[0]),
+                    minutes: Number(data[props.column].split(":")[1]),
                 });
             } else {
                 setIsClicked(false);
@@ -58,18 +56,18 @@ export default function ClockButton(props) {
 
     const checkTime = () => {
         const current = {
-            hours: props.time.split(":")[0],
-            minutes: props.time.split(":")[1],
+            hours: Number(props.time.split(":")[0]),
+            minutes: Number(props.time.split(":")[1]),
         };
 
         const start = {
-            hours: time.startTime.hours,
-            minutes: time.startTime.minutes,
+            hours: Number(time.startTime.hours),
+            minutes: Number(time.startTime.minutes),
         };
 
         const end = {
-            hours: time.endTime.hours,
-            minutes: time.endTime.minutes,
+            hours: Number(time.endTime.hours),
+            minutes: Number(time.endTime.minutes),
         };
 
         if (
@@ -109,23 +107,27 @@ export default function ClockButton(props) {
     };
 
     if (
-        (isClicked &&
-            isDisabled &&
-            valueClicked.hours === time.startTime.hours) ||
-        valueClicked.hours === time.endTime.hours
+        isClicked &&
+        isDisabled &&
+        (valueClicked.hours > time.startTime.hours ||
+            (valueClicked.hours === time.startTime.hours &&
+                valueClicked.minutes >= time.startTime.minutes)) &&
+        (valueClicked.hours < time.endTime.hours ||
+            (valueClicked.hours === time.endTime.hours &&
+                valueClicked.minutes <= time.endTime.minutes))
     ) {
         let x: string = "";
         switch (time.startTime.hours) {
-            case "8":
+            case 8:
                 x = "9:00";
                 break;
-            case "12":
+            case 12:
                 x = "12:30";
                 break;
-            case "13":
+            case 13:
                 x = "13:30";
                 break;
-            case "17":
+            case 17:
                 x = "17:00";
                 break;
             default:
@@ -142,7 +144,9 @@ export default function ClockButton(props) {
     } else if (
         isClicked &&
         isDisabled &&
-        valueClicked.hours < time.late?.hours
+        (valueClicked.hours > time.late?.hours ||
+            (valueClicked.hours === time.late?.hours &&
+                valueClicked.minutes >= time.late?.minutes))
     ) {
         return (
             <button
@@ -155,14 +159,31 @@ export default function ClockButton(props) {
     } else if (
         isClicked &&
         isDisabled &&
-        valueClicked.hours < time.before?.hours
+        (valueClicked.hours < time.before?.hours ||
+            (valueClicked.hours === time.before?.hours &&
+                valueClicked.minutes <= time.before?.minutes))
     ) {
         return (
             <button
-                className="bg-red-500 text-white font-bold py-2 px-4 rounded opacity-50"
+                className="bg-orange-500 text-white font-bold py-2 px-4 rounded opacity-50"
                 disabled
             >
-                {time.before.hours + ":" + time.before.minutes}
+                {valueClicked.hours + ":" + valueClicked.minutes}
+            </button>
+        );
+    } else if (
+        !isClicked &&
+        isDisabled &&
+        (props.time.split(":")[0] > time.nextTimer?.hours ||
+            (props.time.split(":")[0] === time.nextTimer?.hours &&
+                props.time.split(":")[1] >= time.nextTimer?.minutes))
+    ) {
+        return (
+            <button
+                className="bg-gray-700 text-white font-bold py-2 px-4 rounded opacity-50"
+                disabled
+            >
+                {"--" + ":" + "--"}
             </button>
         );
     } else {
@@ -170,7 +191,9 @@ export default function ClockButton(props) {
             <button
                 className="bg-green-500 text-white font-bold py-2 px-4 rounded"
                 onClick={handleClick}
-            ></button>
+            >
+                {time.endTime.hours + ":" + time.endTime.minutes}
+            </button>
         );
     }
 }
