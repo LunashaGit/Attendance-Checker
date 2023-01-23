@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ClockButton from "@/Components/Custom/ClockButton";
+import Calendar from "@/Components/Custom/Calendar";
 import axios from "axios";
 
 export default function Testing(props) {
@@ -34,6 +35,7 @@ export default function Testing(props) {
                     />
                 );
             })}
+            <Calendar />
         </div>
     );
 }
