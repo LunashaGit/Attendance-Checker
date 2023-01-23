@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\TestingController;
+use App\Http\Controllers\SectionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/testing', [TestingController::class, 'index'])->name('admin');
+    Route::get('/section', [SectionController::class, 'index'])->name('admin');
 });
 
 require __DIR__.'/auth.php';
