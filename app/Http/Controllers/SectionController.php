@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Section;
 use App\Models\User;
+use App\Models\TechTalk;
 class SectionController extends Controller
 {
     public function index()
@@ -13,6 +14,7 @@ class SectionController extends Controller
         return Inertia::render('Section/Index', [
             'sections' => Section::all(),
             'users' => User::all(),
+            'techTalks' => TechTalk::all(),
         ]);
     }
 

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\TechTalkController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,5 +27,8 @@ Route::get('/time', function () {
     $time = date('H:i:s', strtotime('+5 hours', strtotime(date('H:i:s'))));
     return response()->json($time);
 });
+
+Route::post('/techtalks', [TechTalkController::class, 'create']);
+Route::put('/techtalks', [TechTalkController::class, 'update']);
 
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);

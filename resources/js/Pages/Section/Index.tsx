@@ -5,6 +5,7 @@ export default function Section(props) {
         <div>
             <GetInfos infos={props.sections} />
             <GetInfos infos={props.users} />
+            <GetInfos infos={props.techTalks} />
         </div>
     );
 }
