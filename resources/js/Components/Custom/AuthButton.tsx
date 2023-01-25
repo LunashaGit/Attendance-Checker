@@ -8,12 +8,9 @@ export default function AuthButton(props) {
             <a href={route(type.toLocaleLowerCase())}>
                 <div
                     key={type}
-                    className={
-                        (type == "Github"
-                            ? " bg-gray-50 text-gray-500 "
-                            : " bg-gray-700 text-gray-50 ") +
-                        " border border-gray-300 shadow-sm flex flex-row items-center justify-center gap-4 p-2 rounded-md"
-                    }
+                    className="bg-gray-50 text-gray-500 
+                        border border-gray-300 flex flex-row items-center justify-center gap-4 p-2 rounded-md shadow-lg hover:bg-gray-200 hover:text-gray-600 hover:border-gray-400 cursor-pointer
+                    "
                 >
                     <div className="flex flex-row items-center justify-center gap-4">
                         <img
@@ -21,7 +18,7 @@ export default function AuthButton(props) {
                             src={type == "Github" ? Github : Code}
                             alt={type}
                         />
-                        <p className="text-base">{type}</p>
+                        <p className="text-base font-semibold">{type}</p>
                     </div>
                 </div>
             </a>

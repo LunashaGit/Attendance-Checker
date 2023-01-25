@@ -69,19 +69,55 @@ const Calendar = (props) => {
             console.log(res.data);
         });
     }
-    console.log(dayValue);
+    // keep only monday to friday
+    const daysOfWeek = days.filter((day) => {
+        const date = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            day
+        );
+        return date.getDay() !== 0 && date.getDay() !== 6;
+    });
+
     return (
-        <div>
-            <button onClick={prevMonth}>Prev</button>
-            <button onClick={nextMonth}>Next</button>
-            <h1>
-                {monthName} {currentDate.getFullYear()}
-            </h1>
-            <div className="flex flex-wrap w-4/6">
-                {days.map((day) => (
+        <div className="mx-auto w-8/12">
+            <div className="flex flex-row justify-between w-full my-4">
+                <div className="flex flex-row gap-4">
+                    <button
+                        className="
+                    bg-[#66a2e2] text-white rounded-lg w-24 py-2
+                    "
+                        onClick={prevMonth}
+                    >
+                        Previous
+                    </button>
+                    <button
+                        className="
+                    bg-[#66a2e2] text-white rounded-lg w-24 py-2
+                    "
+                        onClick={nextMonth}
+                    >
+                        Next
+                    </button>
+                </div>
+                <h1>
+                    {monthName} {currentDate.getFullYear()}
+                </h1>
+            </div>
+
+            <div className="grid grid-cols-5 gap-4 ">
+                {daysOfWeek.map((day, index) => (
                     <div
-                        className="w-24 h-24 border-red-500 border-2 cursor-pointer"
-                        key={day}
+                        className={
+                            (day === new Date().getDate() &&
+                            currentDate.getMonth() === new Date().getMonth() &&
+                            currentDate.getFullYear() ===
+                                new Date().getFullYear()
+                                ? "border-[#66a2e2]"
+                                : "border-[#dee2e6]") +
+                            " w-full h-24 border-2 cursor-pointer rounded-lg mx-auto"
+                        }
+                        key={index}
                         defaultValue={day}
                         onClick={() => {
                             setDayValue({
@@ -92,7 +128,34 @@ const Calendar = (props) => {
                             setDayClicked(true);
                         }}
                     >
-                        {day}
+                        <div className="flex gap-2 items-center justify-center">
+                            <h4 className="text-sm">
+                                {new Date(
+                                    currentDate.getFullYear(),
+                                    currentDate.getMonth(),
+                                    day
+                                )
+                                    .toLocaleString("en-us", {
+                                        weekday: "long",
+                                    })
+                                    .slice(0, 3)}
+                            </h4>
+                            <h1 className="text-lg">{day}</h1>
+                            <h4 className="text-sm">
+                                {currentDate.getFullYear()}
+                            </h4>
+                        </div>
+                        <hr
+                            className={
+                                day === new Date().getDate() &&
+                                currentDate.getMonth() ===
+                                    new Date().getMonth() &&
+                                currentDate.getFullYear() ===
+                                    new Date().getFullYear()
+                                    ? "border-[#66a2e2] border-1 w-4/5 mx-auto"
+                                    : "border-[#dee2e6] border-1 w-4/5 mx-auto"
+                            }
+                        />
                     </div>
                 ))}
             </div>
