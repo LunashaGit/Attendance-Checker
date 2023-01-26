@@ -49,4 +49,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function campuse()
+    {
+        return $this->belongsTo(Campuse::class);
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class);
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+    public function techTalks()
+    {
+        return $this->hasMany(TechTalk::class);
+    }
+
+    public function github()
+    {
+        return $this->hasOne(Github::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
 }

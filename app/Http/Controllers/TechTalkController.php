@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TechTalk;
 use App\Models\User;
+use Inertia\Inertia;
 
 class TechTalkController extends Controller
 {
+    public function index(Request $request)
+    {
+        $techTalks = TechTalk::all();
+
+        return Inertia::render('TechTalk/Index', [
+            'techTalks' => $techTalks,
+        ]);
+    }
+
     public function create(Request $request)
     {
 
@@ -17,6 +27,7 @@ class TechTalkController extends Controller
             'description' => $request->description,
             'date' => $request->date,
             'time' => $request->time,
+            !empty($request->commentary) ? 'commentary' : null => $request->commentary,
         ]);
 
         return response()->json([

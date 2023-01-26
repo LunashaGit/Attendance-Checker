@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\InfosController;
 use App\Http\Controllers\TechTalkController;
 
 /*
@@ -31,4 +32,5 @@ Route::get('/time', function () {
 Route::post('/techtalks', [TechTalkController::class, 'create']);
 Route::put('/techtalks', [TechTalkController::class, 'update']);
 
+Route::get('/users', [InfosController::class, 'index']);
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);

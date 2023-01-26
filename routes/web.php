@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\TestingController;
 use App\Http\Controllers\SectionController;
+use App\Http\Controllers\TechTalkController;
+use App\Http\Controllers\InfosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,14 +21,14 @@ use App\Http\Controllers\SectionController;
 
 Route::get('/', function (){ return Inertia::render('Connect/Index');} );
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [ProfileController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/tech-talks', [TechTalkController::class, 'index'])->name('tech-talks.index');
+    Route::get('/whoiswho', [InfosController::class, 'index'])->name('whoiswho.index');
 });
 
 Route::middleware(['auth'])->group(function () {

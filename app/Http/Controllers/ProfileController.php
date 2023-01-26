@@ -13,6 +13,15 @@ use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index(Request $request): Response
+    {
+        return Inertia::render('Dashboard/Index');
+    }
     /**
      * Display the user's profile form.
      */
