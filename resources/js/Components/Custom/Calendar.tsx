@@ -160,6 +160,30 @@ const Calendar = (props) => {
                                     : "border-[#dee2e6] border-1 w-4/5 mx-auto"
                             }
                         />
+                        {props.techTalks.map((techTalk) => {
+                            if (
+                                techTalk.date ===
+                                `${currentDate.getFullYear()}-${
+                                    currentDate.getMonth().toString().length ==
+                                    1
+                                        ? "0" + (currentDate.getMonth() + 1)
+                                        : currentDate.getMonth()
+                                }-${
+                                    day.toString().length == 1 ? "0" + day : day
+                                }`
+                            ) {
+                                return (
+                                    <div
+                                        className="flex flex-col gap-2 items-center justify-center"
+                                        key={techTalk.id}
+                                    >
+                                        <h1 className="text-sm text-gray-400">
+                                            {techTalk.title}
+                                        </h1>
+                                    </div>
+                                );
+                            }
+                        })}
                     </div>
                 ))}
             </div>

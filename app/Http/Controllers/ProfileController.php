@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-
+use App\Models\TechTalk;
 class ProfileController extends Controller
 {
     public function __construct()
@@ -20,7 +20,9 @@ class ProfileController extends Controller
 
     public function index(Request $request): Response
     {
-        return Inertia::render('Dashboard/Index');
+        return Inertia::render('Dashboard/Index', [
+            'techTalks' => TechTalk::where('user_id', $request->user()->id)->get(),
+        ]);
     }
     /**
      * Display the user's profile form.

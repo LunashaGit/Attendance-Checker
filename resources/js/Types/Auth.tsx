@@ -9,5 +9,10 @@ export type Auth = {
         is_admin: boolean;
         is_coach: boolean;
         section_id: number;
+        github_id: number;
+        section: {
+            id: number;
+            name: string;
+        };
     };
 };

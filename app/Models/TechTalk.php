@@ -18,4 +18,11 @@ class TechTalk extends Model
         'commentary',
         'is_over',
     ];
+
+    protected $with = ['user'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
