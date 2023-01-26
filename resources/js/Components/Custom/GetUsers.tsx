@@ -33,7 +33,7 @@ export default function GetUsers(props: Props) {
     }, [search]);
 
     return (
-        <div className="w-5/6 mx-auto my-4">
+        <div className="max-w-7xl mx-auto my-4">
             <div className="flex flex-row justify-between items-center">
                 <h1 className="text-3xl font-semibold text-white">Who's who</h1>
                 <form

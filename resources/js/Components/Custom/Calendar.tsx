@@ -84,7 +84,7 @@ const Calendar = (props) => {
     });
 
     return (
-        <div className="mx-auto w-8/12">
+        <div className="mx-auto max-w-7xl">
             <div className="flex flex-row justify-between w-full my-4">
                 <div className="flex flex-row gap-4">
                     <button
