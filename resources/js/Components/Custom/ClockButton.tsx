@@ -4,6 +4,7 @@ import { Time, Value } from "@/Types/ClockButton";
 import { TimeTable } from "@/Parameters/ClockButton";
 
 export default function ClockButton(props) {
+    console.log(props);
     const [isDisabled, setIsDisabled] = useState(true);
     const [hours, setHours] = useState(null);
     const [time, setTime] = useState<Time>({

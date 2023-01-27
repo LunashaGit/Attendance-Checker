@@ -31,7 +31,7 @@ class TechTalkController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'success',
+            TechTalk::all(),
         ]);
 
     }
