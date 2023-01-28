@@ -40,7 +40,7 @@ export default function Dashboard(props: Props) {
                 <div className="flex row gap-4 items-center justify-left">
                     <GithubPicture
                         className="h-16 w-16 rounded-lg"
-                        auth={props.auth}
+                        user={props.auth.user.github_id}
                     />
                     <div className="flex flex-col justify-between gap-2">
                         <HiMessage auth={props.auth} />

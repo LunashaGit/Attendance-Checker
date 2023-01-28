@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { Dialog, Transition } from "@headlessui/react";
+import GithubPicture from "./GithubPicture";
 
 type TypeDayValue = {
     day: number;
@@ -9,19 +10,28 @@ type TypeDayValue = {
 };
 
 type TypeTechTalks = {
-    map(arg0: (techTalk: any) => JSX.Element): React.ReactNode;
-    id: number;
-    user_id: number;
-    title: string;
-    description: string;
-    date: string;
-    time: string;
-    commentary: string;
-    created_at: string;
-    updated_at: string;
+    map?(arg0: (techTalk: TypeTechTalks) => JSX.Element): React.ReactNode;
+    id?: number;
+    user_id?: number;
+    title?: string;
+    date?: string;
+    time?: string;
+    is_over?: boolean;
+    commentary?: string;
+    created_at?: string;
+    updated_at?: string;
+    user?: {
+        id?: number;
+        name?: string;
+        github_id?: number;
+        section?: {
+            id?: number;
+            name?: string;
+        };
+    };
 };
 
-const Calendar = (props) => {
+export default function Calendar(props) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dayClicked, setDayClicked] = useState<boolean>(false);
     const [dayValue, setDayValue] = useState<TypeDayValue>({
@@ -31,12 +41,26 @@ const Calendar = (props) => {
     });
     const [hour, setHour] = useState<string>("13:30");
     const [techTalks, setTechTalks] = useState<TypeTechTalks>(props.techTalks);
-    console.log(techTalks);
+    const [valueTechTalks, setValueTechTalks] = useState<TypeTechTalks>({
+        title: null,
+        date: null,
+        time: null,
+        commentary: null,
+        is_over: null,
+        user: {
+            name: null,
+            section: {
+                name: null,
+            },
+        },
+    });
     const nextMonth = () => {
         setCurrentDate(
             new Date(currentDate.setMonth(currentDate.getMonth() + 1))
         );
     };
+    const [techTalkClicked, setTechTalkClicked] = useState<boolean>(false);
+
     const prevMonth = () => {
         setCurrentDate(
             new Date(currentDate.setMonth(currentDate.getMonth() - 1))
@@ -77,7 +101,6 @@ const Calendar = (props) => {
         const data = {
             user_id: props.auth.user.id,
             title: e.target.title.value,
-            description: e.target.description.value,
             date: e.target.date.value,
             time: e.target.time.value,
             commentary: e.target.commentary.value,
@@ -87,7 +110,7 @@ const Calendar = (props) => {
         });
         setDayClicked(false);
     }
-    // keep only monday to friday
+
     const daysOfWeek = days.filter((day) => {
         const date = new Date(
             currentDate.getFullYear(),
@@ -96,6 +119,14 @@ const Calendar = (props) => {
         );
         return date.getDay() !== 0 && date.getDay() !== 6;
     });
+
+    useEffect(() => {
+        if (techTalkClicked) {
+            setDayClicked(false);
+        } else if (dayClicked) {
+            setTechTalkClicked(false);
+        }
+    }, [dayClicked, techTalkClicked]);
 
     return (
         <div className="mx-auto max-w-7xl">
@@ -133,7 +164,7 @@ const Calendar = (props) => {
                                 new Date().getFullYear()
                                 ? "border-[#66a2e2]"
                                 : "border-[#dee2e6]") +
-                            " w-full border-2 cursor-pointer rounded-lg mx-auto bg-[#1f2937]"
+                            " w-full border-2 cursor-pointer rounded-lg mx-auto bg-[#1f2937] min-h-[4rem] relative z-0"
                         }
                         key={index}
                         defaultValue={day}
@@ -189,8 +220,31 @@ const Calendar = (props) => {
                             ) {
                                 return (
                                     <div
-                                        className="flex flex-row gap-2 items-center w-full py-2 z-1 h-20"
+                                        className="flex flex-row gap-2 items-center w-[90%] z-100 h-20 relative bg-[#1b212c] mx-auto my-2 rounded-md"
                                         key={techTalk.id}
+                                        onClick={() => {
+                                            setTechTalkClicked(true),
+                                                setValueTechTalks({
+                                                    id: techTalk.id,
+                                                    title: techTalk.title,
+                                                    date: techTalk.date,
+                                                    time: techTalk.time,
+                                                    is_over: techTalk.is_over,
+                                                    commentary:
+                                                        techTalk.commentary,
+                                                    user: {
+                                                        name: techTalk.user
+                                                            .name,
+                                                        github_id:
+                                                            techTalk.user
+                                                                .github_id,
+                                                        section: {
+                                                            name: techTalk.user
+                                                                .section.name,
+                                                        },
+                                                    },
+                                                });
+                                        }}
                                     >
                                         <small className="rotate-moins90">
                                             {techTalk.time.slice(0, 5)}
@@ -272,21 +326,6 @@ const Calendar = (props) => {
                                                 type="text"
                                                 name="title"
                                                 placeholder="Title"
-                                            />
-                                        </div>
-
-                                        <div className="w-full">
-                                            <label
-                                                className="text-white text-sm"
-                                                htmlFor="description"
-                                            >
-                                                Description
-                                            </label>
-                                            <input
-                                                className="w-full dark:bg-gray-900 text-[#979ea3]"
-                                                type="text"
-                                                name="description"
-                                                placeholder="Description"
                                             />
                                         </div>
                                         <div className="w-full flex flex-row gap-2">
@@ -375,8 +414,105 @@ const Calendar = (props) => {
                     </div>
                 </Dialog>
             </Transition>
+            <Transition appear show={techTalkClicked} as={Fragment}>
+                <Dialog
+                    as="div"
+                    className="fixed inset-0 z-10 overflow-y-auto"
+                    onClose={() => {
+                        setTechTalkClicked(false), setDayClicked(false);
+                    }}
+                >
+                    <div className="min-h-screen px-4 text-center bg-black bg-opacity-40">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0" />
+                        </Transition.Child>
+
+                        <span
+                            className="inline-block h-screen align-middle"
+                            aria-hidden="true"
+                        >
+                            &#8203;
+                        </span>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className=" inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-[#373f50] shadow-xl rounded-2xl">
+                                <Dialog.Title
+                                    as="h3"
+                                    className="text-lg font-medium leading-6 text-white"
+                                >
+                                    Tech Talk
+                                </Dialog.Title>
+                                <hr className="my-2" />
+                                <div className="flex flex-col justify-center">
+                                    <div className="flex flex-row justify-between">
+                                        <div>
+                                            <h1 className="text-white text-xl">
+                                                {valueTechTalks.title}
+                                            </h1>
+                                            <p className="text-white text-sm">
+                                                {valueTechTalks.date +
+                                                    ", " +
+                                                    valueTechTalks.time}
+                                            </p>
+                                        </div>
+                                        {valueTechTalks.is_over == true && (
+                                            <div>
+                                                <p className="px-2 text-white bg-green-500 rounded-lg">
+                                                    Done
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-2">
+                                        <p className="text-white text-base">
+                                            Author
+                                        </p>
+                                        <div className="flex flex-row">
+                                            <GithubPicture
+                                                className="w-16 h-16 rounded-l-md"
+                                                user={
+                                                    valueTechTalks.user
+                                                        .github_id
+                                                }
+                                            />
+                                            <div className="bg-[#181c24] p-2 rounded-r-md">
+                                                <p className="text-white text-base">
+                                                    {valueTechTalks.user.name}
+                                                </p>
+                                                <small className="text-white text-sm">
+                                                    {
+                                                        valueTechTalks.user
+                                                            .section.name
+                                                    }
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p className="text-white text-base">
+                                        {valueTechTalks.commentary}
+                                    </p>
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
+            </Transition>
         </div>
     );
-};
-
-export default Calendar;
+}

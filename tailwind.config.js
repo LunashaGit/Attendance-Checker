@@ -23,6 +23,7 @@ module.exports = {
             },
             zIndex: {
                 1: "1",
+                moins1: "-1",
             },
         },
     },
