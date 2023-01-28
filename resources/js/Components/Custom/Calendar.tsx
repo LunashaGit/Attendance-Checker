@@ -42,12 +42,14 @@ export default function Calendar(props) {
     const [hour, setHour] = useState<string>("13:30");
     const [techTalks, setTechTalks] = useState<TypeTechTalks>(props.techTalks);
     const [valueTechTalks, setValueTechTalks] = useState<TypeTechTalks>({
+        id: null,
         title: null,
         date: null,
         time: null,
         commentary: null,
         is_over: null,
         user: {
+            id: null,
             name: null,
             section: {
                 name: null,
@@ -233,6 +235,7 @@ export default function Calendar(props) {
                                                     commentary:
                                                         techTalk.commentary,
                                                     user: {
+                                                        id: techTalk.user.id,
                                                         name: techTalk.user
                                                             .name,
                                                         github_id:
@@ -477,6 +480,125 @@ export default function Calendar(props) {
                                                 </p>
                                             </div>
                                         )}
+                                        {valueTechTalks.is_over == false &&
+                                            (props.auth.user.id ==
+                                                valueTechTalks.user.id ||
+                                                (props.auth.user.is_admin ||
+                                                    props.auth.user.is_coach) ==
+                                                    true) && (
+                                                <div>
+                                                    <button
+                                                        className="px-2 mr-2 text-white bg-red-500 rounded-lg"
+                                                        onClick={() => {
+                                                            setTechTalkClicked(
+                                                                false
+                                                            ),
+                                                                axios
+                                                                    .delete(
+                                                                        "/api/techtalks",
+                                                                        {
+                                                                            data: {
+                                                                                id: valueTechTalks.id,
+                                                                            },
+                                                                        }
+                                                                    )
+                                                                    .then(
+                                                                        (
+                                                                            res
+                                                                        ) => {
+                                                                            setTechTalks(
+                                                                                res
+                                                                                    .data[0]
+                                                                            ),
+                                                                                setValueTechTalks(
+                                                                                    {
+                                                                                        id: null,
+                                                                                        title: null,
+                                                                                        date: null,
+                                                                                        time: null,
+                                                                                        commentary:
+                                                                                            null,
+                                                                                        is_over:
+                                                                                            null,
+                                                                                        user: {
+                                                                                            id: null,
+                                                                                            name: null,
+                                                                                            section:
+                                                                                                {
+                                                                                                    id: null,
+                                                                                                    name: null,
+                                                                                                },
+                                                                                        },
+                                                                                    }
+                                                                                );
+                                                                        }
+                                                                    );
+                                                        }}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                    <button
+                                                        className="px-2 ml-2 text-white bg-blue-500 rounded-lg"
+                                                        onClick={() => {
+                                                            setTechTalkClicked(
+                                                                false
+                                                            ),
+                                                                axios
+                                                                    .put(
+                                                                        "/api/techtalks",
+                                                                        {
+                                                                            id: valueTechTalks.id,
+                                                                            is_over:
+                                                                                true,
+                                                                        }
+                                                                    )
+                                                                    .then(
+                                                                        (
+                                                                            res
+                                                                        ) => {
+                                                                            setTechTalks(
+                                                                                res
+                                                                                    .data[0]
+                                                                            ),
+                                                                                setValueTechTalks(
+                                                                                    {
+                                                                                        id: valueTechTalks.id,
+                                                                                        title: valueTechTalks.title,
+                                                                                        date: valueTechTalks.date,
+                                                                                        time: valueTechTalks.time,
+                                                                                        commentary:
+                                                                                            valueTechTalks.commentary,
+                                                                                        is_over:
+                                                                                            true,
+                                                                                        user: {
+                                                                                            id: valueTechTalks
+                                                                                                .user
+                                                                                                .id,
+                                                                                            name: valueTechTalks
+                                                                                                .user
+                                                                                                .name,
+                                                                                            section:
+                                                                                                {
+                                                                                                    id: valueTechTalks
+                                                                                                        .user
+                                                                                                        .section
+                                                                                                        .id,
+                                                                                                    name: valueTechTalks
+                                                                                                        .user
+                                                                                                        .section
+                                                                                                        .name,
+                                                                                                },
+                                                                                        },
+                                                                                    }
+                                                                                );
+                                                                        }
+                                                                    );
+                                                        }}
+                                                    >
+                                                        Done?
+                                                    </button>
+                                                </div>
+                                            )}
                                     </div>
 
                                     <div className="mt-2">

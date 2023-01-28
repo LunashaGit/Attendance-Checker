@@ -24,7 +24,6 @@ class TechTalkController extends Controller
         TechTalk::create([
             'user_id' => $request->user_id,
             'title' => $request->title,
-            'description' => $request->description,
             'date' => $request->date,
             'time' => $request->time,
             !empty($request->commentary) ? 'commentary' : null => $request->commentary,
@@ -42,14 +41,22 @@ class TechTalkController extends Controller
         $techTalk = TechTalk::find($request->id);
 
         $techTalk->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            'commentary' => $request->commentary,
             'is_over' => $request->is_over,
         ]);
 
         return response()->json([
-            'message' => 'success',
+            TechTalk::all(),
+        ]);
+    }
+
+    public function delete(Request $request)
+    {
+        $techTalk = TechTalk::find($request->id);
+
+        $techTalk->delete();
+
+        return response()->json([
+            TechTalk::all(),
         ]);
     }
 }
