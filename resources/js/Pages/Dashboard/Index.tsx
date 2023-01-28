@@ -37,7 +37,7 @@ export default function Dashboard(props: Props) {
     return (
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="w-8/12 mx-auto my-4 flex flex-col gap-16">
-                <div className="flex flex row gap-4 items-center justify-left">
+                <div className="flex row gap-4 items-center justify-left">
                     <GithubPicture
                         className="h-16 w-16 rounded-lg"
                         auth={props.auth}

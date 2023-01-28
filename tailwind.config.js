@@ -15,6 +15,15 @@ module.exports = {
             fontFamily: {
                 sans: ["Nunito", ...defaultTheme.fontFamily.sans],
             },
+            rotate: {
+                moins90: "-90deg",
+            },
+            margin: {
+                moins4: "-4rem",
+            },
+            zIndex: {
+                1: "1",
+            },
         },
     },
 

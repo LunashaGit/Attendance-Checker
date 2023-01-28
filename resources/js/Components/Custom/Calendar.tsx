@@ -119,7 +119,7 @@ const Calendar = (props) => {
                                 new Date().getFullYear()
                                 ? "border-[#66a2e2]"
                                 : "border-[#dee2e6]") +
-                            " w-full h-32 border-2 cursor-pointer rounded-lg mx-auto bg-[#1f2937]"
+                            " w-full border-2 cursor-pointer rounded-lg mx-auto bg-[#1f2937]"
                         }
                         key={index}
                         defaultValue={day}
@@ -151,13 +151,14 @@ const Calendar = (props) => {
                         </div>
                         <hr
                             className={
-                                day === new Date().getDate() &&
+                                (day === new Date().getDate() &&
                                 currentDate.getMonth() ===
                                     new Date().getMonth() &&
                                 currentDate.getFullYear() ===
                                     new Date().getFullYear()
-                                    ? "border-[#66a2e2] border-1 w-4/5 mx-auto"
-                                    : "border-[#dee2e6] border-1 w-4/5 mx-auto"
+                                    ? "border-[#66a2e2]"
+                                    : "border-[#dee2e6]") +
+                                " border-1 w-4/5 mx-auto"
                             }
                         />
                         {props.techTalks.map((techTalk) => {
@@ -174,12 +175,24 @@ const Calendar = (props) => {
                             ) {
                                 return (
                                     <div
-                                        className="flex flex-col gap-2 items-center justify-center"
+                                        className="flex flex-row gap-2 items-center w-full py-2 z-1 h-20"
                                         key={techTalk.id}
                                     >
-                                        <h1 className="text-sm text-gray-400">
-                                            {techTalk.title}
-                                        </h1>
+                                        <small className="rotate-moins90">
+                                            {techTalk.time.slice(0, 5)}
+                                        </small>
+
+                                        <div className="text-left">
+                                            <h4 className="text-sm">
+                                                {techTalk.title}
+                                            </h4>
+                                            <h6 className="text-sm text-gray-400">
+                                                {techTalk.user.name}
+                                            </h6>
+                                            <h6 className="text-sm text-gray-400">
+                                                {techTalk.user.section.name}
+                                            </h6>
+                                        </div>
                                     </div>
                                 );
                             }
