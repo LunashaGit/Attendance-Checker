@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\User;
 class TechTalk extends Model
 {
     use HasFactory;
@@ -18,8 +18,6 @@ class TechTalk extends Model
         'commentary',
         'is_over',
     ];
-
-    protected $with = ['user'];
 
     public function user()
     {

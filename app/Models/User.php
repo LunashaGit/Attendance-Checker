@@ -31,8 +31,6 @@ class User extends Authenticatable
         'auth_type',
     ];
 
-    protected $with = ['section'];
-
     /**
      * The attributes that should be hidden for serialization.
      *

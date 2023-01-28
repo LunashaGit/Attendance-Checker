@@ -8,6 +8,7 @@ type Props = {
     techTalks: Object;
 };
 export default function TechTalks(props: Props) {
+    console.log(props.techTalks);
     return (
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="text-white">

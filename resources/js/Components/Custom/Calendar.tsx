@@ -32,6 +32,7 @@ type TypeTechTalks = {
 };
 
 export default function Calendar(props) {
+    console.log(props);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dayClicked, setDayClicked] = useState<boolean>(false);
     const [dayValue, setDayValue] = useState<TypeDayValue>({
@@ -56,6 +57,7 @@ export default function Calendar(props) {
             },
         },
     });
+    console.log(techTalks);
     const nextMonth = () => {
         setCurrentDate(
             new Date(currentDate.setMonth(currentDate.getMonth() + 1))

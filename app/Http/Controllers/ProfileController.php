@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\TechTalk;
+use App\Models\User;
 class ProfileController extends Controller
 {
     public function __construct()
@@ -21,6 +22,7 @@ class ProfileController extends Controller
     public function index(Request $request): Response
     {
         return Inertia::render('Dashboard/Index', [
+            'user' => $request->user()->load('section'),
             'techTalks' => TechTalk::where('user_id', $request->user()->id)->get(),
         ]);
     }

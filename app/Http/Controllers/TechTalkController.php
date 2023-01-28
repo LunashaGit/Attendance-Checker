@@ -11,9 +11,21 @@ class TechTalkController extends Controller
 {
     public function index(Request $request)
     {
-        $techTalks = TechTalk::all();
+        $techTalks = TechTalk::with('user.section')->get();
 
         return Inertia::render('TechTalk/Index', [
+            'user' => $request->user()->load('section'),
+            'techTalks' => $techTalks
+        ]);
+    }
+
+    public function getByMonthAndCampus(Request $request)
+    {
+        $techTalks = TechTalk::where('date', 'like', $request->month . '%')
+            ->where('campus_id', $request->campus_id)
+            ->get();
+
+        return response()->json([
             'techTalks' => $techTalks,
         ]);
     }
@@ -30,7 +42,7 @@ class TechTalkController extends Controller
         ]);
 
         return response()->json([
-            TechTalk::all(),
+            TechTalk::with('user.section')->get(),
         ]);
 
     }
@@ -45,7 +57,7 @@ class TechTalkController extends Controller
         ]);
 
         return response()->json([
-            TechTalk::all(),
+            TechTalk::with('user.section')->get(),
         ]);
     }
 
@@ -56,7 +68,7 @@ class TechTalkController extends Controller
         $techTalk->delete();
 
         return response()->json([
-            TechTalk::all(),
+            TechTalk::with('user.section')->get(),
         ]);
     }
 }

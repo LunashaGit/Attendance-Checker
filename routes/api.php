@@ -32,6 +32,7 @@ Route::get('/time', function () {
 Route::post('/techtalks', [TechTalkController::class, 'create']);
 Route::put('/techtalks', [TechTalkController::class, 'update']);
 Route::delete('/techtalks', [TechTalkController::class, 'delete']);
+Route::get('/techtalks', [TechTalkController::class, 'getByMonthAndCampus']);
 
 Route::get('/users', [InfosController::class, 'index']);
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);
