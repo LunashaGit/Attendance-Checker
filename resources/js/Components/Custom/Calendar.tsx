@@ -8,8 +8,20 @@ type TypeDayValue = {
     year: number;
 };
 
+type TypeTechTalks = {
+    map(arg0: (techTalk: any) => JSX.Element): React.ReactNode;
+    id: number;
+    user_id: number;
+    title: string;
+    description: string;
+    date: string;
+    time: string;
+    commentary: string;
+    created_at: string;
+    updated_at: string;
+};
+
 const Calendar = (props) => {
-    console.log(props);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dayClicked, setDayClicked] = useState<boolean>(false);
     const [dayValue, setDayValue] = useState<TypeDayValue>({
@@ -18,6 +30,8 @@ const Calendar = (props) => {
         year: null,
     });
     const [hour, setHour] = useState<string>("13:30");
+    const [techTalks, setTechTalks] = useState<TypeTechTalks>(props.techTalks);
+    console.log(techTalks);
     const nextMonth = () => {
         setCurrentDate(
             new Date(currentDate.setMonth(currentDate.getMonth() + 1))
@@ -69,7 +83,7 @@ const Calendar = (props) => {
             commentary: e.target.commentary.value,
         };
         axios.post("/api/techtalks", data).then((res) => {
-            console.log(res.data);
+            setTechTalks(res.data[0]);
         });
         setDayClicked(false);
     }
@@ -161,7 +175,7 @@ const Calendar = (props) => {
                                 " border-1 w-4/5 mx-auto"
                             }
                         />
-                        {props.techTalks.map((techTalk) => {
+                        {techTalks.map((techTalk) => {
                             if (
                                 techTalk.date ===
                                 `${currentDate.getFullYear()}-${
