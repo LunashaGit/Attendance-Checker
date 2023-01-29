@@ -6,13 +6,17 @@ type Props = {
     auth: Auth;
     errors: Object;
     techTalks: Object;
+    campuses: Object;
 };
 export default function TechTalks(props: Props) {
-    console.log(props.techTalks);
     return (
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="text-white">
-                <Calendar auth={props.auth} techTalks={props.techTalks} />
+                <Calendar
+                    auth={props.auth}
+                    techTalks={props.techTalks}
+                    campuses={props.campuses}
+                />
             </div>
         </AuthenticatedLayout>
     );

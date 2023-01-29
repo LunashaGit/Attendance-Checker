@@ -57,7 +57,9 @@ export default function Calendar(props) {
             },
         },
     });
-    console.log(techTalks);
+    const [campus, setCampus] = useState<number>(
+        props.auth.user.section.campus_id
+    );
     const nextMonth = () => {
         setCurrentDate(
             new Date(currentDate.setMonth(currentDate.getMonth() + 1))
@@ -99,7 +101,6 @@ export default function Calendar(props) {
         "December",
     ];
     const monthName = monthNames[currentDate.getMonth()];
-
     function handleSubmit(e) {
         e.preventDefault();
         const data = {
@@ -108,10 +109,20 @@ export default function Calendar(props) {
             date: e.target.date.value,
             time: e.target.time.value,
             commentary: e.target.commentary.value,
+            campus_id: props.auth.user.section.campus_id,
+            month:
+                currentDate.getMonth().toString().length == 1
+                    ? "0" + (currentDate.getMonth() + 1)
+                    : currentDate.getMonth() + 1,
         };
-        axios.post("/api/techtalks", data).then((res) => {
-            setTechTalks(res.data[0]);
-        });
+        axios
+            .post("/api/techtalks", data)
+            .then((res) => {
+                setTechTalks(res.data[0]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         setDayClicked(false);
     }
 
@@ -132,6 +143,22 @@ export default function Calendar(props) {
         }
     }, [dayClicked, techTalkClicked]);
 
+    useEffect(() => {
+        axios
+            .get("/api/techtalks", {
+                params: {
+                    campus_id: campus,
+                    month:
+                        currentDate.getMonth().toString().length == 1
+                            ? "0" + (currentDate.getMonth() + 1)
+                            : currentDate.getMonth() + 1,
+                },
+            })
+            .then((res) => {
+                setTechTalks(res.data[0]);
+            });
+    }, [campus, currentDate]);
+    console.log(currentDate);
     return (
         <div className="mx-auto max-w-7xl">
             <div className="flex flex-row justify-between w-full my-4">
@@ -152,6 +179,32 @@ export default function Calendar(props) {
                     >
                         Next
                     </button>
+                </div>
+                <div className="flex flex-row gap-4">
+                    <select
+                        className="bg-[#1f2937] text-white rounded-lg w-24 py-2"
+                        onChange={(e) => {
+                            setCampus(Number(e.target.value));
+                        }}
+                        defaultValue={0}
+                    >
+                        <option
+                            value={0}
+                            disabled
+                            className="bg-[#1f2937] text-white"
+                        >
+                            ----
+                        </option>
+                        {props.campuses.map((campus) => (
+                            <option
+                                key={campus.id}
+                                value={campus.id}
+                                className="bg-[#1f2937] text-white"
+                            >
+                                {campus.name}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <h1>
                     {monthName} {currentDate.getFullYear()}
@@ -501,6 +554,23 @@ export default function Calendar(props) {
                                                                         {
                                                                             data: {
                                                                                 id: valueTechTalks.id,
+                                                                                campus_id:
+                                                                                    props
+                                                                                        .auth
+                                                                                        .user
+                                                                                        .section
+                                                                                        .campus_id,
+                                                                                month:
+                                                                                    currentDate
+                                                                                        .getMonth()
+                                                                                        .toString()
+                                                                                        .length ==
+                                                                                    1
+                                                                                        ? "0" +
+                                                                                          (currentDate.getMonth() +
+                                                                                              1)
+                                                                                        : currentDate.getMonth() +
+                                                                                          1,
                                                                             },
                                                                         }
                                                                     )
@@ -552,6 +622,23 @@ export default function Calendar(props) {
                                                                             id: valueTechTalks.id,
                                                                             is_over:
                                                                                 true,
+                                                                            campus_id:
+                                                                                props
+                                                                                    .auth
+                                                                                    .user
+                                                                                    .section
+                                                                                    .campus_id,
+                                                                            month:
+                                                                                currentDate
+                                                                                    .getMonth()
+                                                                                    .toString()
+                                                                                    .length ==
+                                                                                1
+                                                                                    ? "0" +
+                                                                                      (currentDate.getMonth() +
+                                                                                          1)
+                                                                                    : currentDate.getMonth() +
+                                                                                      1,
                                                                         }
                                                                     )
                                                                     .then(
