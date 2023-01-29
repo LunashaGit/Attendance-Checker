@@ -32,7 +32,6 @@ type TypeTechTalks = {
 };
 
 export default function Calendar(props) {
-    console.log(props);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dayClicked, setDayClicked] = useState<boolean>(false);
     const [dayValue, setDayValue] = useState<TypeDayValue>({
@@ -158,7 +157,6 @@ export default function Calendar(props) {
                 setTechTalks(res.data[0]);
             });
     }, [campus, currentDate]);
-    console.log(currentDate);
     return (
         <div className="mx-auto max-w-7xl">
             <div className="flex flex-row justify-between w-full my-4">
