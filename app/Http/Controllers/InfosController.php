@@ -10,7 +10,10 @@ class InfosController extends Controller
     public function index(Request $request)
     {
         if ($request->is('api/*') && $request->has('search')) {
-            $users = User::with('section')->where('name', 'like', '%' . $request->search . '%')->get();
+            $users = User::with('section')
+            ->where('first_name', 'like', '%' . $request->search . '%')
+            ->orWhere('last_name', 'like', '%' . $request->search . '%')
+            ->get();
             
             return response()->json([
                 'users' => $users,

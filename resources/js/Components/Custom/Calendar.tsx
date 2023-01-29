@@ -22,7 +22,8 @@ type TypeTechTalks = {
     updated_at?: string;
     user?: {
         id?: number;
-        name?: string;
+        first_name?: string;
+        last_name?: string;
         github_id?: number;
         section?: {
             id?: number;
@@ -50,7 +51,8 @@ export default function Calendar(props) {
         is_over: null,
         user: {
             id: null,
-            name: null,
+            first_name: null,
+            last_name: null,
             section: {
                 name: null,
             },
@@ -289,8 +291,12 @@ export default function Calendar(props) {
                                                         techTalk.commentary,
                                                     user: {
                                                         id: techTalk.user.id,
-                                                        name: techTalk.user
-                                                            .name,
+                                                        first_name:
+                                                            techTalk.user
+                                                                .first_name,
+                                                        last_name:
+                                                            techTalk.user
+                                                                .last_name,
                                                         github_id:
                                                             techTalk.user
                                                                 .github_id,
@@ -311,7 +317,8 @@ export default function Calendar(props) {
                                                 {techTalk.title}
                                             </h4>
                                             <h6 className="text-sm text-gray-400">
-                                                {techTalk.user.name}
+                                                {techTalk.user.first_name}{" "}
+                                                {techTalk.user.last_name}
                                             </h6>
                                             <h6 className="text-sm text-gray-400">
                                                 {techTalk.user.section.name}
@@ -592,7 +599,10 @@ export default function Calendar(props) {
                                                                                             null,
                                                                                         user: {
                                                                                             id: null,
-                                                                                            name: null,
+                                                                                            first_name:
+                                                                                                null,
+                                                                                            last_name:
+                                                                                                null,
                                                                                             section:
                                                                                                 {
                                                                                                     id: null,
@@ -661,9 +671,14 @@ export default function Calendar(props) {
                                                                                             id: valueTechTalks
                                                                                                 .user
                                                                                                 .id,
-                                                                                            name: valueTechTalks
-                                                                                                .user
-                                                                                                .name,
+                                                                                            first_name:
+                                                                                                valueTechTalks
+                                                                                                    .user
+                                                                                                    .first_name,
+                                                                                            last_name:
+                                                                                                valueTechTalks
+                                                                                                    .user
+                                                                                                    .last_name,
                                                                                             section:
                                                                                                 {
                                                                                                     id: valueTechTalks
@@ -702,7 +717,14 @@ export default function Calendar(props) {
                                             />
                                             <div className="bg-[#181c24] p-2 rounded-r-md">
                                                 <p className="text-white text-base">
-                                                    {valueTechTalks.user.name}
+                                                    {
+                                                        valueTechTalks.user
+                                                            .first_name
+                                                    }{" "}
+                                                    {
+                                                        valueTechTalks.user
+                                                            .last_name
+                                                    }
                                                 </p>
                                                 <small className="text-white text-sm">
                                                     {

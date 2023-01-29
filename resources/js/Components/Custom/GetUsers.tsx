@@ -7,7 +7,8 @@ type Props = {
     users: Object[];
 };
 type User = {
-    name: string;
+    first_name: string;
+    last_name: string;
     is_coach: boolean;
     section: {
         name: string;
@@ -54,7 +55,10 @@ export default function GetUsers(props: Props) {
                     <thead className="border-red-500 border-2">
                         <tr className="text-left">
                             <th className="p-2 bg-[#373f50] border-[#202c34] border-2">
-                                Name
+                                Firstname
+                            </th>
+                            <th className="p-2 bg-[#373f50] border-[#202c34] border-2">
+                                Lastname
                             </th>
                             <th className="p-2 bg-[#373f50] border-[#202c34] border-2">
                                 Type
@@ -69,7 +73,10 @@ export default function GetUsers(props: Props) {
                             return (
                                 <tr className="text-left">
                                     <td className="p-2 bg-[#373f50] border-[#202c34] border-2">
-                                        {user.name}
+                                        {user.first_name}
+                                    </td>
+                                    <td className="p-2 bg-[#373f50] border-[#202c34] border-2">
+                                        {user.last_name}
                                     </td>
                                     <td className="p-2 bg-[#373f50] border-[#202c34] border-2">
                                         {user.is_coach ? "Coach" : "Junior"}

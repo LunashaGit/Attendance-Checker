@@ -66,8 +66,7 @@ class AuthenticatedSessionController extends Controller
     public function handleGithubCallback()
     {
         $user = Socialite::driver('github')->user();
-
-        $found = User::where('github_id', $user->id)->first();
+        $found = User::where([['github_id', '=', $user->id],['email', '=', $user->email]])->first();
 
         if (!$found) {
             $newUser = User::create([
