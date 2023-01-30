@@ -21,11 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/attendance/{id}', [AttendanceController::class, 'getByUser']);
+Route::get('/attendance', [AttendanceController::class, 'getByUser']);
 Route::put('/attendance', [AttendanceController::class, 'update']);
 
 Route::get('/time', function () {
-    $time = date('H:i:s', strtotime('+1 hours', strtotime(date('H:i:s'))));
+    $time = date('H:i:s', strtotime('0 hours', strtotime(date('H:i:s'))));
     return response()->json($time);
 });
 

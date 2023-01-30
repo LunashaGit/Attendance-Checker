@@ -49,9 +49,9 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function getByUser($id)
+    public function getByUser(Request $request)
     {
-        $attendance = Attendance::where('user_id', $id)->where('date', now()->format('Y-m-d'))->first();
+        $attendance = Attendance::where('user_id', $request->user_id)->where('date', now()->format('Y-m-d'))->first();
         return response()->json($attendance);
     }
 }

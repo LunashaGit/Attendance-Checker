@@ -1,93 +1,32 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Time, Value } from "@/Types/ClockButton";
-import { TimeTable } from "@/Parameters/ClockButton";
+
+type ClockButtonProps = {
+    column: string;
+    auth: any;
+    time: string;
+};
 
 export default function ClockButton(props) {
     console.log(props);
-    const [isDisabled, setIsDisabled] = useState(true);
-    const [hours, setHours] = useState(null);
-    const [time, setTime] = useState<Time>({
-        startTime: {
-            hours: null,
-            minutes: null,
-        },
-        endTime: {
-            hours: null,
-            minutes: null,
-        },
-        late: {
-            hours: null,
-            minutes: null,
-        },
-        before: {
-            hours: null,
-            minutes: null,
-        },
-        nextTimer: {
-            hours: null,
-            minutes: null,
-        },
-    });
-    const [isClicked, setIsClicked] = useState(false);
-    const [valueClicked, setValueClicked] = useState<Value>({
-        hours: null,
-        minutes: null,
-    });
-
+    const [isClicked, setIsClicked] = useState<boolean>(false);
+    const [valueClicked, setValueClicked] = useState<string>("");
     useEffect(() => {
-        setTime(TimeTable[props.column]);
-        setHours(TimeTable[props.column].startTime);
-    }, [props.column]);
-
-    useEffect(() => {
-        axios.get("/api/attendance/" + props.auth.user.id).then((res) => {
-            let data = res.data;
-            if (data[props.column] !== null) {
-                setIsClicked(true);
-                setValueClicked({
-                    hours: Number(data[props.column].split(":")[0]),
-                    minutes: Number(data[props.column].split(":")[1]),
-                });
-            } else {
-                setIsClicked(false);
-            }
-        });
-    }, []);
-
-    const checkTime = () => {
-        const current = {
-            hours: Number(props.time.split(":")[0]),
-            minutes: Number(props.time.split(":")[1]),
-        };
-
-        const start = {
-            hours: Number(time.startTime.hours),
-            minutes: Number(time.startTime.minutes),
-        };
-
-        const end = {
-            hours: Number(time.endTime.hours),
-            minutes: Number(time.endTime.minutes),
-        };
-
-        if (
-            current.hours >= start.hours &&
-            current.hours <= end.hours &&
-            current.minutes >= start.minutes &&
-            current.minutes <= end.minutes
-        ) {
-            setIsDisabled(false);
-        } else {
-            setIsDisabled(true);
-        }
-    };
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            checkTime();
-        }, 1000);
-        return () => clearInterval(interval);
+        axios
+            .get("/api/attendance/", {
+                params: {
+                    user_id: props.auth.user.id,
+                },
+            })
+            .then((res) => {
+                let data = res.data;
+                if (data[props.column] === null) {
+                    setIsClicked(false);
+                } else {
+                    setIsClicked(true);
+                    setValueClicked(data[props.column]);
+                }
+            });
     }, []);
 
     const handleClick = () => {
@@ -105,148 +44,156 @@ export default function ClockButton(props) {
             .then((res) => {
                 setIsClicked(true);
                 console.log(res);
-                setValueClicked({
-                    hours: Number(res.data[props.column].split(":")[0]),
-                    minutes: Number(res.data[props.column].split(":")[1]),
-                });
+                setValueClicked(res.data[props.column]);
             });
     };
 
-    let x: string = "";
-    switch (time.startTime.hours) {
-        case 8:
-            x = "9:00";
+    let buttonClass = "";
+    let isDisabled = false;
+    let buttonText = "";
+    let server = new Date();
+    server.setHours(
+        Number(props.time.split(":")[0]),
+        Number(props.time.split(":")[1])
+    );
+    let min = new Date();
+    let max = new Date();
+    let beforeOrAfter = new Date();
+    let clickedTime = new Date();
+    clickedTime.setHours(
+        Number(valueClicked.split(":")[0]),
+        Number(valueClicked.split(":")[1])
+    );
+    console.log(server);
+    switch (props.column) {
+        case "beginning":
+            min.setHours(8, 45, 0);
+            max.setHours(12, 29, 59);
+            beforeOrAfter.setHours(9, 0, 0);
+            if (isClicked) {
+                if (clickedTime >= min && clickedTime <= beforeOrAfter) {
+                    buttonClass = "bg-green-500 opacity-50";
+                    isDisabled = true;
+                    buttonText = "9:00";
+                } else if (clickedTime > beforeOrAfter && clickedTime <= max) {
+                    buttonClass = "bg-red-500 opacity-50";
+                    isDisabled = true;
+                    buttonText = valueClicked.slice(0, 5);
+                }
+            } else {
+                if (server < min) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "8:45";
+                } else if (server >= min && server <= beforeOrAfter) {
+                    buttonClass = "bg-green-500";
+                    isDisabled = false;
+                    buttonText = "9:00";
+                } else if (server > beforeOrAfter && server <= max) {
+                    buttonClass = "bg-red-500";
+                    isDisabled = false;
+                    buttonText = "9:00";
+                } else if (server > max) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "--:--";
+                }
+            }
+
             break;
-        case 12:
-            x = "12:30";
+        case "lunch":
+            min.setHours(12, 30, 0);
+            max.setHours(13, 19, 59);
+            if (isClicked) {
+                if (clickedTime >= min && clickedTime <= max) {
+                    buttonClass = "bg-green-500 opacity-50";
+                    isDisabled = true;
+                    buttonText = "12:30";
+                }
+            } else {
+                if (server < min) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "12:30";
+                } else if (server >= min && server <= max) {
+                    buttonClass = "bg-green-500";
+                    isDisabled = false;
+                    buttonText = "12:30";
+                } else if (server > max) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "--:--";
+                }
+            }
             break;
-        case 13:
-            x = "13:30";
+        case "return":
+            min.setHours(13, 20, 0);
+            max.setHours(13, 30, 0);
+            if (isClicked) {
+                if (clickedTime >= min && clickedTime <= max) {
+                    buttonClass = "bg-green-500 opacity-50";
+                    isDisabled = true;
+                    buttonText = "13:30";
+                }
+            } else {
+                if (server < min) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "13:30";
+                } else if (server >= min && server <= max) {
+                    buttonClass = "bg-green-500";
+                    isDisabled = false;
+                    buttonText = "13:30";
+                } else if (server > max) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "--:--";
+                }
+            }
             break;
-        case 17:
-            x = "17:00";
-            break;
-        default:
+        case "end":
+            min.setHours(17, 0, 0);
+            max.setHours(20, 59, 59);
+            beforeOrAfter.setHours(13, 31, 0);
+            if (isClicked) {
+                if (clickedTime >= beforeOrAfter && clickedTime <= min) {
+                    buttonClass = "bg-red-500 opacity-50";
+                    isDisabled = true;
+                    buttonText = valueClicked.slice(0, 5);
+                } else if (clickedTime >= min && clickedTime <= max) {
+                    buttonClass = "bg-green-500 opacity-50";
+                    isDisabled = false;
+                    buttonText = "17:00";
+                }
+            } else {
+                if (server < beforeOrAfter) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "17:00";
+                } else if (server >= beforeOrAfter && server <= min) {
+                    buttonClass = "bg-red-500";
+                    isDisabled = false;
+                    buttonText = "17:00";
+                } else if (server >= min && server <= max) {
+                    buttonClass = "bg-green-500";
+                    isDisabled = false;
+                    buttonText = "17:00";
+                } else if (server > max) {
+                    buttonClass = "bg-gray-500";
+                    isDisabled = true;
+                    buttonText = "--:--";
+                }
+            }
             break;
     }
 
-    if (
-        isClicked &&
-        isDisabled &&
-        (valueClicked.hours > time.startTime.hours ||
-            (valueClicked.hours === time.startTime.hours &&
-                valueClicked.minutes >= time.startTime.minutes)) &&
-        (valueClicked.hours < time.endTime.hours ||
-            (valueClicked.hours === time.endTime.hours &&
-                valueClicked.minutes <= time.endTime.minutes))
-    ) {
-        return (
-            <button
-                className="bg-green-500 text-white font-bold py-2 px-4 rounded opacity-50"
-                disabled
-            >
-                {x}
-            </button>
-        );
-    } else if (
-        isClicked &&
-        isDisabled &&
-        (valueClicked.hours > time.late?.hours ||
-            (valueClicked.hours === time.late?.hours &&
-                valueClicked.minutes >= time.late?.minutes))
-    ) {
-        return (
-            <button
-                className="bg-red-500 text-white font-bold py-2 px-4 rounded opacity-50"
-                disabled
-            >
-                {valueClicked.hours + ":" + valueClicked.minutes}
-            </button>
-        );
-    } else if (
-        isClicked &&
-        isDisabled &&
-        (valueClicked.hours < time.before?.hours ||
-            (valueClicked.hours === time.before?.hours &&
-                valueClicked.minutes <= time.before?.minutes))
-    ) {
-        return (
-            <button
-                className="bg-orange-500 text-white font-bold py-2 px-4 rounded opacity-50"
-                disabled
-            >
-                {valueClicked.hours + ":" + valueClicked.minutes}
-            </button>
-        );
-    } else if (
-        !isClicked &&
-        isDisabled &&
-        (props.time.split(":")[0] > time.nextTimer?.hours ||
-            (props.time.split(":")[0] === time.nextTimer?.hours &&
-                props.time.split(":")[1] >= time.nextTimer?.minutes))
-    ) {
-        return (
-            <button
-                className="bg-gray-700 text-white font-bold py-2 px-4 rounded opacity-50"
-                disabled
-            >
-                {"--" + ":" + "--"}
-            </button>
-        );
-    } else if (
-        !isClicked &&
-        isDisabled &&
-        (props.time.split(":")[0] < time.startTime.hours ||
-            (props.time.split(":")[0] === time.startTime.hours &&
-                props.time.split(":")[1] <= time.startTime.minutes))
-    ) {
-        return (
-            <button
-                className="bg-gray-500 text-white font-bold py-2 px-4 rounded opacity-50"
-                disabled
-            >
-                {x}
-            </button>
-        );
-    } else if (
-        !isClicked &&
-        (props.time.split(":")[0] >= time.late?.hours ||
-            (props.time.split(":")[0] === time.late?.hours &&
-                props.time.split(":")[1] >= time.late?.minutes))
-    ) {
-        return (
-            <button
-                className="bg-red-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleClick}
-            >
-                {props.time.split(":")[0] + ":" + props.time.split(":")[1]}
-            </button>
-        );
-    } else if (
-        !isClicked &&
-        (props.time.split(":")[0] >= time.startTime.hours ||
-            (props.time.split(":")[0] === time.startTime.hours &&
-                props.time.split(":")[1] >= time.startTime.minutes)) &&
-        (props.time.split(":")[0] <= time.endTime.hours ||
-            (props.time.split(":")[0] === time.endTime.hours &&
-                props.time.split(":")[1] <= time.endTime.minutes))
-    ) {
-        return (
-            <button
-                className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleClick}
-            >
-                {time.endTime.hours + ":" + time.endTime.minutes}
-            </button>
-        );
-    } else {
-        return (
-            <button
-                className="bg-orange-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleClick}
-            >
-                {props.time.split(":")[0] + ":" + props.time.split(":")[1]}
-            </button>
-        );
-    }
+    return (
+        <button
+            className={`w-16 h-8 rounded-lg ${buttonClass} text-white font-bold text-lg`}
+            disabled={isDisabled}
+            onClick={handleClick}
+        >
+            <span>{buttonText}</span>
+        </button>
+    );
 }

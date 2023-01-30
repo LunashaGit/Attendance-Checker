@@ -28,12 +28,6 @@ export default function Dashboard(props: Props) {
     axios.get("/api/time").then((res) => {
         setTime(res.data);
     });
-
-    setInterval(() => {
-        axios.get("/api/time").then((res) => {
-            setTime(res.data);
-        });
-    }, 60000);
     return (
         <AuthenticatedLayout auth={props.auth} errors={props.errors}>
             <div className="w-8/12 mx-auto my-4 flex flex-col gap-16">

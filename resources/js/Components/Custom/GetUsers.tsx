@@ -42,7 +42,6 @@ export default function GetUsers(props: Props) {
     const [clickedUser, setClickedUser] = useState<boolean>(false);
     const [clickedInformations, setClickedInformations] =
         useState<boolean>(false);
-    console.log(valueUser);
     useEffect(() => {
         setTimeout(() => {
             axios
@@ -75,6 +74,23 @@ export default function GetUsers(props: Props) {
         });
     }
 
+    function handleSubmitPut(e) {
+        e.preventDefault();
+        const data = {
+            user_id: valueUser.id,
+            phone: e.target.phone.value,
+            birthday: e.target.birthday.value,
+            email_alias: e.target.email_alias.value,
+            github: e.target.github.value,
+            github_link: e.target.github_link.value,
+            linkedin: e.target.linkedin.value,
+            section: e.target.section.value,
+        };
+        console.log(data);
+        axios.put("/api/infos", data).then((res) => {
+            console.log(res);
+        });
+    }
     console.log(valueUser);
     console.log(clickedUser);
     return (
