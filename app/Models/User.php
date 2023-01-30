@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->belongsTo(Section::class);
     }
 
+    public function personalInformation()
+    {
+        return $this->belongsTo(PersonalInformation::class);
+    }
+
     public function techTalks()
     {
         return $this->hasMany(TechTalk::class);
@@ -79,5 +84,7 @@ class User extends Authenticatable
     {
         return $this->is_admin;
     }
+
+
 
 }

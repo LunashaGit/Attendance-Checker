@@ -35,4 +35,7 @@ Route::delete('/techtalks', [TechTalkController::class, 'delete']);
 Route::get('/techtalks', [TechTalkController::class, 'getByMonthAndCampus']);
 
 Route::get('/users', [InfosController::class, 'index']);
+Route::post('/infos', [InfosController::class, 'create']);
+Route::post('/infos', [InfosController::class, 'update']);
+
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);
