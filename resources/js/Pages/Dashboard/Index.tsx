@@ -9,14 +9,14 @@ import axios from "axios";
 import OverallAttendance from "@/Components/Custom/OverallAttendance";
 import Pedagogy from "@/Components/Custom/Pedagogy";
 import TechTalks from "@/Components/Custom/TechTalks";
+import SwitchButtonCampus from "@/Components/Custom/SwitchButtonCampus";
 type Props = {
     auth: Auth;
     errors: Object;
-    techTalks: Object;
+    techTalks: Object[];
 };
 
 export default function Dashboard(props: Props) {
-    console.log(props);
     const [time, setTime] = useState<string>("");
     const [column] = useState<Array<string>>([
         "beginning",
@@ -24,7 +24,10 @@ export default function Dashboard(props: Props) {
         "return",
         "end",
     ]);
-
+    const [valueClicked, setValueClicked] = useState<string>("");
+    const callBack = (element) => {
+        setValueClicked(element);
+    };
     axios.get("/api/time").then((res) => {
         setTime(res.data);
     });
@@ -41,17 +44,21 @@ export default function Dashboard(props: Props) {
                         <Section auth={props.auth} />
                     </div>
                 </div>
-                <div className="flex flex-row gap-8 justify-center items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
-                    {column.map((col, index) => {
-                        return (
-                            <ClockButton
-                                key={index}
-                                column={col}
-                                auth={props.auth}
-                                time={time}
-                            />
-                        );
-                    })}
+                <div className="flex flex-row items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
+                    <SwitchButtonCampus auth={props.auth} callBack={callBack} />
+                    <div className="flex flex-row gap-8">
+                        {column.map((col, index) => {
+                            return (
+                                <ClockButton
+                                    key={index}
+                                    column={col}
+                                    auth={props.auth}
+                                    time={time}
+                                    valueClicked={valueClicked}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
                 <div className="flex flex-row justify-center items-center gap-44">
                     <OverallAttendance auth={props.auth} />

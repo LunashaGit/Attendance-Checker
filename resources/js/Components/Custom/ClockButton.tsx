@@ -5,12 +5,17 @@ type ClockButtonProps = {
     column: string;
     auth: any;
     time: string;
+    valueClicked: string;
 };
 
-export default function ClockButton(props) {
+export default function ClockButton(props: ClockButtonProps) {
     console.log(props);
     const [isClicked, setIsClicked] = useState<boolean>(false);
     const [valueClicked, setValueClicked] = useState<string>("");
+    const [location, setLocation] = useState<string>("");
+    useEffect(() => {
+        setLocation(props.valueClicked);
+    }, [props.valueClicked]);
     useEffect(() => {
         axios
             .get("/api/attendance/", {
@@ -30,10 +35,13 @@ export default function ClockButton(props) {
     }, []);
 
     const handleClick = () => {
+        let x = location;
+        console.log(location);
         axios
             .put("/api/attendance/", {
                 user_id: props.auth.user.id,
                 column: props.column,
+                location: x,
                 value:
                     new Date().getHours() +
                     ":" +
@@ -60,11 +68,12 @@ export default function ClockButton(props) {
     let max = new Date();
     let beforeOrAfter = new Date();
     let clickedTime = new Date();
-    clickedTime.setHours(
-        Number(valueClicked.split(":")[0]),
-        Number(valueClicked.split(":")[1])
-    );
-    console.log(server);
+    if (valueClicked !== null) {
+        clickedTime.setHours(
+            Number(valueClicked.split(":")[0]),
+            Number(valueClicked.split(":")[1])
+        );
+    }
     switch (props.column) {
         case "beginning":
             min.setHours(8, 45, 0);
@@ -78,7 +87,10 @@ export default function ClockButton(props) {
                 } else if (clickedTime > beforeOrAfter && clickedTime <= max) {
                     buttonClass = "bg-red-500 opacity-50";
                     isDisabled = true;
-                    buttonText = valueClicked.slice(0, 5);
+                    buttonText = `${clickedTime.getHours()}:${clickedTime
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, "0")}`;
                 }
             } else {
                 if (server < min) {
@@ -159,7 +171,10 @@ export default function ClockButton(props) {
                 if (clickedTime >= beforeOrAfter && clickedTime <= min) {
                     buttonClass = "bg-red-500 opacity-50";
                     isDisabled = true;
-                    buttonText = valueClicked.slice(0, 5);
+                    buttonText = `${clickedTime.getHours()}:${clickedTime
+                        .getMinutes()
+                        .toString()
+                        .padStart(2, "0")}`;
                 } else if (clickedTime >= min && clickedTime <= max) {
                     buttonClass = "bg-green-500 opacity-50";
                     isDisabled = false;

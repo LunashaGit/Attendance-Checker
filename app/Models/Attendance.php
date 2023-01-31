@@ -16,5 +16,6 @@ class Attendance extends Model
         'lunch',
         'return',
         'end',
+        'location',
     ];
 }

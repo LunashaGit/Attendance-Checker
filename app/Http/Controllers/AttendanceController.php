@@ -41,11 +41,13 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::where('user_id', $request->user_id)->where('date', now()->format('Y-m-d'))->first();
         $attendance->update([
+            'location' => $request->location,
             $request->column => $request->value,
         ]);
         return response()->json([
             'message' => 'success',
             $request->column => $request->value,
+            'location' => $request->location,
         ]);
     }
 
