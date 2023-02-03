@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Models\Section;
 class AttendanceController extends Controller
 {   
     public function index()
@@ -55,5 +56,24 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::where('user_id', $request->user_id)->where('date', now()->format('Y-m-d'))->first();
         return response()->json($attendance);
+    }
+
+    public function getByDate(Request $request)
+    {
+        $attendances = Attendance::with('user.section')
+        ->whereHas('user.section', function ($query) use ($request) {
+            $query->where('id', $request->section_id);
+        })
+        ->where('date', $request->date)
+        ->get();
+
+        return response()->json($attendances);
+    }
+
+    public function clockOut()
+    {
+        return Inertia::render('ClockOut/Index',[
+            'sections' =>  Section::all(),
+        ]);
     }
 }

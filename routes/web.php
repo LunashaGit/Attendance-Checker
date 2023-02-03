@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,9 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/whoiswho', [InfosController::class, 'index'])->name('whoiswho.index');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'is_coach'])->group(function () {
     Route::get('/testing', [TestingController::class, 'index'])->name('admin');
     Route::get('/section', [SectionController::class, 'index'])->name('admin');
+    Route::get('/clockout', [AttendanceController::class, 'clockout'])->name('admin');
 });
 
 require __DIR__.'/auth.php';

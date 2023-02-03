@@ -44,22 +44,28 @@ export default function Dashboard(props: Props) {
                         <Section auth={props.auth} />
                     </div>
                 </div>
-                <div className="flex flex-row items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
-                    <SwitchButtonCampus auth={props.auth} callBack={callBack} />
-                    <div className="flex flex-row gap-8">
-                        {column.map((col, index) => {
-                            return (
-                                <ClockButton
-                                    key={index}
-                                    column={col}
-                                    auth={props.auth}
-                                    time={time}
-                                    valueClicked={valueClicked}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
+                {props.auth.user.is_admin != true ||
+                    (props.auth.user.is_coach != true && (
+                        <div className="flex flex-row items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
+                            <SwitchButtonCampus
+                                auth={props.auth}
+                                callBack={callBack}
+                            />
+                            <div className="flex flex-row gap-8">
+                                {column.map((col, index) => {
+                                    return (
+                                        <ClockButton
+                                            key={index}
+                                            column={col}
+                                            auth={props.auth}
+                                            time={time}
+                                            valueClicked={valueClicked}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
                 <div className="flex flex-row justify-center items-center gap-44">
                     <OverallAttendance auth={props.auth} />
                     <Pedagogy auth={props.auth} techTalks={props.techTalks} />

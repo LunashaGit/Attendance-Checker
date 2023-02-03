@@ -18,4 +18,11 @@ class Attendance extends Model
         'end',
         'location',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    
 }

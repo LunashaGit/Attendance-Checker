@@ -13,7 +13,8 @@ export default function Pedagogy(props: Props) {
             <div className="flex flex-col gap-2">
                 <p>Your events</p>
                 <p className="text-sm">
-                    You have given 1 <b>tech-talks</b> so far:
+                    You have given {props.techTalks.length} <b>tech-talks</b> so
+                    far:
                 </p>
                 <p className="text-sm p-4">
                     {props.techTalks.map((techTalk: any, index: number) => {
