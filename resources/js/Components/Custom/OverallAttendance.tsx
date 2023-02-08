@@ -5,6 +5,14 @@ type Props = {
     attendancesBefore: Object[];
 };
 
+type TypeAttendance = {
+    date: string;
+    beginning: string;
+    end: string;
+    return: string;
+    lunch: string;
+};
+
 export default function OverallAttendance(props: Props) {
     const [attendances, setAttendances] = useState<Object[]>(
         props.attendancesBefore
@@ -33,7 +41,7 @@ export default function OverallAttendance(props: Props) {
                 OAR must stay above 80% or contract can be terminated.
             </p>
             {attendances &&
-                attendances.map((attendance: any, index: number) => {
+                attendances.map((attendance: TypeAttendance, index: number) => {
                     return (
                         <div
                             key={index}

@@ -4,7 +4,12 @@ type Props = {
     auth: Auth;
     techTalks: Object[];
 };
-
+type TypeTechTalk = {
+    title: string;
+    commentary: string;
+    date: string;
+    time: string;
+};
 export default function Pedagogy(props: Props) {
     return (
         <div className="flex flex-col gap-4 text-xl text-left text-white font-semibold h-64 w-2/6">
@@ -16,15 +21,17 @@ export default function Pedagogy(props: Props) {
                     far:
                 </p>
                 <p className="text-sm p-4">
-                    {props.techTalks.map((techTalk: any, index: number) => {
-                        return (
-                            <div key={index}>
-                                <p>
-                                    {index + 1}. <b>{techTalk.title}</b>
-                                </p>
-                            </div>
-                        );
-                    })}
+                    {props.techTalks.map(
+                        (techTalk: TypeTechTalk, index: number) => {
+                            return (
+                                <div key={index}>
+                                    <p>
+                                        {index + 1}. <b>{techTalk.title}</b>
+                                    </p>
+                                </div>
+                            );
+                        }
+                    )}
                 </p>
             </div>
         </div>
