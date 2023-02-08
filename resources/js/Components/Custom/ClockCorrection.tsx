@@ -131,7 +131,7 @@ export default function ClockCorrection(props: Props) {
                                             Remote
                                         </button>
                                     </>
-                                ) : (
+                                ) : item.location === "Remote" ? (
                                     <>
                                         <button
                                             value={"Campus"}
@@ -149,6 +149,35 @@ export default function ClockCorrection(props: Props) {
                                         <button
                                             disabled
                                             className="text-white font-semibold rounded-lg px-4 py-2 dark:bg-[#39435a]"
+                                        >
+                                            Remote
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            value={"Campus"}
+                                            onClick={(e) =>
+                                                handleChange(
+                                                    e,
+                                                    item.id,
+                                                    "location"
+                                                )
+                                            }
+                                            className="text-white font-semibold rounded-lg px-4 py-2 bg-red-500"
+                                        >
+                                            Campus
+                                        </button>
+                                        <button
+                                            className="text-white font-semibold rounded-lg px-4 py-2 bg-red-500"
+                                            value={"Remote"}
+                                            onClick={(e) =>
+                                                handleChange(
+                                                    e,
+                                                    item.id,
+                                                    "location"
+                                                )
+                                            }
                                         >
                                             Remote
                                         </button>
