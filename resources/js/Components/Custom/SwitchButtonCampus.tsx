@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function ClockButton(props) {
+export default function SwitchButtonCampus(props) {
     const [elements] = useState<Array<string>>(["Campus", "Remote"]);
     const [bgCampus, setBgCampus] = useState<string>("");
     const [bgRemote, setBgRemote] = useState<string>("");

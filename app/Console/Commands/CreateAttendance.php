@@ -34,6 +34,7 @@ class CreateAttendance extends Command
         foreach ($users as $user) {
             $attendance->insert([
                 'user_id' => $user->id,
+                'location' => null,
                 'date' => now()->format('Y-m-d'),
                 'beginning' => null,
                 'lunch' => null,

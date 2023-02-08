@@ -21,6 +21,7 @@ type Data = {
 
 export default function ClockCorrection(props: Props) {
     const [data, setData] = useState<Array<Data>>([]);
+    const [location] = useState<Array<string>>(["Campus", "Remote"]);
     useEffect(() => {
         axios
             .get("/api/attendance/check", {
@@ -52,18 +53,18 @@ export default function ClockCorrection(props: Props) {
                 );
             });
     }
-    console.log(data);
     return (
         <div className="flex flex-col gap-2">
             {data.map((item, index) => {
                 return (
-                    <div key={index}>
-                        <div className="flex flex-row gap-2">
-                            <p>{item.user.id}</p>
-                            <p>{item.user.first_name}</p>
-                            <p>{item.user.last_name}</p>
-                        </div>
-                        <form>
+                    <div
+                        key={index}
+                        className="flex flex-row gap-2 items-center"
+                    >
+                        <p className="truncate w-32 text-center">
+                            {item.user.first_name + " " + item.user.last_name}
+                        </p>
+                        <form className="flex flex-row gap-4 justify-center items-center">
                             <input
                                 type="time"
                                 name="beginning"
@@ -101,6 +102,31 @@ export default function ClockCorrection(props: Props) {
                                     handleChange(e, item.id, "end")
                                 }
                             />
+                            {item.location === "Campus" ? (
+                                <div className="flex flex-row gap-2">
+                                    <button disabled>Campus</button>
+                                    <button
+                                        value={"Remote"}
+                                        onClick={(e) =>
+                                            handleChange(e, item.id, "location")
+                                        }
+                                    >
+                                        Remote
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="flex flex-row gap-2">
+                                    <button
+                                        value={"Campus"}
+                                        onClick={(e) =>
+                                            handleChange(e, item.id, "location")
+                                        }
+                                    >
+                                        Campus
+                                    </button>
+                                    <button disabled>Remote</button>
+                                </div>
+                            )}
                         </form>
                     </div>
                 );
