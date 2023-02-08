@@ -78,7 +78,7 @@ export default function ClockButton(props: ClockButtonProps) {
         case "beginning":
             min.setHours(8, 45, 0);
             max.setHours(12, 29, 59);
-            beforeOrAfter.setHours(9, 0, 0);
+            beforeOrAfter.setHours(9, 1, 0);
             if (isClicked) {
                 if (clickedTime >= min && clickedTime <= beforeOrAfter) {
                     buttonClass = "bg-green-500 opacity-50";

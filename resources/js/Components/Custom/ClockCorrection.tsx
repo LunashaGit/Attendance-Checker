@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import GithubPicture from "@/Components/Custom/GithubPicture";
 type Props = {
     date: string;
     section: string;
@@ -16,6 +17,7 @@ type Data = {
         id: string;
         first_name: string;
         last_name: string;
+        github_id: number;
     };
 };
 
@@ -54,23 +56,27 @@ export default function ClockCorrection(props: Props) {
             });
     }
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 text-white items-center justify-center dark:bg-gray-800 py-4 rounded-lg my-4">
             {data.map((item, index) => {
                 return (
                     <div
                         key={index}
                         className="flex flex-row gap-2 items-center"
                     >
-                        <p className="truncate w-32 text-center">
+                        <GithubPicture
+                            className="h-16 w-16 rounded-lg"
+                            user={item.user.github_id}
+                        />
+                        <p className="truncate w-32 text-left">
                             {item.user.first_name + " " + item.user.last_name}
                         </p>
-                        <form className="flex flex-row gap-4 justify-center items-center">
+                        <form className="flex flex-row gap-4 justify-center items-center text-black">
                             <input
                                 type="time"
                                 name="beginning"
                                 id="beginning"
                                 defaultValue={item.beginning}
-                                className="text-center"
+                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "beginning")
                                 }
@@ -79,7 +85,7 @@ export default function ClockCorrection(props: Props) {
                                 type="time"
                                 name="lunch"
                                 defaultValue={item.lunch}
-                                className="text-center"
+                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "lunch")
                                 }
@@ -88,7 +94,7 @@ export default function ClockCorrection(props: Props) {
                                 type="time"
                                 name="return"
                                 defaultValue={item.return}
-                                className="text-center"
+                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "return")
                                 }
@@ -97,36 +103,58 @@ export default function ClockCorrection(props: Props) {
                                 type="time"
                                 name="end"
                                 defaultValue={item.end}
-                                className="text-center"
+                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "end")
                                 }
                             />
-                            {item.location === "Campus" ? (
-                                <div className="flex flex-row gap-2">
-                                    <button disabled>Campus</button>
-                                    <button
-                                        value={"Remote"}
-                                        onClick={(e) =>
-                                            handleChange(e, item.id, "location")
-                                        }
-                                    >
-                                        Remote
-                                    </button>
-                                </div>
-                            ) : (
-                                <div className="flex flex-row gap-2">
-                                    <button
-                                        value={"Campus"}
-                                        onClick={(e) =>
-                                            handleChange(e, item.id, "location")
-                                        }
-                                    >
-                                        Campus
-                                    </button>
-                                    <button disabled>Remote</button>
-                                </div>
-                            )}
+                            <div className="flex flex-row gap-2 text-white">
+                                {item.location === "Campus" ? (
+                                    <>
+                                        <button
+                                            disabled
+                                            className="text-white font-semibold rounded-lg px-4 py-2 dark:bg-[#39435a]"
+                                        >
+                                            Campus
+                                        </button>
+                                        <button
+                                            className="text-white font-semibold rounded-lg px-4 py-2 bg-gray-500"
+                                            value={"Remote"}
+                                            onClick={(e) =>
+                                                handleChange(
+                                                    e,
+                                                    item.id,
+                                                    "location"
+                                                )
+                                            }
+                                        >
+                                            Remote
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            value={"Campus"}
+                                            onClick={(e) =>
+                                                handleChange(
+                                                    e,
+                                                    item.id,
+                                                    "location"
+                                                )
+                                            }
+                                            className="text-white font-semibold rounded-lg px-4 py-2 bg-gray-500"
+                                        >
+                                            Campus
+                                        </button>
+                                        <button
+                                            disabled
+                                            className="text-white font-semibold rounded-lg px-4 py-2 dark:bg-[#39435a]"
+                                        >
+                                            Remote
+                                        </button>
+                                    </>
+                                )}
+                            </div>
                         </form>
                     </div>
                 );

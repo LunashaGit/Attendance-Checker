@@ -44,8 +44,8 @@ export default function Dashboard(props: Props) {
                         <Section auth={props.auth} />
                     </div>
                 </div>
-                {props.auth.user.is_admin != true ||
-                    (props.auth.user.is_coach != true && (
+                {props.auth.user.is_admin != true &&
+                    props.auth.user.is_coach != true && (
                         <div className="flex flex-row items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
                             <SwitchButtonCampus
                                 auth={props.auth}
@@ -65,7 +65,7 @@ export default function Dashboard(props: Props) {
                                 })}
                             </div>
                         </div>
-                    ))}
+                    )}
                 <div className="flex flex-row justify-center items-center gap-44">
                     <OverallAttendance auth={props.auth} />
                     <Pedagogy auth={props.auth} techTalks={props.techTalks} />
