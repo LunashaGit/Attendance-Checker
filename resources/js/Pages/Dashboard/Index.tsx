@@ -15,7 +15,11 @@ type Props = {
     auth: Auth;
     errors: Object;
     techTalks: Object[];
-    techTalksToday: Object[];
+    techTalksToday: {
+        time: string;
+        title: string;
+        length: number;
+    }[];
     attendancesBefore: Object[];
 };
 

@@ -5,6 +5,7 @@ import { Link } from "@inertiajs/react";
 type dayTalksType = {
     time: string;
     title: string;
+    length: number;
 }[];
 
 type Props = {
