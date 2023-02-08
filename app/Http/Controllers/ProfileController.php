@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\TechTalk;
 use App\Models\User;
+use App\Models\Attendance;
 class ProfileController extends Controller
 {
     public function __construct()
@@ -21,9 +22,28 @@ class ProfileController extends Controller
 
     public function index(Request $request): Response
     {
+        $attendancesBefore = Attendance::whereDate('date', '<', now()->format('Y-m-d'))
+        ->where(function ($query) {
+            $query->whereNull('beginning')
+            ->orWhereNull('lunch')
+            ->orWhereNull('return')
+            ->orWhereNull('end');
+        })
+        ->where('user_id', Auth::user()->id)
+        ->get();
+
+        $techTalksToday = TechTalk::with('user.section')
+        ->whereHas('user.section', function ($query) use ($request) {
+            $query->where('id', Auth::user()->section_id);
+        })
+        ->whereDate('date', date('Y-m-d'))
+        ->get();
+        
         return Inertia::render('Dashboard/Index', [
             'user' => $request->user()->load('section'),
             'techTalks' => TechTalk::where('user_id', $request->user()->id)->get(),
+            'techTalksToday' => $techTalksToday,
+            'attendancesBefore' => $attendancesBefore,
         ]);
     }
     /**

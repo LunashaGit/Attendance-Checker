@@ -15,6 +15,8 @@ type Props = {
     auth: Auth;
     errors: Object;
     techTalks: Object[];
+    techTalksToday: Object[];
+    attendancesBefore: Object[];
 };
 
 export default function Dashboard(props: Props) {
@@ -36,7 +38,7 @@ export default function Dashboard(props: Props) {
         <>
             <Head title="Dashboard" />
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
-                <div className="w-8/12 mx-auto my-4 flex flex-col gap-16">
+                <div className="w-8/12 mx-auto py-4 flex flex-col gap-16">
                     <div className="flex row gap-4 items-center justify-left">
                         <GithubPicture
                             className="h-16 w-16 rounded-lg"
@@ -69,13 +71,19 @@ export default function Dashboard(props: Props) {
                                 </div>
                             </div>
                         )}
-                    <div className="flex flex-row justify-center items-center gap-44">
-                        <OverallAttendance auth={props.auth} />
+                    <div className="flex flex-row justify-between items-center gap-12">
+                        <OverallAttendance
+                            auth={props.auth}
+                            attendancesBefore={props.attendancesBefore}
+                        />
                         <Pedagogy
                             auth={props.auth}
                             techTalks={props.techTalks}
                         />
-                        <TechTalks auth={props.auth} />
+                        <TechTalks
+                            auth={props.auth}
+                            techTalksToday={props.techTalksToday}
+                        />
                     </div>
                 </div>
             </AuthenticatedLayout>

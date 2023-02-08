@@ -86,4 +86,19 @@ class AttendanceController extends Controller
             'sections' =>  Section::all(),
         ]);
     }
+
+    public function beforeTodayAndWithNullInside(Request $request)
+    {
+        $attendance = Attendance::whereDate('date', '<', now()->format('Y-m-d'))
+        ->where(function ($query) {
+            $query->whereNull('beginning')
+            ->orWhereNull('lunch')
+            ->orWhereNull('return')
+            ->orWhereNull('end');
+        })
+        ->where('user_id', $request->user_id)
+        ->get();
+        
+        return response()->json($attendance);
+    }
 }

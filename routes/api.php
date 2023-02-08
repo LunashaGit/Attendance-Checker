@@ -25,6 +25,7 @@ Route::get('/attendance', [AttendanceController::class, 'getByUser']);
 Route::put('/attendance', [AttendanceController::class, 'update']);
 Route::get('/attendance/check', [AttendanceController::class, 'getByDate']);
 Route::put('/attendance/check', [AttendanceController::class, 'updateByDate']);
+Route::get('/attendance/before', [AttendanceController::class, 'beforeTodayAndWithNullInside']);
 
 Route::get('/time', function () {
     $time = date('H:i:s', strtotime('+1 hours', strtotime(date('H:i:s'))));

@@ -7,7 +7,7 @@ type Props = {
 
 export default function Pedagogy(props: Props) {
     return (
-        <div className="flex flex-col gap-4 text-xl text-left text-white font-semibold h-64">
+        <div className="flex flex-col gap-4 text-xl text-left text-white font-semibold h-64 w-2/6">
             <h2 className="text-center">Pedagogy</h2>
             <div className="flex flex-col gap-2">
                 <p>Your events</p>
