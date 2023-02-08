@@ -69,6 +69,7 @@ export default function ClockCorrection(props: Props) {
                                 name="beginning"
                                 id="beginning"
                                 defaultValue={item.beginning}
+                                className="text-center"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "beginning")
                                 }
@@ -77,6 +78,7 @@ export default function ClockCorrection(props: Props) {
                                 type="time"
                                 name="lunch"
                                 defaultValue={item.lunch}
+                                className="text-center"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "lunch")
                                 }
@@ -85,6 +87,7 @@ export default function ClockCorrection(props: Props) {
                                 type="time"
                                 name="return"
                                 defaultValue={item.return}
+                                className="text-center"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "return")
                                 }
@@ -93,6 +96,7 @@ export default function ClockCorrection(props: Props) {
                                 type="time"
                                 name="end"
                                 defaultValue={item.end}
+                                className="text-center"
                                 onChange={(e) =>
                                     handleChange(e, item.id, "end")
                                 }
