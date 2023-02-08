@@ -91,8 +91,6 @@ export default function GetUsers(props: Props) {
             console.log(res);
         });
     }
-    console.log(valueUser);
-    console.log(clickedUser);
     return (
         <div className="max-w-7xl mx-auto my-4">
             <div className="flex flex-row justify-between items-center">

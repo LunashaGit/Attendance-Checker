@@ -16,7 +16,6 @@ type Props = {
 export default function Authenticated({ auth, children }: Props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
-    console.log(auth);
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">

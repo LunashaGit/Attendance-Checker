@@ -126,4 +126,18 @@ class TechTalkController extends Controller
             ->get()
         ]);
     }
+    
+    public function getTodayAndSection(Request $request)
+    {
+        $techTalks = TechTalk::with('user.section')
+        ->whereHas('user.section', function ($query) use ($request) {
+            $query->where('id', $request->section_id);
+        })
+        ->whereDate('date', date('Y-m-d'))
+        ->get();
+
+        return response()->json([
+            'techTalks' => $techTalks,
+        ]);
+    }
 }

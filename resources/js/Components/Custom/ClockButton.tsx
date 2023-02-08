@@ -9,7 +9,6 @@ type ClockButtonProps = {
 };
 
 export default function ClockButton(props: ClockButtonProps) {
-    console.log(props);
     const [isClicked, setIsClicked] = useState<boolean>(false);
     const [valueClicked, setValueClicked] = useState<string>("");
     const [location, setLocation] = useState<string>("");
@@ -36,7 +35,6 @@ export default function ClockButton(props: ClockButtonProps) {
 
     const handleClick = () => {
         let x = location;
-        console.log(location);
         axios
             .put("/api/attendance/", {
                 user_id: props.auth.user.id,
@@ -51,7 +49,6 @@ export default function ClockButton(props: ClockButtonProps) {
             })
             .then((res) => {
                 setIsClicked(true);
-                console.log(res);
                 setValueClicked(res.data[props.column]);
             });
     };

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Auth } from "@/Types/Auth";
 import GetUsers from "@/Components/Custom/GetUsers";
-import axios from "axios";
-
+import { Head } from "@inertiajs/react";
 type Props = {
     sections: {
         id: number;
@@ -15,14 +14,16 @@ type Props = {
 };
 
 export default function WhosWho(props: Props) {
-    console.log(props);
     return (
-        <AuthenticatedLayout auth={props.auth} errors={props.errors}>
-            <GetUsers
-                auth={props.auth}
-                users={props.users}
-                sections={props.sections}
-            />
-        </AuthenticatedLayout>
+        <>
+            <Head title="Who's Who" />
+            <AuthenticatedLayout auth={props.auth} errors={props.errors}>
+                <GetUsers
+                    auth={props.auth}
+                    users={props.users}
+                    sections={props.sections}
+                />
+            </AuthenticatedLayout>
+        </>
     );
 }

@@ -6,7 +6,6 @@ type Props = {
 };
 
 export default function Pedagogy(props: Props) {
-    console.log(props);
     return (
         <div className="flex flex-col gap-4 text-xl text-left text-white font-semibold h-64">
             <h2 className="text-center">Pedagogy</h2>

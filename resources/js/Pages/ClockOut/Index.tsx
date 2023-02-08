@@ -25,9 +25,7 @@ export default function ClockOut(props: Props) {
     };
     return (
         <>
-            <Head>
-                <title>Change</title>
-            </Head>
+            <Head title="Clock Correction" />
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
                 <div className="w-8/12 mx-auto my-4 flex flex-col">
                     <div className="flex flex-row justify-between">

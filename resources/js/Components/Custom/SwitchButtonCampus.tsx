@@ -15,7 +15,7 @@ export default function SwitchButtonCampus(props) {
             : (setBgCampus("bg-gray-500"), setBgRemote("dark:bg-[#39435a]"));
     }, [value]);
     return (
-        <div className="flex flex-row gap-2 mx-8">
+        <div className="flex flex-row gap-2 mx-8 w-2/6">
             {elements.map((element, index) => {
                 return (
                     <button
