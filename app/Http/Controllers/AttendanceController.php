@@ -70,6 +70,16 @@ class AttendanceController extends Controller
         return response()->json($attendances);
     }
 
+    public function updateByDate(Request $request){
+        $attendance = Attendance::where('id', $request->id)->first();
+
+        $attendance->update([
+            $request->column => $request->value,
+        ]);
+
+        return response()->json($attendance);
+    }
+
     public function clockOut()
     {
         return Inertia::render('ClockOut/Index',[
