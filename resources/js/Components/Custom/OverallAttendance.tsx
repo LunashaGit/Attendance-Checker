@@ -17,7 +17,6 @@ export default function OverallAttendance(props: Props) {
     const [attendances, setAttendances] = useState<Object[]>(
         props.attendancesBefore
     );
-    console.log(attendances);
     return (
         <div className="flex flex-col gap-4 w-2/6">
             <h2 className="text-center text-white font-semibold">
