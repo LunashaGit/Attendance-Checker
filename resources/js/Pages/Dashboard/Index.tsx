@@ -42,7 +42,7 @@ export default function Dashboard(props: Props) {
         <>
             <Head title="Dashboard" />
             <AuthenticatedLayout auth={props.auth} errors={props.errors}>
-                <div className="w-8/12 mx-auto py-4 flex flex-col gap-16">
+                <div className="w-8/12 mx-auto py-4 flex flex-col gap-8">
                     <div className="flex row gap-4 items-center justify-left">
                         <GithubPicture
                             className="h-16 w-16 rounded-lg"
