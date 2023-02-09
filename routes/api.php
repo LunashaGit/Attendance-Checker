@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\InfosController;
 use App\Http\Controllers\TechTalkController;
-
+use App\Http\Controllers\AbsenceController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,4 +42,5 @@ Route::get('/users', [InfosController::class, 'index']);
 Route::post('/infos', [InfosController::class, 'create']);
 Route::post('/infos', [InfosController::class, 'update']);
 
+Route::post('/absences', [AbsenceController::class, 'create']);
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);

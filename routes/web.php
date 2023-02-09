@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'is_coach'])->group(function () {
     Route::get('/testing', [TestingController::class, 'index'])->name('admin');
+    Route::get('/testing/absences', [AbsenceController::class, 'index'])->name('admin');
     Route::get('/section', [SectionController::class, 'index'])->name('admin');
     Route::get('/clockout', [AttendanceController::class, 'clockout'])->name('admin');
 });
