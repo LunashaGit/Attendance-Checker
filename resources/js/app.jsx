@@ -10,7 +10,12 @@ const appName = "MyBeCode";
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
-        import(`./Pages/${name}`).then((module) => module.default),
+        resolvePageComponent(
+            `./Pages/${name}.tsx`,
+            import.meta.globEager("./Pages/**/*.tsx")
+        ),
+    // import(`./Pages/${name}`).then((module) => module.default),
+
     setup({ el, App, props }) {
         const root = createRoot(el);
 

@@ -40,7 +40,11 @@ export default function TechTalks(props: Props) {
                         )}
                         <hr className="border-2 border-white w-5/6 rounded-md mx-auto" />
                         <Link href="/tech-talks/" className="text-white">
-                            <p className="text-sm text-center">Open</p>
+                            <p className="text-sm text-center">
+                                {props.auth.user.section != null
+                                    ? "Open"
+                                    : "Wait for your section to be assigned"}
+                            </p>
                         </Link>
                     </div>
                 </div>
