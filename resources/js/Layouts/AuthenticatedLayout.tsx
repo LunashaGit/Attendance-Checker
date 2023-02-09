@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
@@ -6,7 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import React from "react";
 import { Auth } from "@/Types/Auth";
-
+import MobileWarning from "@/Components/Custom/MobileWarning";
 type Props = {
     auth: Auth;
     children: JSX.Element;
@@ -14,10 +14,21 @@ type Props = {
 };
 
 export default function Authenticated({ auth, children }: Props) {
+    const [showMobileWarning, setShowMobileWarning] = useState(false);
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth < 950) {
+            setShowMobileWarning(true);
+        } else {
+            setShowMobileWarning(false);
+        }
+    });
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+            {showMobileWarning && <MobileWarning />}
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">

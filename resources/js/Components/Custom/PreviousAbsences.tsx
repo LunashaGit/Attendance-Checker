@@ -46,13 +46,17 @@ export default function PreviousAbsences(props: Props) {
             })
             .then((res) => {
                 setAbsences(res.data.absences);
-                setAbsencesToShow(
-                    res.data.absences[res.data.absences.length - 1]
-                );
+                if (res.data.absences.length > 0) {
+                    setAbsencesToShow(
+                        res.data.absences[res.data.absences.length - 1]
+                    );
+                }
             });
     }, [isClicked]);
-
-    let x = JSON.parse(absencesToShow.attendances);
+    let x;
+    if (absences.length != 0) {
+        x = JSON.parse(absencesToShow.attendances);
+    }
     return (
         <>
             <button
@@ -131,113 +135,116 @@ export default function PreviousAbsences(props: Props) {
                                             })
                                             .reverse()}
                                     </div>
-                                    <div className="flex flex-col w-8/12 text-white">
-                                        <h1 className="text-xl text-center">
-                                            Absence of{" "}
-                                            {absencesToShow.dateBegin} to{" "}
-                                            {absencesToShow.dateEnd}
-                                        </h1>
-                                        <p
-                                            className={
-                                                (absencesToShow.status ===
-                                                "Accepted"
-                                                    ? "bg-green-500"
-                                                    : "bg-blue-500") +
-                                                " px-2 rounded-lg mx-auto"
-                                            }
-                                        >
-                                            {absencesToShow.status}
-                                        </p>
-                                        <div className="flex flex-col gap-2">
-                                            <h3 className="font-semibold">
-                                                Attendances :{" "}
-                                            </h3>
-                                            {x &&
-                                                x.map((attendance) => {
-                                                    return (
-                                                        <div>
-                                                            <p>
-                                                                {
-                                                                    attendance.date
-                                                                }{" "}
-                                                            </p>
-                                                            <p>
-                                                                {" "}
-                                                                <b>
-                                                                    Hours
-                                                                </b> :{" "}
-                                                                {attendance.beginning !=
-                                                                null
-                                                                    ? attendance.beginning.slice(
-                                                                          0,
-                                                                          5
-                                                                      )
-                                                                    : "--:--"}{" "}
-                                                                |{" "}
-                                                                {attendance.lunch !=
-                                                                null
-                                                                    ? attendance.lunch.slice(
-                                                                          0,
-                                                                          5
-                                                                      )
-                                                                    : "--:--"}{" "}
-                                                                |{" "}
-                                                                {attendance.lunchEnd !=
-                                                                null
-                                                                    ? attendance.lunchEnd.slice(
-                                                                          0,
-                                                                          5
-                                                                      )
-                                                                    : "--:--"}{" "}
-                                                                |{" "}
-                                                                {attendance.end !=
-                                                                null
-                                                                    ? attendance.end.slice(
-                                                                          0,
-                                                                          5
-                                                                      )
-                                                                    : "--:--"}
-                                                            </p>
-                                                        </div>
-                                                    );
-                                                })}
-                                            <div className="flex flex-row gap-2">
+                                    {absences.length != 0 && (
+                                        <div className="flex flex-col w-8/12 text-white">
+                                            <h1 className="text-xl text-center">
+                                                Absence of{" "}
+                                                {absencesToShow.dateBegin} to{" "}
+                                                {absencesToShow.dateEnd}
+                                            </h1>
+                                            <p
+                                                className={
+                                                    (absencesToShow.status ===
+                                                    "Accepted"
+                                                        ? "bg-green-500"
+                                                        : "bg-blue-500") +
+                                                    " px-2 rounded-lg mx-auto"
+                                                }
+                                            >
+                                                {absencesToShow.status}
+                                            </p>
+                                            <div className="flex flex-col gap-2">
                                                 <h3 className="font-semibold">
-                                                    Circumstance :{" "}
+                                                    Attendances :{" "}
                                                 </h3>
-                                                <p>
-                                                    {
-                                                        absencesToShow.circumstance
-                                                    }
-                                                </p>
-                                            </div>
-                                            <div className="flex flex-row gap-2">
-                                                <h3 className="font-semibold">
-                                                    Evidence :{" "}
-                                                </h3>
-                                                <a
-                                                    className="text-green-500"
-                                                    href={
-                                                        "/images/" +
-                                                        absencesToShow.file
-                                                    }
-                                                >
-                                                    Link
-                                                </a>
-                                            </div>
-                                            <div className="flex flex-row gap-2">
-                                                <h3 className="font-semibold">
-                                                    Description :{" "}
-                                                </h3>
-                                                <p>
-                                                    {absencesToShow.description !=
-                                                    null
-                                                        ? absencesToShow.description
-                                                        : "No description"}
-                                                </p>
+                                                {x &&
+                                                    x.map((attendance) => {
+                                                        return (
+                                                            <div>
+                                                                <p>
+                                                                    {
+                                                                        attendance.date
+                                                                    }{" "}
+                                                                </p>
+                                                                <p>
+                                                                    {" "}
+                                                                    <b>
+                                                                        Hours
+                                                                    </b>{" "}
+                                                                    :{" "}
+                                                                    {attendance.beginning !=
+                                                                    null
+                                                                        ? attendance.beginning.slice(
+                                                                              0,
+                                                                              5
+                                                                          )
+                                                                        : "--:--"}{" "}
+                                                                    |{" "}
+                                                                    {attendance.lunch !=
+                                                                    null
+                                                                        ? attendance.lunch.slice(
+                                                                              0,
+                                                                              5
+                                                                          )
+                                                                        : "--:--"}{" "}
+                                                                    |{" "}
+                                                                    {attendance.lunchEnd !=
+                                                                    null
+                                                                        ? attendance.lunchEnd.slice(
+                                                                              0,
+                                                                              5
+                                                                          )
+                                                                        : "--:--"}{" "}
+                                                                    |{" "}
+                                                                    {attendance.end !=
+                                                                    null
+                                                                        ? attendance.end.slice(
+                                                                              0,
+                                                                              5
+                                                                          )
+                                                                        : "--:--"}
+                                                                </p>
+                                                            </div>
+                                                        );
+                                                    })}
+                                                <div className="flex flex-row gap-2">
+                                                    <h3 className="font-semibold">
+                                                        Circumstance :{" "}
+                                                    </h3>
+                                                    <p>
+                                                        {
+                                                            absencesToShow.circumstance
+                                                        }
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-row gap-2">
+                                                    <h3 className="font-semibold">
+                                                        Evidence :{" "}
+                                                    </h3>
+                                                    <a
+                                                        className="text-green-500"
+                                                        href={
+                                                            "/images/" +
+                                                            absencesToShow.file
+                                                        }
+                                                    >
+                                                        Link
+                                                    </a>
+                                                </div>
+                                                <div className="flex flex-row gap-2">
+                                                    <h3 className="font-semibold">
+                                                        Description :{" "}
+                                                    </h3>
+                                                    <p>
+                                                        {absencesToShow.description !=
+                                                        null
+                                                            ? absencesToShow.description
+                                                            : "No description"}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             </div>
                         </Transition.Child>
