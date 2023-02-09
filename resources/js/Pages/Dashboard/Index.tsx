@@ -75,7 +75,7 @@ export default function Dashboard(props: Props) {
                                 </div>
                             </div>
                         )}
-                    <div className="flex flex-row justify-between items-center gap-12">
+                    <div className="flex flex-row justify-between items-start gap-12">
                         <OverallAttendance
                             auth={props.auth}
                             attendancesBefore={props.attendancesBefore}
