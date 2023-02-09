@@ -98,6 +98,7 @@ class AttendanceController extends Controller
             ->orWhereNull('end')
             ->orWhere('end', '<', '17:00:00');
         })
+        ->whereNull('absence_id')
         ->where('user_id', $request->user_id)
         ->get();
         

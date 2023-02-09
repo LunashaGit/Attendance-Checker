@@ -31,6 +31,7 @@ class ProfileController extends Controller
             ->orWhereNull('end')
             ->orWhere('end', '<', '17:00:00');
         })
+        ->whereNull('absence_id')
         ->where('user_id', Auth::user()->id)
         ->get();
 

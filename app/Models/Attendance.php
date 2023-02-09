@@ -17,6 +17,7 @@ class Attendance extends Model
         'return',
         'end',
         'location',
+        'absence_id',
     ];
 
     public function user()

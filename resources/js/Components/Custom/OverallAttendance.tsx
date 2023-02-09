@@ -82,7 +82,7 @@ export default function OverallAttendance(props: Props) {
                 }
             )
             .then((response) => {
-                console.log(response);
+                setAttendances(response.data.attendances);
                 setOpen(false);
             })
             .catch((error) => {

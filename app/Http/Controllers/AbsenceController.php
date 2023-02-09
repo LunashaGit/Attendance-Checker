@@ -43,11 +43,19 @@ class AbsenceController extends Controller
             ->whereBetween('date', [$request->dateBegin, $request->dateEnd])
             ->get();
 
+        foreach ($attendances as $attendance) {
+            $attendance->update([
+                'absence_id' => $absence->id,
+            ]);
+        }
+
         $absence->attendances = $attendances;
 
         $absence->save();
 
-        return response()->json($absence);
+        return response()->json([
+            'attendances' => Attendance::where('user_id', $request->user_id)->where('absence_id', null)->where('date', '<', now()->format('Y-m-d'))->get(),
+        ]);
     }
     
 }
