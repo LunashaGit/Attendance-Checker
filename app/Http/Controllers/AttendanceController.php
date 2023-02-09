@@ -92,9 +92,11 @@ class AttendanceController extends Controller
         $attendance = Attendance::whereDate('date', '<', now()->format('Y-m-d'))
         ->where(function ($query) {
             $query->whereNull('beginning')
+            ->orWhere('beginning', '>', '09:01:00')
             ->orWhereNull('lunch')
             ->orWhereNull('return')
-            ->orWhereNull('end');
+            ->orWhereNull('end')
+            ->orWhere('end', '<', '17:00:00');
         })
         ->where('user_id', $request->user_id)
         ->get();
