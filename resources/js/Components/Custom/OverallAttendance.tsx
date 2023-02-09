@@ -2,6 +2,7 @@ import React, { useState, Fragment } from "react";
 import { Auth } from "@/Types/Auth";
 import { Transition, Dialog } from "@headlessui/react";
 import axios from "axios";
+import PreviousAbsences from "./PreviousAbsences";
 type Props = {
     auth: Auth;
     attendancesBefore: Object[];
@@ -114,6 +115,7 @@ export default function OverallAttendance(props: Props) {
             <p className="text-xs text-white">
                 OAR must stay above 80% or contract can be terminated.
             </p>
+            <PreviousAbsences auth={props.auth} />
             {attendances &&
                 attendances
                     .map((attendance: TypeAttendance, index: number) => {

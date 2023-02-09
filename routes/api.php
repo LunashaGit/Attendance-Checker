@@ -43,4 +43,5 @@ Route::post('/infos', [InfosController::class, 'create']);
 Route::post('/infos', [InfosController::class, 'update']);
 
 Route::post('/absences', [AbsenceController::class, 'create']);
+Route::get('/absences/previous', [AbsenceController::class, 'index']);
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);

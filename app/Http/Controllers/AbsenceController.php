@@ -9,8 +9,15 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 class AbsenceController extends Controller
 {   
-    public function index()
-    {
+    public function index(Request $request)
+    {   
+        if ($request->is('api/*')) {
+            $absences = Absence::where('user_id', $request->user_id)->get();
+            return response()->json([
+                'absences' => $absences,
+            ]);
+        }
+
         $absences = Absence::all();
         return Inertia::render('Testing/Index', ['absences' => $absences]);
     }
@@ -57,5 +64,4 @@ class AbsenceController extends Controller
             'attendances' => Attendance::where('user_id', $request->user_id)->where('absence_id', null)->where('date', '<', now()->format('Y-m-d'))->get(),
         ]);
     }
-    
 }
