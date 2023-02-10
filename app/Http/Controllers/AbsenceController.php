@@ -63,5 +63,94 @@ class AbsenceController extends Controller
         return response()->json([
             'attendances' => Attendance::where('user_id', $request->user_id)->where('absence_id', null)->where('date', '<', now()->format('Y-m-d'))->get(),
         ]);
+
+    }
+
+    public function absencesAdmin (Request $request)
+    {
+        if ($request->is('api/absences/not-justified')) {
+            $absences = Attendance::with("user")
+            ->whereHas('user', function ($query) use ($request) {
+                $query->where('section_id', $request->section_id);
+                $query->where('first_name', 'like', '%' . $request->search . '%')
+                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+            })
+            ->whereDate('date', '<', now()->format('Y-m-d'))
+            ->where(function ($query) {
+                $query->whereNull('beginning')
+                ->orWhere('beginning', '>', '09:01:00')
+                ->orWhereNull('lunch')
+                ->orWhereNull('return')
+                ->orWhereNull('end')
+                ->orWhere('end', '<', '17:00:00');
+            })
+            ->whereNull('absence_id')
+            ->get();
+
+            return response()->json([
+                'absences' => $absences,
+            ]);
+        }
+
+        if ($request->is('api/absences/all')) {
+            $absences = Absence::with("user")
+            ->whereHas('user', function ($query) use ($request) {
+                $query->where('section_id', $request->section_id);
+                $query->where('first_name', 'like', '%' . $request->search . '%')
+                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+            })
+            ->get();
+
+            return response()->json([
+                'absences' => $absences,
+            ]);
+        }
+
+        if ($request->is('api/absences/accepted')) {
+            $absences = Absence::with("user")
+            ->whereHas('user', function ($query) use ($request) {
+                $query->where('section_id', $request->section_id);
+                $query->where('first_name', 'like', '%' . $request->search . '%')
+                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+            })
+            ->where('status', 'Accepted')
+            ->get();
+
+            return response()->json([
+                'absences' => $absences,
+            ]);
+        }
+
+        if ($request->is('api/absences/pending')) {
+            $absences = Absence::with("user")
+            ->whereHas('user', function ($query) use ($request) {
+                $query->where('section_id', $request->section_id);
+                $query->where('first_name', 'like', '%' . $request->search . '%')
+                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+            })
+            ->where('status', 'Pending')
+            ->get();
+
+            return response()->json([
+                'absences' => $absences,
+            ]);
+        }
+
+        if ($request->is('api/absences/refused')) {
+            $absences = Absence::with("user")
+            ->whereHas('user', function ($query) use ($request) {
+                $query->where('section_id', $request->section_id);
+                $query->where('first_name', 'like', '%' . $request->search . '%')
+                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+            })
+            ->where('status', 'Refused')
+            ->get();
+
+            return response()->json([
+                'absences' => $absences,
+            ]);
+        }
+
+        // request Absence
     }
 }

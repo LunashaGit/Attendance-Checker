@@ -65,7 +65,7 @@ export default function ClockButton(props: ClockButtonProps) {
     let max = new Date();
     let beforeOrAfter = new Date();
     let clickedTime = new Date();
-    if (valueClicked !== null) {
+    if (valueClicked != null) {
         clickedTime.setHours(
             Number(valueClicked.split(":")[0]),
             Number(valueClicked.split(":")[1])
