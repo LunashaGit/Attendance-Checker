@@ -44,7 +44,7 @@ Route::post('/infos', [InfosController::class, 'update']);
 
 Route::post('/absences', [AbsenceController::class, 'create']);
 Route::get('/absences/previous', [AbsenceController::class, 'index']);
-Route::get('/absences/not-justified', [AbsenceController::class, 'absencesAdmin']);
+Route::get('/absences/unjustified', [AbsenceController::class, 'absencesAdmin']);
 Route::get('/absences/all', [AbsenceController::class, 'absencesAdmin']);
 Route::get('/absences/accepted', [AbsenceController::class, 'absencesAdmin']);
 Route::get('/absences/pending', [AbsenceController::class, 'absencesAdmin']);

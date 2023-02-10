@@ -61,53 +61,60 @@ export default function ClockCorrection(props: Props) {
                 return (
                     <div
                         key={index}
-                        className="flex flex-row gap-2 items-center"
+                        className="flex flex-row gap-2 items-center justify-between w-10/12"
                     >
-                        <GithubPicture
-                            className="h-16 w-16 rounded-lg"
-                            user={item.user.github_id}
-                        />
-                        <p className="truncate w-32 text-left">
-                            {item.user.first_name + " " + item.user.last_name}
-                        </p>
-                        <form className="flex flex-row gap-4 justify-center items-center text-black">
-                            <input
-                                type="time"
-                                name="beginning"
-                                id="beginning"
-                                defaultValue={item.beginning}
-                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
-                                onChange={(e) =>
-                                    handleChange(e, item.id, "beginning")
-                                }
+                        <div className="flex flex-row w-3/12 justify-center items-center gap-2">
+                            <GithubPicture
+                                className="h-16 w-16 rounded-lg"
+                                user={item.user.github_id}
                             />
-                            <input
-                                type="time"
-                                name="lunch"
-                                defaultValue={item.lunch}
-                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
-                                onChange={(e) =>
-                                    handleChange(e, item.id, "lunch")
-                                }
-                            />
-                            <input
-                                type="time"
-                                name="return"
-                                defaultValue={item.return}
-                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
-                                onChange={(e) =>
-                                    handleChange(e, item.id, "return")
-                                }
-                            />
-                            <input
-                                type="time"
-                                name="end"
-                                defaultValue={item.end}
-                                className="text-center dark:bg-[#39435a] text-white rounded-lg"
-                                onChange={(e) =>
-                                    handleChange(e, item.id, "end")
-                                }
-                            />
+                            <p className="truncate w-32 text-left">
+                                {item.user.first_name +
+                                    " " +
+                                    item.user.last_name}
+                            </p>
+                        </div>
+                        <form className="w-9/12 flex flex-row gap-4 justify-center items-center text-black">
+                            <div className=" flex flex-row justify-between items-center w-full">
+                                <input
+                                    type="time"
+                                    name="beginning"
+                                    id="beginning"
+                                    defaultValue={item.beginning}
+                                    className="text-center dark:bg-[#39435a] text-white rounded-lg text-base w-160"
+                                    onChange={(e) =>
+                                        handleChange(e, item.id, "beginning")
+                                    }
+                                />
+                                <input
+                                    type="time"
+                                    name="lunch"
+                                    defaultValue={item.lunch}
+                                    className="text-center dark:bg-[#39435a] text-white rounded-lg text-base w-160"
+                                    onChange={(e) =>
+                                        handleChange(e, item.id, "lunch")
+                                    }
+                                />
+                                <input
+                                    type="time"
+                                    name="return"
+                                    defaultValue={item.return}
+                                    className="text-center dark:bg-[#39435a] text-white rounded-lg w-160"
+                                    onChange={(e) =>
+                                        handleChange(e, item.id, "return")
+                                    }
+                                />
+                                <input
+                                    type="time"
+                                    name="end"
+                                    defaultValue={item.end}
+                                    className="text-center dark:bg-[#39435a] text-white rounded-lg w-160"
+                                    onChange={(e) =>
+                                        handleChange(e, item.id, "end")
+                                    }
+                                />
+                            </div>
+
                             <div className="flex flex-row gap-2 text-white">
                                 {item.location === "Campus" ? (
                                     <>

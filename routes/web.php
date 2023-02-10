@@ -38,7 +38,7 @@ Route::middleware(['auth', 'is_coach'])->group(function () {
     Route::get('/testing/absences', [AbsenceController::class, 'index'])->name('admin');
     Route::get('/section', [SectionController::class, 'index'])->name('admin');
     Route::get('/clockout', [AttendanceController::class, 'clockout'])->name('admin');
-    Route::get('/absences/admin', [AbsenceController::class, 'absenceAdmin'])->name('admin');
+    Route::get('/absences/admin', [AbsenceController::class, 'absencesAdmin'])->name('admin');
 });
 
 require __DIR__.'/auth.php';

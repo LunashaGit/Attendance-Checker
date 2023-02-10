@@ -6,3 +6,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     background: none;
     display: none;
 }
+input[type="time"]::-webkit-datetime-edit-second-field {
+    background: none;
+    color: transparent;
+    margin-left: -3px;
+    position: absolute;
+    width: 1px;
+}

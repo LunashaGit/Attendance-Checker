@@ -7,6 +7,7 @@ use App\Models\Absence;
 use App\Models\Attendance;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use App\Models\Section;
 class AbsenceController extends Controller
 {   
     public function index(Request $request)
@@ -68,12 +69,14 @@ class AbsenceController extends Controller
 
     public function absencesAdmin (Request $request)
     {
-        if ($request->is('api/absences/not-justified')) {
+        if ($request->is('api/absences/unjustified')) {
             $absences = Attendance::with("user")
             ->whereHas('user', function ($query) use ($request) {
-                $query->where('section_id', $request->section_id);
-                $query->where('first_name', 'like', '%' . $request->search . '%')
-                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                $query->where('section_id', $request->section_id)
+                ->where(function ($q) use ($request) {
+                    $q->where('first_name', 'like', '%' . $request->search . '%')
+                      ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                });
             })
             ->whereDate('date', '<', now()->format('Y-m-d'))
             ->where(function ($query) {
@@ -95,9 +98,12 @@ class AbsenceController extends Controller
         if ($request->is('api/absences/all')) {
             $absences = Absence::with("user")
             ->whereHas('user', function ($query) use ($request) {
-                $query->where('section_id', $request->section_id);
-                $query->where('first_name', 'like', '%' . $request->search . '%')
-                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                $query
+                ->where('section_id', $request->section_id)
+                ->where(function ($q) use ($request) {
+                    $q->where('first_name', 'like', '%' . $request->search . '%')
+                      ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                });
             })
             ->get();
 
@@ -109,9 +115,11 @@ class AbsenceController extends Controller
         if ($request->is('api/absences/accepted')) {
             $absences = Absence::with("user")
             ->whereHas('user', function ($query) use ($request) {
-                $query->where('section_id', $request->section_id);
-                $query->where('first_name', 'like', '%' . $request->search . '%')
-                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                $query->where('section_id', $request->section_id)
+                ->where(function ($q) use ($request) {
+                    $q->where('first_name', 'like', '%' . $request->search . '%')
+                      ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                });
             })
             ->where('status', 'Accepted')
             ->get();
@@ -124,9 +132,11 @@ class AbsenceController extends Controller
         if ($request->is('api/absences/pending')) {
             $absences = Absence::with("user")
             ->whereHas('user', function ($query) use ($request) {
-                $query->where('section_id', $request->section_id);
-                $query->where('first_name', 'like', '%' . $request->search . '%')
-                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                $query->where('section_id', $request->section_id)
+                ->where(function ($q) use ($request) {
+                    $q->where('first_name', 'like', '%' . $request->search . '%')
+                      ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                });
             })
             ->where('status', 'Pending')
             ->get();
@@ -139,9 +149,11 @@ class AbsenceController extends Controller
         if ($request->is('api/absences/refused')) {
             $absences = Absence::with("user")
             ->whereHas('user', function ($query) use ($request) {
-                $query->where('section_id', $request->section_id);
-                $query->where('first_name', 'like', '%' . $request->search . '%')
-                ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                $query->where('section_id', $request->section_id)
+                ->where(function ($q) use ($request) {
+                    $q->where('first_name', 'like', '%' . $request->search . '%')
+                      ->orWhere('last_name', 'like', '%' . $request->search . '%');
+                });
             })
             ->where('status', 'Refused')
             ->get();
@@ -151,6 +163,8 @@ class AbsenceController extends Controller
             ]);
         }
 
-        // request Absence
+        return Inertia::render('Absences/Index', [
+            'sections' => Section::all(),
+        ]);
     }
 }

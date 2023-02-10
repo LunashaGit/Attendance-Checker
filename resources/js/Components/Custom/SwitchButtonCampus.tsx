@@ -9,7 +9,11 @@ export default function SwitchButtonCampus(props) {
         props.callBack(childData);
         setValue(childData);
     };
+
     useEffect(() => {
+        if (value === "") {
+            handleCallback("Campus");
+        }
         value === "Campus"
             ? (setBgCampus("dark:bg-[#39435a]"), setBgRemote("bg-gray-500"))
             : (setBgCampus("bg-gray-500"), setBgRemote("dark:bg-[#39435a]"));
