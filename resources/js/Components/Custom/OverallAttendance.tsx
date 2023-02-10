@@ -131,7 +131,7 @@ export default function OverallAttendance(props: Props) {
                                     <div className="flex flex-row gap-2 items-center justify-center">
                                         <p className="text-left text-base flex flex-row gap-4">
                                             {attendance.beginning === null
-                                                ? "N/A"
+                                                ? "--:--"
                                                 : attendance.beginning.slice(
                                                       0,
                                                       5

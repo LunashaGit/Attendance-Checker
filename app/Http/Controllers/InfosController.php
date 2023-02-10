@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Section;
+use App\Models\Attendance;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 class InfosController extends Controller
 {
     public function index(Request $request)
@@ -58,8 +61,40 @@ class InfosController extends Controller
             'github_link' => $request->github_link,
             'linkedin' => $request->linkedin,
         ]); 
+        
+        if ($request->section) {
+            $user->section_id = $request->section;
+            if($user->is_coach == 1 || $user->is_admin == 1) {
+                $user->save();
+        
+                return response()->json([
+                    'user' => $user,
+                ]);
+            }
+            db::table('attendances')->where('user_id', $user->id)->delete();
+            
+            $section = Section::find($request->section);
 
-        $user->section_id = $request->section;
+            $startDate = Carbon::parse($section->date_start_courses);
+            $endDate = Carbon::parse($section->date_end_courses);
+
+            $records = [];
+
+            while ($startDate <= $endDate) {
+                if (!$startDate->isWeekend() &&
+                    !($startDate >= Carbon::parse($section->date_start_holiday1) && $startDate <= Carbon::parse($section->date_end_holiday1)) &&
+                    !($startDate >= Carbon::parse($section->date_start_holiday2) && $startDate <= Carbon::parse($section->date_end_holiday2))) {
+                    $records[] = [
+                        'user_id' => $user->id,
+                        'date' => $startDate->toDateString(),
+                    ];
+                }
+                $startDate->addDay();
+            }
+
+            DB::table('attendances')->insert($records);
+        }
+
         $user->save();
         
         return response()->json([
