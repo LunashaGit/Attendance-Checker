@@ -103,7 +103,7 @@ export default function ClockButton(props: ClockButtonProps) {
                     isDisabled = false;
                     buttonText = "9:00";
                 } else if (server > max) {
-                    buttonClass = "bg-gray-500";
+                    buttonClass = "bg-gray-500 opacity-50";
                     isDisabled = true;
                     buttonText = "--:--";
                 }
@@ -129,7 +129,7 @@ export default function ClockButton(props: ClockButtonProps) {
                     isDisabled = false;
                     buttonText = "12:30";
                 } else if (server > max) {
-                    buttonClass = "bg-gray-500";
+                    buttonClass = "bg-gray-500 opacity-50";
                     isDisabled = true;
                     buttonText = "--:--";
                 }
@@ -154,7 +154,7 @@ export default function ClockButton(props: ClockButtonProps) {
                     isDisabled = false;
                     buttonText = "13:30";
                 } else if (server > max) {
-                    buttonClass = "bg-gray-500";
+                    buttonClass = "bg-gray-500 opacity-50";
                     isDisabled = true;
                     buttonText = "--:--";
                 }
