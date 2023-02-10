@@ -167,4 +167,18 @@ class AbsenceController extends Controller
             'sections' => Section::all(),
         ]);
     }
+
+    public function update(Request $request)
+    {
+        $absence = Absence::find($request->id);
+        $absence->update([
+            'status' => $request->status,
+        ]);
+
+        $absence->save();
+
+        return response()->json([
+            'absence' => $absence,
+        ]);
+    }
 }

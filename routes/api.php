@@ -49,4 +49,5 @@ Route::get('/absences/all', [AbsenceController::class, 'absencesAdmin']);
 Route::get('/absences/accepted', [AbsenceController::class, 'absencesAdmin']);
 Route::get('/absences/pending', [AbsenceController::class, 'absencesAdmin']);
 Route::get('/absences/refused', [AbsenceController::class, 'absencesAdmin']);
+Route::put('/absences', [AbsenceController::class, 'update']);
 // Route::get('/attendance', [AttendanceController::class, 'schedule']);

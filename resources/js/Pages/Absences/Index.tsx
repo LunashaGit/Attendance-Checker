@@ -48,6 +48,7 @@ export default function Absences(props: Props) {
                         section={section}
                         apiCallValue={apiCallValue}
                         searchValue={searchValue}
+                        call={call}
                     />
                 </div>
             </AuthenticatedLayout>

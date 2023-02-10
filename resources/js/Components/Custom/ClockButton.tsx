@@ -174,7 +174,7 @@ export default function ClockButton(props: ClockButtonProps) {
                         .padStart(2, "0")}`;
                 } else if (clickedTime >= min && clickedTime <= max) {
                     buttonClass = "bg-green-500 opacity-50";
-                    isDisabled = false;
+                    isDisabled = true;
                     buttonText = "17:00";
                 }
             } else {

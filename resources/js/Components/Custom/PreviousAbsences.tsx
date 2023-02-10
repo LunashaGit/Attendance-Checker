@@ -188,9 +188,9 @@ export default function PreviousAbsences(props: Props) {
                                                                           )
                                                                         : "--:--"}{" "}
                                                                     |{" "}
-                                                                    {attendance.lunchEnd !=
+                                                                    {attendance.return !=
                                                                     null
-                                                                        ? attendance.lunchEnd.slice(
+                                                                        ? attendance.return.slice(
                                                                               0,
                                                                               5
                                                                           )

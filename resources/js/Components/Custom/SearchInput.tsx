@@ -5,9 +5,7 @@ type Props = {
 
 export default function SearchInput(props: Props) {
     const [search, setSearch] = useState<string>("");
-    useEffect(() => {
-        props.callBackSearch(search);
-    }, [search]);
+    const handleCallback = (e) => props.callBackSearch(e.target.value);
     return (
         <>
             <input
@@ -16,7 +14,10 @@ export default function SearchInput(props: Props) {
                 placeholder="Firstname or Lastname"
                 value={search}
                 onChange={(e) => {
-                    setSearch(e.target.value);
+                    setSearch(e.target.value),
+                        setTimeout(() => {
+                            handleCallback(e);
+                        }, 1000);
                 }}
             />
         </>
