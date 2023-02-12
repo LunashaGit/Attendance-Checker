@@ -6,6 +6,7 @@ import PreviousAbsences from "./PreviousAbsences";
 type Props = {
     auth: Auth;
     attendancesBefore: Object[];
+    percentage: number;
 };
 
 type TypeAttendance = {
@@ -91,15 +92,17 @@ export default function OverallAttendance(props: Props) {
             });
     }
 
-    console.log(open);
-    console.log(valueAttendance);
     return (
         <div className="flex flex-col gap-4 w-2/6">
             <h2 className="text-center text-white font-semibold">
                 Absences to Justify
             </h2>
             <p className="text-xl text-white font-semibold text-left">
-                Overall Attendance: NULL%
+                Overall Attendance:{" "}
+                {(props.percentage &&
+                    props.percentage.toString().slice(0, 5)) ||
+                    0}
+                %
             </p>
             <div className="bg-gray-700 rounded-lg">
                 <div
@@ -107,9 +110,17 @@ export default function OverallAttendance(props: Props) {
                     aria-valuenow={100}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    className="w-5/6 h-4 bg-gray-200 rounded-lg text-center font-semibold text-xs text-gray-700"
+                    className="h-4 bg-gray-200 rounded-lg text-center font-semibold text-xs text-gray-700"
+                    style={{
+                        width: `${
+                            (props.percentage && props.percentage) || 0
+                        }%`,
+                    }}
                 >
-                    NULL
+                    {(props.percentage &&
+                        props.percentage.toString().slice(0, 5)) ||
+                        0}
+                    %
                 </div>
             </div>
             <p className="text-xs text-white">

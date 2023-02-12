@@ -153,7 +153,7 @@ export default function PreviousAbsences(props: Props) {
                                             >
                                                 {absencesToShow.status}
                                             </p>
-                                            <div className="flex flex-col gap-2">
+                                            <div className="flex flex-col gap-2 overflow-y-auto h-64">
                                                 <h3 className="font-semibold">
                                                     Attendances :{" "}
                                                 </h3>

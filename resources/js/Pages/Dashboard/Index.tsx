@@ -21,9 +21,12 @@ type Props = {
         length: number;
     }[];
     attendancesBefore: Object[];
+    attendanceToday: Object;
+    percentage: number;
 };
 
 export default function Dashboard(props: Props) {
+    console.log(props);
     const [time, setTime] = useState<string>("");
     const [column] = useState<Array<string>>([
         "beginning",
@@ -54,7 +57,8 @@ export default function Dashboard(props: Props) {
                         </div>
                     </div>
                     {props.auth.user.is_admin != true &&
-                        props.auth.user.is_coach != true && (
+                        props.auth.user.is_coach != true &&
+                        props.attendanceToday != null && (
                             <div className="flex flex-row items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
                                 <SwitchButtonCampus
                                     auth={props.auth}
@@ -79,6 +83,7 @@ export default function Dashboard(props: Props) {
                         <OverallAttendance
                             auth={props.auth}
                             attendancesBefore={props.attendancesBefore}
+                            percentage={props.percentage}
                         />
                         <Pedagogy
                             auth={props.auth}

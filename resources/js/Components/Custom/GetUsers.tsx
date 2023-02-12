@@ -68,12 +68,17 @@ export default function GetUsers(props: Props) {
             linkedin: e.target.linkedin.value,
             section: e.target.section.value,
         };
-        console.log(data);
         axios.post("/api/infos", data).then((res) => {
-            console.log(res);
+            setUsers(
+                users.map((user: User) => {
+                    if (user.id === valueUser.id) {
+                        user = res.data.user;
+                    }
+                    return user;
+                })
+            );
         });
     }
-
     function handleSubmitPut(e) {
         e.preventDefault();
         const data = {
@@ -86,7 +91,6 @@ export default function GetUsers(props: Props) {
             linkedin: e.target.linkedin.value,
             section: e.target.section.value,
         };
-        console.log(data);
         axios.put("/api/infos", data).then((res) => {
             console.log(res);
         });

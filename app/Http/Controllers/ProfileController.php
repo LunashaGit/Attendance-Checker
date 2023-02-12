@@ -13,6 +13,7 @@ use Inertia\Response;
 use App\Models\TechTalk;
 use App\Models\User;
 use App\Models\Attendance;
+use Carbon\Carbon;
 class ProfileController extends Controller
 {
     public function __construct()
@@ -42,12 +43,59 @@ class ProfileController extends Controller
         ->whereDate('date', date('Y-m-d'))
         ->get();
         
-        return Inertia::render('Dashboard/Index', [
+        $attendanceToday = Attendance::where('user_id', Auth::user()->id)->whereDate('date', date('Y-m-d'))->first();
+
+        $attendances = Attendance::where('user_id', Auth::user()->id)
+            ->whereDate('date', '<=', Carbon::today())
+            ->get();
+        
+        if(!$attendances->count() > 0){
+            
+            return Inertia::render('Dashboard/Index', [
+                'user' => $request->user()->load('section'),
+                'techTalks' => TechTalk::where('user_id', $request->user()->id)->get(),
+                'techTalksToday' => $techTalksToday,
+                'attendancesBefore' => $attendancesBefore,
+                'attendanceToday' => $attendanceToday,
+            ]);
+        } 
+        $total_working_days = $attendances->count() * 4;
+        $absent_columns = 0;
+
+        foreach ($attendances as $attendance) {
+            if (!$attendance->beginning) {
+                $absent_columns++;
+            }
+            if (!$attendance->lunch) {
+                $absent_columns++;
+            }
+            if (!$attendance->return) {
+                $absent_columns++;
+            }
+            if (!$attendance->end) {
+                $absent_columns++;
+            }
+            if ($attendance->beginning >= '09:01:00') {
+                $absent_columns++;
+            }
+            if ($attendance->end < '17:00:00') {
+                $absent_columns++;
+            }
+
+        }
+
+        $percentage = 100 - (100 / $total_working_days * $absent_columns);
+
+            return Inertia::render('Dashboard/Index', [
             'user' => $request->user()->load('section'),
             'techTalks' => TechTalk::where('user_id', $request->user()->id)->get(),
             'techTalksToday' => $techTalksToday,
             'attendancesBefore' => $attendancesBefore,
+            'attendanceToday' => $attendanceToday,
+            'percentage' => $percentage,
         ]);
+
+       
     }
     /**
      * Display the user's profile form.

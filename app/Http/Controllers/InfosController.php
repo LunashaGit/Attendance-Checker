@@ -52,7 +52,7 @@ class InfosController extends Controller
 
     public function update(Request $request)
     {
-        $user = User::find($request->user_id);
+        $user = User::with('section')->find($request->user_id);
         $user->personalInformation()->update([
             'phone_number' => $request->phone,
             'birth_date' => $request->birthday,
