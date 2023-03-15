@@ -9,6 +9,22 @@ export default function Section(props) {
         setSection(section);
     };
 
+    useEffect(() => {
+        const data = {
+            section_id: section,
+        };
+        axios
+            .get("/api/summary/", {
+                params: data,
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [section]);
+
     return (
         <div>
             <SectionSelect

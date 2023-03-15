@@ -122,12 +122,62 @@ class InfosController extends Controller
     public function summary(Request $request)
     {
         // get every user in the section
+
+        $informations = [];
+
         $users = User::with('section', 'personalInformation')
         ->where('section_id', $request->section_id)
+        ->where('is_admin', 0)
+        ->where('is_coach', 0)
         ->get();
+
+        $informations['users'] = $users;
+        foreach ($users as $key => $user) {
+            $attendances = Attendance::where('user_id', $user->id)
+            ->whereDate('date', '<=', Carbon::today())
+            ->get();
+
+            
+            if ($attendances->count() == 0) {
+                $informations['users'][$key]['percentage'] = 0;
+                continue;
+            }
+
+            $total_working_days = $attendances->count() * 4;
+        $absent_columns = 0;
+
+        foreach ($attendances as $attendance) {
+            if (!$attendance->beginning) {
+                $absent_columns++;
+            }
+            if (!$attendance->lunch) {
+                $absent_columns++;
+            }
+            if (!$attendance->return) {
+                $absent_columns++;
+            }
+            if (!$attendance->end) {
+                $absent_columns++;
+            }
+            if ($attendance->beginning >= '09:01:00') {
+                $absent_columns++;
+            }
+            if ($attendance->end < '17:00:00') {
+                $absent_columns++;
+            }
+
+        }
+
+        $percentage = 100 - (100 / $total_working_days * $absent_columns);
+
+        $informations['users'][$key]['percentage'] = $percentage;
+
+        }
+
 
         return response()->json([
             'users' => $users,
+            'informations' => $informations,
         ]);
     }
 
