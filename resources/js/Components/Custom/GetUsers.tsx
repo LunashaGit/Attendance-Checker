@@ -26,6 +26,7 @@ type User = {
     };
     personal_information: {
         id: number;
+        NISS: string;
         phone_number: string;
         birth_date: string;
         email_alias: string;
@@ -39,6 +40,7 @@ export default function GetUsers(props: Props) {
     const [users, setUsers] = useState(props.users);
     const [search, setSearch] = useState<string>("");
     const [valueUser, setValueUser] = useState<User>({} as User);
+    console.log(valueUser);
     const [clickedUser, setClickedUser] = useState<boolean>(false);
     const [clickedInformations, setClickedInformations] =
         useState<boolean>(false);
@@ -60,6 +62,7 @@ export default function GetUsers(props: Props) {
         e.preventDefault();
         const data = {
             user_id: valueUser.id,
+            niss: e.target.NISS.value,
             phone: e.target.phone.value,
             birthday: e.target.birthday.value,
             email_alias: e.target.email_alias.value,
@@ -68,21 +71,28 @@ export default function GetUsers(props: Props) {
             linkedin: e.target.linkedin.value,
             section: e.target.section.value,
         };
-        axios.post("/api/infos", data).then((res) => {
-            setUsers(
-                users.map((user: User) => {
-                    if (user.id === valueUser.id) {
-                        user = res.data.user;
-                    }
-                    return user;
-                })
-            );
-        });
+        axios
+            .post("/api/infos", data)
+            .then((res) => {
+                console.log(res.data);
+                setUsers(
+                    users.map((user: User) => {
+                        if (user.id === valueUser.id) {
+                            user = res.data.user;
+                        }
+                        return user;
+                    })
+                );
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
     function handleSubmitPut(e) {
         e.preventDefault();
         const data = {
             user_id: valueUser.id,
+            NISS: e.target.NISS.value,
             phone: e.target.phone.value,
             birthday: e.target.birthday.value,
             email_alias: e.target.email_alias.value,
@@ -277,13 +287,37 @@ export default function GetUsers(props: Props) {
                                                 valueUser.last_name}
                                         </p>
                                     </div>
-                                    <div className="flex flex-row justify-between">
+                                    <div className="flex flex-row gap-4">
                                         <p className="text-white">Github : </p>
+                                        <a
+                                            className="text-green-300"
+                                            href={
+                                                valueUser.personal_information
+                                                    .github_link
+                                            }
+                                        >
+                                            {
+                                                valueUser.personal_information
+                                                    .github
+                                            }
+                                        </a>
                                     </div>
-                                    <div className="flex flex-row justify-between">
+                                    <div className="flex flex-row gap-4">
                                         <p className="text-white">
                                             Linkedin :{" "}
                                         </p>
+                                        <a
+                                            className="text-green-300"
+                                            href={
+                                                valueUser.personal_information
+                                                    .linkedin
+                                            }
+                                        >
+                                            {
+                                                valueUser.personal_information
+                                                    .linkedin
+                                            }
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -344,6 +378,38 @@ export default function GetUsers(props: Props) {
                                                 className="flex flex-col justify-center items-center gap-4"
                                                 onSubmit={handleSubmit}
                                             >
+                                                <div className="w-full">
+                                                    <label
+                                                        className="text-white text-sm"
+                                                        htmlFor="NISS"
+                                                    >
+                                                        NISS
+                                                    </label>
+                                                    <input
+                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        type="text"
+                                                        name="NISS"
+                                                        placeholder="NISS"
+                                                        autoComplete="off"
+                                                        value={
+                                                            valueUser
+                                                                .personal_information
+                                                                .NISS
+                                                        }
+                                                        onChange={(e) => {
+                                                            setValueUser({
+                                                                ...valueUser,
+                                                                personal_information:
+                                                                    {
+                                                                        ...valueUser.personal_information,
+                                                                        NISS: e
+                                                                            .target
+                                                                            .value,
+                                                                    },
+                                                            });
+                                                        }}
+                                                    />
+                                                </div>
                                                 <div className="w-full">
                                                     <label
                                                         className="text-white text-sm"
@@ -605,6 +671,21 @@ export default function GetUsers(props: Props) {
                                                 className="flex flex-col justify-center items-center gap-4"
                                                 onSubmit={handleSubmit}
                                             >
+                                                <div className="w-full">
+                                                    <label
+                                                        className="text-white text-sm"
+                                                        htmlFor="NISS"
+                                                    >
+                                                        NISS
+                                                    </label>
+                                                    <input
+                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        type="text"
+                                                        name="NISS"
+                                                        placeholder="NISS"
+                                                        autoComplete="off"
+                                                    />
+                                                </div>
                                                 <div className="w-full">
                                                     <label
                                                         className="text-white text-sm"

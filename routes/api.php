@@ -41,6 +41,7 @@ Route::get('/techtalks/today', [TechTalkController::class, 'getTodayAndSection']
 Route::get('/users', [InfosController::class, 'index']);
 Route::post('/infos', [InfosController::class, 'create']);
 Route::post('/infos', [InfosController::class, 'update']);
+Route::get('/summary', [InfosController::class, 'summary']);
 
 Route::post('/absences', [AbsenceController::class, 'create']);
 Route::get('/absences/previous', [AbsenceController::class, 'index']);

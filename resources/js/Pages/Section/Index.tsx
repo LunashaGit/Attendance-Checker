@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import SectionSelect from "@/Components/Custom/SectionSelect";
+import axios from "axios";
 import GetInfos from "@/Components/Custom/GetInfos";
 export default function Section(props) {
+    const [section, setSection] = useState<string>("1");
+
+    const callBackSection = (section) => {
+        setSection(section);
+    };
+
     return (
         <div>
-            <GetInfos infos={props.sections} />
-            <GetInfos infos={props.users} />
-            <GetInfos infos={props.techTalks} />
+            <SectionSelect
+                sections={props.sections}
+                callBackSection={callBackSection}
+            />
         </div>
     );
 }

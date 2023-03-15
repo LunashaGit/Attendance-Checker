@@ -10,6 +10,7 @@ class PersonalInformation extends Model
     use HasFactory;
 
     protected $fillable = [
+        'NISS',
         'phone_number',
         'birth_date',
         'email_alias',

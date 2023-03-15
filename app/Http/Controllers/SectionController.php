@@ -11,10 +11,8 @@ class SectionController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Section/Index', [
-            'sections' => Section::all(),
-            'users' => User::all(),
-            'techTalks' => TechTalk::all(),
+        return Inertia::render('Section/Index',[
+            'sections' =>  Section::all(),
         ]);
     }
 

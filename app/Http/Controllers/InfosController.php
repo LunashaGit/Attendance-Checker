@@ -33,6 +33,7 @@ class InfosController extends Controller
     {
         $user = User::find($request->user_id);
         $response = $user->personalInformation()->create([
+            'NISS' => $request->niss,
             'phone_number' => $request->phone,
             'birth_date' => $request->birthday,
             'email_alias' => $request->email_alias,
@@ -53,7 +54,19 @@ class InfosController extends Controller
     public function update(Request $request)
     {
         $user = User::with('section')->find($request->user_id);
-        $user->personalInformation()->update([
+        if($user->personalInformation != null){
+            $user->personalInformation()->update([
+                'NISS' => $request->niss,
+                'phone_number' => $request->phone,
+                'birth_date' => $request->birthday,
+                'email_alias' => $request->email_alias,
+                'github' => $request->github,
+                'github_link' => $request->github_link,
+                'linkedin' => $request->linkedin,
+            ]);
+        } else {
+            $response_user = $user->personalInformation()->create([
+            'NISS' => $request->niss,
             'phone_number' => $request->phone,
             'birth_date' => $request->birthday,
             'email_alias' => $request->email_alias,
@@ -61,6 +74,9 @@ class InfosController extends Controller
             'github_link' => $request->github_link,
             'linkedin' => $request->linkedin,
         ]); 
+        
+        $user->personal_information_id = $response_user->id;
+        }
         
         if ($request->section) {
             $user->section_id = $request->section;
@@ -95,10 +111,23 @@ class InfosController extends Controller
             DB::table('attendances')->insert($records);
         }
 
+        
         $user->save();
         
         return response()->json([
             'user' => $user,
+        ]);
+    }
+
+    public function summary(Request $request)
+    {
+        // get every user in the section
+        $users = User::with('section', 'personalInformation')
+        ->where('section_id', $request->section_id)
+        ->get();
+
+        return response()->json([
+            'users' => $users,
         ]);
     }
 
