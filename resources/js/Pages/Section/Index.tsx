@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import SectionSelect from "@/Components/Custom/SectionSelect";
 import axios from "axios";
 import GetInfos from "@/Components/Custom/GetInfos";
+import Summary from "@/Components/Custom/Summary";
 export default function Section(props) {
     const [section, setSection] = useState<string>("1");
+    const [infos, setInfos] = useState<Array<Object>>([]);
 
     const callBackSection = (section) => {
         setSection(section);
@@ -19,9 +21,7 @@ export default function Section(props) {
             })
             .then((response) => {
                 console.log(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
+                setInfos(response.data.informations.users);
             });
     }, [section]);
 
@@ -31,6 +31,7 @@ export default function Section(props) {
                 sections={props.sections}
                 callBackSection={callBackSection}
             />
+            <Summary infos={infos} />
         </div>
     );
 }

@@ -292,14 +292,14 @@ export default function GetUsers(props: Props) {
                                         <a
                                             className="text-green-300"
                                             href={
+                                                valueUser.personal_information &&
                                                 valueUser.personal_information
                                                     .github_link
                                             }
                                         >
-                                            {
+                                            {valueUser.personal_information &&
                                                 valueUser.personal_information
-                                                    .github
-                                            }
+                                                    .github}
                                         </a>
                                     </div>
                                     <div className="flex flex-row gap-4">
@@ -309,14 +309,14 @@ export default function GetUsers(props: Props) {
                                         <a
                                             className="text-green-300"
                                             href={
+                                                valueUser.personal_information &&
                                                 valueUser.personal_information
                                                     .linkedin
                                             }
                                         >
-                                            {
+                                            {valueUser.personal_information &&
                                                 valueUser.personal_information
-                                                    .linkedin
-                                            }
+                                                    .linkedin}
                                         </a>
                                     </div>
                                 </div>
