@@ -27,7 +27,7 @@ class TechTalkController extends Controller
             ]);
             
         }
-
+        
         $techTalks = TechTalk::with('user.section')
         ->whereHas('user.section', function ($query) use ($request) {
             $query->where('campus_id', Auth::user()->section->campus_id);

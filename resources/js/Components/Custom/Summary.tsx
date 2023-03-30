@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import GithubPicture from "./GithubPicture";
 type Users = {
-    emaill: string;
+    email: string;
     first_name: string;
     last_name: string;
     percentage: number;
+    github_id: number;
 };
 export default function Summary(props) {
     const [users, setUsers] = useState<Users[]>([]);
@@ -38,8 +40,11 @@ export default function Summary(props) {
                                 key={index}
                                 className="text-left hover:bg-[#202c34] cursor-pointer p-2"
                             >
-                                <td className=" bg-[#373f50] border-[#202c34] border-2 p-2">
-                                    {index + 1}
+                                <td className=" bg-[#373f50] border-[#202c34] border-2">
+                                    <GithubPicture
+                                        className="h-16 w-16"
+                                        user={user.github_id}
+                                    />
                                 </td>
                                 <td className=" bg-[#373f50] border-[#202c34] border-2 p-2">
                                     {user.first_name}
