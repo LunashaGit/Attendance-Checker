@@ -27,15 +27,15 @@ export default function Authenticated({ auth, children }: Props) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     return (
-        <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="min-h-screen bg-gray-100 bg-gray-900">
             {showMobileWarning && <MobileWarning />}
-            <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+            <nav className="bg-white bg-gray-800 border-b border-gray-100 border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/dashboard">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 text-gray-200" />
                                 </Link>
                             </div>
                         </div>
@@ -47,7 +47,7 @@ export default function Authenticated({ auth, children }: Props) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white bg-gray-800 hover:text-gray-700 hover:text-gray-300 focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {auth.user.first_name}
 
@@ -92,7 +92,7 @@ export default function Authenticated({ auth, children }: Props) {
                                         (previousState) => !previousState
                                     )
                                 }
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out"
+                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 text-gray-500 hover:text-gray-500 hover:text-gray-400 hover:bg-gray-100 hover:bg-gray-900 focus:outline-none focus:bg-gray-100 focus:bg-gray-900 focus:text-gray-500 focus:text-gray-400 transition duration-150 ease-in-out"
                             >
                                 <svg
                                     className="h-6 w-6"
@@ -143,9 +143,9 @@ export default function Authenticated({ auth, children }: Props) {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                    <div className="pt-4 pb-1 border-t border-gray-200 border-gray-600">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800 dark:text-gray-200">
+                            <div className="font-medium text-base text-gray-800 text-gray-200">
                                 {auth.user.first_name}
                             </div>
                             <div className="font-medium text-sm text-gray-500">

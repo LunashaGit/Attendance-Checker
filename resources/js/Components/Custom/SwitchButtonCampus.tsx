@@ -15,8 +15,8 @@ export default function SwitchButtonCampus(props) {
             handleCallback("Campus");
         }
         value === "Campus"
-            ? (setBgCampus("dark:bg-[#39435a]"), setBgRemote("bg-gray-500"))
-            : (setBgCampus("bg-gray-500"), setBgRemote("dark:bg-[#39435a]"));
+            ? (setBgCampus("bg-[#39435a]"), setBgRemote("bg-gray-500"))
+            : (setBgCampus("bg-gray-500"), setBgRemote("bg-[#39435a]"));
     }, [value]);
     return (
         <div className="flex flex-row gap-2 mx-8 w-2/6">

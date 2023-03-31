@@ -133,12 +133,12 @@ export default function OverallAttendance(props: Props) {
                         return (
                             <div
                                 key={index}
-                                className="dark:bg-[#39435a] p-2 rounded-sm"
+                                className="bg-[#39435a] p-2 rounded-sm"
                             >
                                 <p className="text-white text-left">
                                     {index + 1}. <b>{attendance.date}</b>
                                 </p>
-                                <div className="flex flex-col justify-center text-white gap-4 dark:bg-gray-800 p-2 rounded-sm">
+                                <div className="flex flex-col justify-center text-white gap-4 bg-gray-800 p-2 rounded-sm">
                                     <div className="flex flex-row gap-2 items-center justify-center">
                                         <p className="text-left text-base flex flex-row gap-4">
                                             {attendance.beginning === null
@@ -245,7 +245,7 @@ export default function OverallAttendance(props: Props) {
                                             </label>
                                             <select
                                                 name="circumstance"
-                                                className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                className="w-full bg-gray-900 text-[#979ea3]"
                                                 defaultValue={0}
                                             >
                                                 <option disabled>
@@ -269,7 +269,7 @@ export default function OverallAttendance(props: Props) {
                                                     Start Date
                                                 </label>
                                                 <input
-                                                    className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                    className="w-full bg-gray-900 text-[#979ea3]"
                                                     type="date"
                                                     name="dateBegin"
                                                     placeholder="Date"
@@ -293,7 +293,7 @@ export default function OverallAttendance(props: Props) {
                                                     End Date
                                                 </label>
                                                 <input
-                                                    className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                    className="w-full bg-gray-900 text-[#979ea3]"
                                                     type="date"
                                                     name="dateEnd"
                                                     placeholder="Date"
@@ -319,7 +319,7 @@ export default function OverallAttendance(props: Props) {
                                                     Start time
                                                 </label>
                                                 <input
-                                                    className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                    className="w-full bg-gray-900 text-[#979ea3]"
                                                     type="time"
                                                     name="timeBegin"
                                                     placeholder="Time"
@@ -343,7 +343,7 @@ export default function OverallAttendance(props: Props) {
                                                     End Date
                                                 </label>
                                                 <input
-                                                    className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                    className="w-full bg-gray-900 text-[#979ea3]"
                                                     type="time"
                                                     name="timeEnd"
                                                     placeholder="Date"
@@ -417,7 +417,7 @@ export default function OverallAttendance(props: Props) {
                                                 Description (optional)
                                             </label>
                                             <textarea
-                                                className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                className="w-full bg-gray-900 text-[#979ea3]"
                                                 name="description"
                                                 placeholder="Add more details, ..."
                                                 rows={4}

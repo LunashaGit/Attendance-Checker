@@ -10,7 +10,7 @@ export default function SearchInput(props: Props) {
         <>
             <input
                 type="text"
-                className="dark:bg-gray-800 text-white rounded-lg"
+                className="bg-gray-800 text-white rounded-lg"
                 placeholder="Firstname or Lastname"
                 value={search}
                 onChange={(e) => {

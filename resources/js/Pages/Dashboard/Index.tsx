@@ -59,7 +59,7 @@ export default function Dashboard(props: Props) {
                     {props.auth.user.is_admin != true &&
                         props.auth.user.is_coach != true &&
                         props.attendanceToday != null && (
-                            <div className="flex flex-row items-center dark:bg-gray-800 h-48 rounded-lg bg-opacity-60">
+                            <div className="flex flex-row items-center bg-gray-800 h-48 rounded-lg bg-opacity-60">
                                 <SwitchButtonCampus
                                     auth={props.auth}
                                     callBack={callBack}

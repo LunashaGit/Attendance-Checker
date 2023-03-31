@@ -116,9 +116,9 @@ export default function PreviousAbsences(props: Props) {
                                                             className={
                                                                 (absence.id ===
                                                                 absencesToShow.id
-                                                                    ? "dark:bg-gray-900"
+                                                                    ? "bg-gray-900"
                                                                     : "") +
-                                                                " text-white p-2 rounded-lg hover:dark:bg-gray-900 text-sm"
+                                                                " text-white p-2 rounded-lg hover:bg-gray-900 text-sm"
                                                             }
                                                             onClick={() => {
                                                                 setAbsencesToShow(

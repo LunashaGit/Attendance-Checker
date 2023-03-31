@@ -7,7 +7,7 @@ export default function AbsencesCall(props: Props) {
     return (
         <>
             <select
-                className="dark:bg-gray-800 text-white rounded-lg"
+                className="bg-gray-800 text-white rounded-lg"
                 onChange={(e) => {
                     props.callBackApiCallValue(e.target.value);
                 }}

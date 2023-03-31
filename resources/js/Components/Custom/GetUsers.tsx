@@ -386,7 +386,7 @@ export default function GetUsers(props: Props) {
                                                         NISS
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="text"
                                                         name="NISS"
                                                         placeholder="NISS"
@@ -418,7 +418,7 @@ export default function GetUsers(props: Props) {
                                                         Phone Number
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="text"
                                                         name="phone"
                                                         placeholder="Phone Number"
@@ -451,7 +451,7 @@ export default function GetUsers(props: Props) {
                                                         Birthday Date
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="date"
                                                         name="birthday"
                                                         autoComplete="off"
@@ -484,7 +484,7 @@ export default function GetUsers(props: Props) {
                                                         Email Alias
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="email"
                                                         name="email_alias"
                                                         autoComplete="off"
@@ -518,7 +518,7 @@ export default function GetUsers(props: Props) {
                                                             Github
                                                         </label>
                                                         <input
-                                                            className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                            className="w-full bg-gray-900 text-[#979ea3]"
                                                             type="text"
                                                             name="github"
                                                             autoComplete="off"
@@ -550,7 +550,7 @@ export default function GetUsers(props: Props) {
                                                             Github Link
                                                         </label>
                                                         <input
-                                                            className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                            className="w-full bg-gray-900 text-[#979ea3]"
                                                             type="text"
                                                             name="github_link"
                                                             autoComplete="off"
@@ -584,7 +584,7 @@ export default function GetUsers(props: Props) {
                                                         Linkedin Link
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="text"
                                                         name="linkedin"
                                                         autoComplete="off"
@@ -617,7 +617,7 @@ export default function GetUsers(props: Props) {
                                                         Section
                                                     </label>
                                                     <select
-                                                        className="dark:bg-gray-900 text-white rounded-lg w-full py-2"
+                                                        className="bg-gray-900 text-white rounded-lg w-full py-2"
                                                         defaultValue={
                                                             valueUser.section.id
                                                         }
@@ -679,7 +679,7 @@ export default function GetUsers(props: Props) {
                                                         NISS
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="text"
                                                         name="NISS"
                                                         placeholder="NISS"
@@ -694,7 +694,7 @@ export default function GetUsers(props: Props) {
                                                         Phone Number
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="text"
                                                         name="phone"
                                                         placeholder="Phone Number"
@@ -709,7 +709,7 @@ export default function GetUsers(props: Props) {
                                                         Birthday Date
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="date"
                                                         name="birthday"
                                                         autoComplete="off"
@@ -724,7 +724,7 @@ export default function GetUsers(props: Props) {
                                                         Email Alias
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="email"
                                                         name="email_alias"
                                                         autoComplete="off"
@@ -740,7 +740,7 @@ export default function GetUsers(props: Props) {
                                                             Github
                                                         </label>
                                                         <input
-                                                            className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                            className="w-full bg-gray-900 text-[#979ea3]"
                                                             type="text"
                                                             name="github"
                                                             autoComplete="off"
@@ -755,7 +755,7 @@ export default function GetUsers(props: Props) {
                                                             Github Link
                                                         </label>
                                                         <input
-                                                            className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                            className="w-full bg-gray-900 text-[#979ea3]"
                                                             type="text"
                                                             name="github_link"
                                                             autoComplete="off"
@@ -771,7 +771,7 @@ export default function GetUsers(props: Props) {
                                                         Linkedin Link
                                                     </label>
                                                     <input
-                                                        className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                        className="w-full bg-gray-900 text-[#979ea3]"
                                                         type="text"
                                                         name="linkedin"
                                                         autoComplete="off"
@@ -786,7 +786,7 @@ export default function GetUsers(props: Props) {
                                                         Section
                                                     </label>
                                                     <select
-                                                        className="dark:bg-gray-900 text-white rounded-lg w-full py-2"
+                                                        className="bg-gray-900 text-white rounded-lg w-full py-2"
                                                         defaultValue={0}
                                                         name="section"
                                                     >

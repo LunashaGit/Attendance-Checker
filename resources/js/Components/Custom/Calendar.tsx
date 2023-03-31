@@ -385,7 +385,7 @@ export default function Calendar(props) {
                                                 Title
                                             </label>
                                             <input
-                                                className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                className="w-full bg-gray-900 text-[#979ea3]"
                                                 type="text"
                                                 name="title"
                                                 placeholder="Title"
@@ -400,7 +400,7 @@ export default function Calendar(props) {
                                                     Date
                                                 </label>
                                                 <input
-                                                    className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                    className="w-full bg-gray-900 text-[#979ea3]"
                                                     type="date"
                                                     name="date"
                                                     placeholder="Date"
@@ -439,7 +439,7 @@ export default function Calendar(props) {
                                                     Time
                                                 </label>
                                                 <input
-                                                    className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                    className="w-full bg-gray-900 text-[#979ea3]"
                                                     type="time"
                                                     name="time"
                                                     placeholder="Time"
@@ -458,7 +458,7 @@ export default function Calendar(props) {
                                                 Abstract
                                             </label>
                                             <textarea
-                                                className="w-full dark:bg-gray-900 text-[#979ea3]"
+                                                className="w-full bg-gray-900 text-[#979ea3]"
                                                 name="commentary"
                                                 placeholder="Optional abstract of the Tech Talk (small description of your topic)"
                                                 rows={4}

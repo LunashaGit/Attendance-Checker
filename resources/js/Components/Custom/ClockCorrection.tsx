@@ -56,7 +56,7 @@ export default function ClockCorrection(props: Props) {
             });
     }
     return (
-        <div className="flex flex-col gap-2 text-white items-center justify-center dark:bg-gray-800 py-4 rounded-lg my-4">
+        <div className="flex flex-col gap-2 text-white items-center justify-center bg-gray-800 py-4 rounded-lg my-4">
             {data.map((item, index) => {
                 return (
                     <div
@@ -81,7 +81,7 @@ export default function ClockCorrection(props: Props) {
                                     name="beginning"
                                     id="beginning"
                                     defaultValue={item.beginning}
-                                    className="text-center dark:bg-[#39435a] text-white rounded-lg text-base w-160"
+                                    className="text-center bg-[#39435a] text-white rounded-lg text-base w-160"
                                     onChange={(e) =>
                                         handleChange(e, item.id, "beginning")
                                     }
@@ -90,7 +90,7 @@ export default function ClockCorrection(props: Props) {
                                     type="time"
                                     name="lunch"
                                     defaultValue={item.lunch}
-                                    className="text-center dark:bg-[#39435a] text-white rounded-lg text-base w-160"
+                                    className="text-center bg-[#39435a] text-white rounded-lg text-base w-160"
                                     onChange={(e) =>
                                         handleChange(e, item.id, "lunch")
                                     }
@@ -99,7 +99,7 @@ export default function ClockCorrection(props: Props) {
                                     type="time"
                                     name="return"
                                     defaultValue={item.return}
-                                    className="text-center dark:bg-[#39435a] text-white rounded-lg w-160"
+                                    className="text-center bg-[#39435a] text-white rounded-lg w-160"
                                     onChange={(e) =>
                                         handleChange(e, item.id, "return")
                                     }
@@ -108,7 +108,7 @@ export default function ClockCorrection(props: Props) {
                                     type="time"
                                     name="end"
                                     defaultValue={item.end}
-                                    className="text-center dark:bg-[#39435a] text-white rounded-lg w-160"
+                                    className="text-center bg-[#39435a] text-white rounded-lg w-160"
                                     onChange={(e) =>
                                         handleChange(e, item.id, "end")
                                     }
@@ -120,7 +120,7 @@ export default function ClockCorrection(props: Props) {
                                     <>
                                         <button
                                             disabled
-                                            className="text-white font-semibold rounded-lg px-4 py-2 dark:bg-[#39435a]"
+                                            className="text-white font-semibold rounded-lg px-4 py-2 bg-[#39435a]"
                                         >
                                             Campus
                                         </button>
@@ -155,7 +155,7 @@ export default function ClockCorrection(props: Props) {
                                         </button>
                                         <button
                                             disabled
-                                            className="text-white font-semibold rounded-lg px-4 py-2 dark:bg-[#39435a]"
+                                            className="text-white font-semibold rounded-lg px-4 py-2 bg-[#39435a]"
                                         >
                                             Remote
                                         </button>

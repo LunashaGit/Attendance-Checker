@@ -16,7 +16,7 @@ export default function SectionSelect(props: Props) {
                 onChange={(e) => {
                     props.callBackSection(e.target.value);
                 }}
-                className="dark:bg-gray-800 text-white rounded-lg"
+                className="bg-gray-800 text-white rounded-lg"
             >
                 {props.sections.map((section: Section, index: number) => {
                     return (

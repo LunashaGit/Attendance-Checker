@@ -442,7 +442,7 @@ export default function AbsencesAPI(props: Props) {
                                                                     absenceValue.dateEnd}
                                                             </h1>
                                                             <select
-                                                                className="dark:bg-gray-800 text-white rounded-lg"
+                                                                className="bg-gray-800 text-white rounded-lg"
                                                                 onChange={(
                                                                     e
                                                                 ) => {

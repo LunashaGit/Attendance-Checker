@@ -14,7 +14,7 @@ export default function DateInput(props: Props) {
             <input
                 type="date"
                 value={date}
-                className="dark:bg-gray-800 text-white rounded-lg"
+                className="bg-gray-800 text-white rounded-lg"
                 onChange={(e) => {
                     setDate(e.target.value);
                     props.callBackDate(e.target.value);

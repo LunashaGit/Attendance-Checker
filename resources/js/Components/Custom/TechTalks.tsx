@@ -21,9 +21,9 @@ export default function TechTalks(props: Props) {
         <div className="flex flex-col gap-4 text-xl text-left text-white font-semibold h-64 w-2/6">
             <h2 className="text-center">Communication</h2>
             <div>
-                <div className="dark:bg-[#39435a] p-2 rounded-sm">
+                <div className="bg-[#39435a] p-2 rounded-sm">
                     <p>Tech Talks</p>
-                    <div className="flex flex-col justify-center items-center gap-4 dark:bg-gray-800 p-2 rounded-sm">
+                    <div className="flex flex-col justify-center items-center gap-4 bg-gray-800 p-2 rounded-sm">
                         {dayTalks &&
                             dayTalks.map((ele) => {
                                 return (
