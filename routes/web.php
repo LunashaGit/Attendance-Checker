@@ -36,9 +36,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'is_coach'])->group(function () {
     Route::get('/testing', [TestingController::class, 'index'])->name('admin');
     Route::get('/testing/absences', [AbsenceController::class, 'index'])->name('admin');
-    Route::get('/section/summary', [SectionController::class, 'index'])->name('admin');
-    Route::get('/clockout', [AttendanceController::class, 'clockout'])->name('admin');
-    Route::get('/absences/admin', [AbsenceController::class, 'absencesAdmin'])->name('admin');
+    Route::get('/section/summary', [SectionController::class, 'index'])->name('section.summary');
+    Route::get('/clockout', [AttendanceController::class, 'clockout'])->name('clockout');
+    Route::get('/absences/admin', [AbsenceController::class, 'absencesAdmin'])->name('absences.admin');
 });
 
 require __DIR__.'/auth.php';
