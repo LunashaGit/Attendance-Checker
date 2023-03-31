@@ -62,7 +62,29 @@ export default function Summary(props) {
                                     {user.last_name}
                                 </td>
                                 <td className=" bg-[#373f50] border-[#202c34] border-2 p-2">
-                                    {user.percentage}
+                                    <div className="bg-gray-800 rounded-lg">
+                                        <div
+                                            role="progressbar"
+                                            aria-valuenow={100}
+                                            aria-valuemin={0}
+                                            aria-valuemax={100}
+                                            className="h-4 bg-gray-200 rounded-lg text-center font-semibold text-xs text-white"
+                                            style={{
+                                                width: `${
+                                                    (user.percentage &&
+                                                        user.percentage) ||
+                                                    0
+                                                }%`,
+                                            }}
+                                        >
+                                            {(user.percentage &&
+                                                user.percentage
+                                                    .toString()
+                                                    .slice(0, 5)) ||
+                                                0}
+                                            %
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
