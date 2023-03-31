@@ -6,6 +6,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import React from "react";
 import { Auth } from "@/Types/Auth";
+import { motion } from "framer-motion";
 import MobileWarning from "@/Components/Custom/MobileWarning";
 import {
     AiFillClockCircle,
@@ -15,11 +16,17 @@ import {
     IoLogOut,
     RiComputerLine, RiGhostFill
 } from "react-icons/all";
+
 type Props = {
     auth: Auth;
     children: JSX.Element;
     errors: Object;
 };
+
+const variants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 1, x: "-100%" },
+}
 
 export default function Authenticated({ auth, children }: Props) {
     const [showMobileWarning, setShowMobileWarning] = useState(false);
@@ -37,7 +44,9 @@ export default function Authenticated({ auth, children }: Props) {
         useState(false);
     return (
         <>
-            <section
+            <motion.div
+                animate={showSideBar ? "open" : "closed"}
+                variants={variants}
                 className={
                     showSideBar ? "fixed w-[250px] h-full top-0 bg-gray-900 shadow-inner shadow-[-6px_2px_500px_21px_rgba(0,0,0,0.75)]" : "hidden"
                 }
@@ -94,10 +103,11 @@ export default function Authenticated({ auth, children }: Props) {
                         </Link>
                     </div>
                 </ul>
-            </section>
+            </motion.div>
+
             <div className={
-                showSideBar ? "ml-[250px] min-h-screen bg-gray-100 bg-gray-900" : "min-h-screen bg-gray-100 bg-gray-900"
-            }
+                    showSideBar ? "pl-[250px] min-h-screen bg-gray-100 bg-gray-900" : "min-h-screen bg-gray-100 bg-gray-900"
+                }
             >
                 {showMobileWarning && <MobileWarning />}
                 <nav className="bg-white bg-gray-800 border-b border-gray-100 border-gray-700">
