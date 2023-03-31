@@ -20,6 +20,6 @@ class IsCoach
             return $next($request);
         }
 
-        return redirect('home');
+        return redirect('dashboard');
     }
 }
