@@ -85,7 +85,10 @@ class ProfileController extends Controller
         }
 
         $percentage = 100 - (100 / $total_working_days * $absent_columns);
-
+        if ($percentage < 0) {
+            $percentage = 0;
+        }
+        
             return Inertia::render('Dashboard/Index', [
             'user' => $request->user()->load('section'),
             'techTalks' => TechTalk::where('user_id', $request->user()->id)->get(),
