@@ -7,6 +7,14 @@ import { Link } from "@inertiajs/react";
 import React from "react";
 import { Auth } from "@/Types/Auth";
 import MobileWarning from "@/Components/Custom/MobileWarning";
+import {
+    AiFillClockCircle,
+    AiFillDashboard,
+    BsFillPersonVcardFill,
+    ImAddressBook,
+    IoLogOut,
+    RiComputerLine, RiGhostFill
+} from "react-icons/all";
 type Props = {
     auth: Auth;
     children: JSX.Element;
@@ -34,20 +42,57 @@ export default function Authenticated({ auth, children }: Props) {
                     showSideBar ? "fixed w-[250px] h-full top-0 bg-gray-900 shadow-inner shadow-[-6px_2px_500px_21px_rgba(0,0,0,0.75)]" : "hidden"
                 }
             >
-                {/* text nav: #00bc8c */}
-                <ul>
-                    <li>
-
-                        Dashboard
-                    </li>
-                    <li>
-                        <span></span>
-                        Who's who
-                    </li>
-                    <li>
-                        <span></span>
-                        Tech Talks
-                    </li>
+                <ul className="flex flex-col text-[#00bc8c] mx-auto px-12 mt-24 w-full">
+                    <div>
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <AiFillDashboard
+                                className="mr-3"
+                            />
+                            Dashboard
+                        </Link>
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <BsFillPersonVcardFill
+                                className="mr-3"
+                            />
+                            Who's who
+                        </Link>
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <RiComputerLine
+                                className="mr-3"
+                            />
+                            Tech Talks
+                        </Link>
+                    </div>
+                    <div className="pt-5">
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <ImAddressBook
+                                className="mr-3"
+                            />
+                            Summary
+                        </Link>
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <AiFillClockCircle
+                                className="mr-3"
+                            />
+                            Clock out
+                        </Link>
+                    </div>
+                    <div className="pt-5">
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <RiGhostFill
+                                className="mr-3"
+                            />
+                            Absences Admin
+                        </Link>
+                    </div>
+                    <div className="pt-5">
+                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
+                            <IoLogOut
+                                className="mr-3"
+                            />
+                            Disconnect
+                        </Link>
+                    </div>
                 </ul>
             </section>
             <div className={
