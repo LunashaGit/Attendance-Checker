@@ -29,8 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/tech-talks', [TechTalkController::class, 'index'])->name('tech-talks.index');
     Route::get('/whoiswho', [InfosController::class, 'index'])->name('whoiswho.index');
+});
+
+Route::middleware(['auth', 'haveCampusId'])->group(function(){
+    Route::get('/tech-talks', [TechTalkController::class, 'index'])->name('tech-talks.index');
 });
 
 Route::middleware(['auth', 'is_coach'])->group(function () {
