@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import GithubPicture from "./GithubPicture";
-import { Transition } from "@headlessui/react";
+import { Transition, Dialog } from "@headlessui/react";
 type Users = {
     email: string;
     first_name: string;
@@ -11,7 +11,13 @@ type Users = {
 export default function Summary(props) {
     const [users, setUsers] = useState<Users[]>([]);
     const [isClicked, setIsClicked] = useState<boolean>(false);
-    const [clickedUser, setClickedUser] = useState<Users>();
+    const [clickedUser, setClickedUser] = useState<Users>({
+        email: "",
+        first_name: "",
+        last_name: "",
+        percentage: 0,
+        github_id: 0,
+    });
 
     useEffect(() => {
         setUsers(props.infos);
@@ -91,7 +97,7 @@ export default function Summary(props) {
                     </tbody>
                 </table>
             )}
-            <Transition
+            {/* <Transition
                 show={isClicked}
                 enter="transition-opacity duration-300"
                 enterFrom="opacity-0"
@@ -122,6 +128,92 @@ export default function Summary(props) {
                         </button>
                     </div>
                 </div>
+            </Transition> */}
+
+            <Transition appear show={isClicked} as={Fragment}>
+                <Dialog
+                    as="div"
+                    className="fixed inset-0 z-10 overflow-y-auto"
+                    onClose={() => {
+                        setIsClicked(false);
+                    }}
+                >
+                    <div className="min-h-screen px-4 text-center bg-black bg-opacity-40">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <Dialog.Overlay className="fixed inset-0" />
+                        </Transition.Child>
+
+                        {/* This element is to trick the browser into centering the modal contents. */}
+
+                        <span
+                            className="inline-block h-screen align-middle"
+                            aria-hidden="true"
+                        >
+                            &#8203;
+                        </span>
+
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                        >
+                            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-[#373f50] shadow-xl rounded-2xl">
+                                <Dialog.Title
+                                    as="h3"
+                                    className="text-lg font-medium leading-6 text-white"
+                                >
+                                    {clickedUser.first_name}{" "}
+                                    {clickedUser.last_name}
+                                </Dialog.Title>
+                                <div className="mt-2">
+                                    <GithubPicture
+                                        className="h-16 w-16 rounded-lg"
+                                        user={clickedUser.github_id}
+                                    />
+                                    <p className="text-sm text-white">
+                                        {clickedUser.percentage}%
+                                    </p>
+
+                                    <div className="bg-gray-800 rounded-lg">
+                                        <div
+                                            role="progressbar"
+                                            aria-valuenow={100}
+                                            aria-valuemin={0}
+                                            aria-valuemax={100}
+                                            className="h-4 bg-gray-200 rounded-lg text-center font-semibold text-xs text-white"
+                                            style={{
+                                                width: `${
+                                                    (clickedUser.percentage &&
+                                                        clickedUser.percentage) ||
+                                                    0
+                                                }%`,
+                                            }}
+                                        >
+                                            {(clickedUser.percentage &&
+                                                clickedUser.percentage
+                                                    .toString()
+                                                    .slice(0, 5)) ||
+                                                0}
+                                            %
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Transition.Child>
+                    </div>
+                </Dialog>
             </Transition>
         </div>
     );
