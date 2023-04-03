@@ -106,10 +106,17 @@ class AttendanceController extends Controller
         return response()->json($attendance);
     }
 
-    public function getUserAttendances(int $user_id): JsonResponse
+    public function getUserAttendances(Request $request): JsonResponse
     {
+        if($request->user_id == null){
+            return response()->json([
+                'error' => 'user_id is required'
+            ]);
+        }
+
         $userAttendances = DB::table('attendances')
-            ->where('user_id', '=', $user_id)
+            ->where('user_id', '=', $request->user_id)
+            ->whereDate('date', '<', now()->format('Y-m-d'))
             ->get();
 
         return response()->json([
