@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Attendance;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\Section;
 class AttendanceController extends Controller
-{   
+{
     public function index()
     {
         $users = User::where('is_coach', 0)->where('is_admin', 0)->get();
@@ -19,7 +20,7 @@ class AttendanceController extends Controller
             'attendances' => $attendances,
         ]);
     }
-    
+
     public function schedule()
     {
         $users = User::where('is_coach', 0)->where('is_admin', 0)->get();
@@ -101,7 +102,18 @@ class AttendanceController extends Controller
         ->whereNull('absence_id')
         ->where('user_id', $request->user_id)
         ->get();
-        
+
         return response()->json($attendance);
+    }
+
+    public function getUserAttendances(int $user_id): JsonResponse
+    {
+        $userAttendances = DB::table('attendances')
+            ->where('user_id', '=', $user_id)
+            ->get();
+
+        return response()->json([
+            'userAttendances' => $userAttendances
+        ]);
     }
 }

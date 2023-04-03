@@ -38,7 +38,7 @@ Route::middleware(['auth', 'haveCampusId'])->group(function(){
 
 Route::middleware(['auth', 'is_coach'])->group(function () {
     Route::get('/testing', [TestingController::class, 'index'])->name('admin');
-    Route::get('/testing/absences', [AbsenceController::class, 'index'])->name('admin');
+    Route::get('/testing/absences', [AbsenceController::class, 'index'])->name('admin.absences');
     Route::get('/section/summary', [SectionController::class, 'index'])->name('section.summary');
     Route::get('/clockout', [AttendanceController::class, 'clockout'])->name('clockout');
     Route::get('/absences/admin', [AbsenceController::class, 'absencesAdmin'])->name('absences.admin');

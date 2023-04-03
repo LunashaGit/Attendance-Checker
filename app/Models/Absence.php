@@ -31,5 +31,4 @@ class Absence extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
-
 }
