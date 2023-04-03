@@ -34,6 +34,7 @@ export default function Authenticated({ auth, children }: Props) {
     const [showMobileWarning, setShowMobileWarning] = useState(false);
     const [showSideBar, setShowSideBar] = useState(false);
 
+    console.log(auth);
     window.addEventListener("resize", () => {
         if (window.innerWidth < 950) {
             setShowMobileWarning(true);
@@ -80,34 +81,40 @@ export default function Authenticated({ auth, children }: Props) {
                             Tech Talks
                         </Link>
                     </div>
-                    <div className="pt-5">
-                        <Link
-                            href="/section/summary"
-                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
-                        >
-                            <ImAddressBook className="mr-3" />
-                            Summary
-                        </Link>
-                        <Link
-                            href="/clockout"
-                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
-                        >
-                            <AiFillClockCircle className="mr-3" />
-                            Clock out
-                        </Link>
-                    </div>
-                    <div className="pt-5">
-                        <Link
-                            href="/absences/admin"
-                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
-                        >
-                            <RiGhostFill className="mr-3" />
-                            Absences Admin
-                        </Link>
-                    </div>
+                    {(auth.user.is_admin == true ||
+                        auth.user.is_coach == true) && (
+                        <div className="pt-5">
+                            <Link
+                                href="/section/summary"
+                                className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                            >
+                                <ImAddressBook className="mr-3" />
+                                Summary
+                            </Link>
+                            <Link
+                                href="/clockout"
+                                className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                            >
+                                <AiFillClockCircle className="mr-3" />
+                                Clock out
+                            </Link>
+                        </div>
+                    )}
+                    {auth.user.is_admin == true && (
+                        <div className="pt-5">
+                            <Link
+                                href="/absences/admin"
+                                className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                            >
+                                <RiGhostFill className="mr-3" />
+                                Absences Admin
+                            </Link>
+                        </div>
+                    )}
                     <div className="pt-5">
                         <Link
                             href={route("logout")}
+                            //@ts-ignore
                             method="post"
                             as="button"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
