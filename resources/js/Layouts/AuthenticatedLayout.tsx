@@ -14,7 +14,8 @@ import {
     BsFillPersonVcardFill,
     ImAddressBook,
     IoLogOut,
-    RiComputerLine, RiGhostFill
+    RiComputerLine,
+    RiGhostFill,
 } from "react-icons/all";
 
 type Props = {
@@ -26,7 +27,7 @@ type Props = {
 const variants = {
     open: { opacity: 1, x: 0 },
     closed: { opacity: 1, x: "-100%" },
-}
+};
 
 export default function Authenticated({ auth, children }: Props) {
     const [showMobileWarning, setShowMobileWarning] = useState(false);
@@ -48,74 +49,98 @@ export default function Authenticated({ auth, children }: Props) {
                 animate={showSideBar ? "open" : "closed"}
                 variants={variants}
                 className={
-                    showSideBar ? "fixed w-[250px] h-full top-0 bg-gray-900 shadow-inner shadow-[-6px_2px_500px_21px_rgba(0,0,0,0.75)]" : "hidden"
+                    showSideBar
+                        ? "fixed w-[250px] h-full top-0 bg-gray-900 shadow-inner shadow-[-6px_2px_500px_21px_rgba(0,0,0,0.75)]"
+                        : "hidden"
                 }
             >
                 <ul className="flex flex-col text-[#00bc8c] mx-auto px-12 mt-24 w-full">
                     <div>
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <AiFillDashboard
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <AiFillDashboard className="mr-3" />
                             Dashboard
                         </Link>
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <BsFillPersonVcardFill
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <BsFillPersonVcardFill className="mr-3" />
                             Who's who
                         </Link>
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <RiComputerLine
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <RiComputerLine className="mr-3" />
                             Tech Talks
                         </Link>
                     </div>
                     <div className="pt-5">
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <ImAddressBook
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <ImAddressBook className="mr-3" />
                             Summary
                         </Link>
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <AiFillClockCircle
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <AiFillClockCircle className="mr-3" />
                             Clock out
                         </Link>
                     </div>
                     <div className="pt-5">
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <RiGhostFill
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <RiGhostFill className="mr-3" />
                             Absences Admin
                         </Link>
                     </div>
                     <div className="pt-5">
-                        <Link href="#" className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]">
-                            <IoLogOut
-                                className="mr-3"
-                            />
+                        <Link
+                            href="#"
+                            className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
+                        >
+                            <IoLogOut className="mr-3" />
                             Disconnect
                         </Link>
                     </div>
                 </ul>
             </motion.div>
 
-            <div className={
-                    showSideBar ? "pl-[250px] min-h-screen bg-gray-100 bg-gray-900" : "min-h-screen bg-gray-100 bg-gray-900"
+            <div
+                className={
+                    showSideBar
+                        ? "pl-[250px] min-h-scree bg-gray-900"
+                        : "min-h-screen bg-gray-900"
                 }
             >
                 {showMobileWarning && <MobileWarning />}
-                <nav className="bg-white bg-gray-800 border-b border-gray-100 border-gray-700">
+                <nav className=" bg-gray-800 border-b border-gray-700">
                     <div className="mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between h-16">
                             <div className="flex items-center pt-2">
-                                <svg onClick={() => setShowSideBar(!showSideBar)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="pb-2 mr-5 cursor-pointer block w-8 h-8 w-auto fill-current text-gray-800 text-gray-200">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                                <svg
+                                    onClick={() => setShowSideBar(!showSideBar)}
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    strokeWidth={1.5}
+                                    stroke="currentColor"
+                                    className="pb-2 mr-5 cursor-pointer block w-8 h-8 w-auto fill-current text-gray-800 text-gray-200"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                                    />
                                 </svg>
                                 <div className="shrink-0 flex items-center">
                                     <Link href="/dashboard">
@@ -125,8 +150,7 @@ export default function Authenticated({ auth, children }: Props) {
                             </div>
 
                             <div className="hidden sm:flex sm:items-center sm:ml-6">
-                                <div className="ml-3 relative">
-                                </div>
+                                <div className="ml-3 relative"></div>
                             </div>
 
                             <div className="-mr-2 flex items-center sm:hidden">
