@@ -8,6 +8,7 @@ import React from "react";
 import { Auth } from "@/Types/Auth";
 import { motion } from "framer-motion";
 import MobileWarning from "@/Components/Custom/MobileWarning";
+import { router } from "@inertiajs/react";
 import {
     AiFillClockCircle,
     AiFillDashboard,
@@ -43,8 +44,9 @@ export default function Authenticated({ auth, children }: Props) {
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+
     return (
-        <>
+        <div>
             <motion.div
                 animate={showSideBar ? "open" : "closed"}
                 variants={variants}
@@ -57,21 +59,21 @@ export default function Authenticated({ auth, children }: Props) {
                 <ul className="flex flex-col text-[#00bc8c] mx-auto px-12 mt-24 w-full">
                     <div>
                         <Link
-                            href="#"
+                            href="/dashboard"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <AiFillDashboard className="mr-3" />
                             Dashboard
                         </Link>
                         <Link
-                            href="#"
+                            href="/whoiswho"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <BsFillPersonVcardFill className="mr-3" />
                             Who's who
                         </Link>
                         <Link
-                            href="#"
+                            href="/tech-talks"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <RiComputerLine className="mr-3" />
@@ -80,14 +82,14 @@ export default function Authenticated({ auth, children }: Props) {
                     </div>
                     <div className="pt-5">
                         <Link
-                            href="#"
+                            href="/section/summary"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <ImAddressBook className="mr-3" />
                             Summary
                         </Link>
                         <Link
-                            href="#"
+                            href="/clockout"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <AiFillClockCircle className="mr-3" />
@@ -96,7 +98,7 @@ export default function Authenticated({ auth, children }: Props) {
                     </div>
                     <div className="pt-5">
                         <Link
-                            href="#"
+                            href="/absences/admin"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <RiGhostFill className="mr-3" />
@@ -105,7 +107,9 @@ export default function Authenticated({ auth, children }: Props) {
                     </div>
                     <div className="pt-5">
                         <Link
-                            href="#"
+                            href={route("logout")}
+                            method="post"
+                            as="button"
                             className="flex items-center mb-3 cursor-pointer hover:text-[#01654C]"
                         >
                             <IoLogOut className="mr-3" />
@@ -198,6 +202,6 @@ export default function Authenticated({ auth, children }: Props) {
                 </nav>
                 <main>{children}</main>
             </div>
-        </>
+        </div>
     );
 }
